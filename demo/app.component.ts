@@ -58,12 +58,15 @@ export class AppComponent {
       disableScrolling: true,
       showZoom: true,
       showRotate: true,
-      showDownloadButton: true
+      showDownloadButton: true,
+      showDownloadExtButton: true
     });
   }
 
   private _onReceivedEvent(event: IEvent): void {
-    if (event.id === LIGHTBOX_EVENT.CLOSE) {
+    if (event.id === LIGHTBOX_EVENT.DOWNLOAD) {
+      console.log("Implement the download of the picture");
+    } else if (event.id === LIGHTBOX_EVENT.CLOSE) {
       this._subscription.unsubscribe();
     }
   }

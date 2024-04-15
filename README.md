@@ -151,6 +151,7 @@ Available options based on lightbox2 options
 | showZoom            | **false**         | Zoom Buttons will be shown if this flag set to **true**                                                                                                                                                          |
 | showRotate            | **false**         | Rotate Buttons will be shown if this flag set to **true**                                                                                                                                                                                                    |
 | showDownloadButton  | **false**         | Download button will be shown if this flag set to **true**    |
+| showDownloadExtButton  | **false**         | Download button will be shown if this flag set to **true** and the download should be handled when the event LIGHTBOX_EVENT.DOWNLOAD is received    |
 | containerElementResolver | () => document.body | Resolves the element that will contain the lightbox | 
 
 

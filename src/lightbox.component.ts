@@ -56,6 +56,9 @@ import {
           <div class="lb-downloadContainer" [hidden]="!ui.showDownloadButton">
             <a class="lb-download" (click)="download($event)"></a>
           </div>
+          <div class="lb-downloadContainer" [hidden]="!ui.showDownloadExtButton">
+            <a class="lb-download" (click)="downloadExt($event)"></a>
+          </div>
           <div class="lb-turnContainer" [hidden]="!ui.showRotateButton">
             <a class="lb-turnLeft" (click)="control($event)"></a>
             <a class="lb-turnRight" (click)="control($event)"></a>
@@ -134,6 +137,10 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
 
       // control whether to show the download button or not
       showDownloadButton: false,
+
+      // control whether to show the download button or not
+      showDownloadExtButton: false,
+
       classList: 'lightbox animation fadeIn'
     };
 
@@ -192,6 +199,13 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
       $event.target.classList.contains('lb-close')) {
       this._lightboxEvent.broadcastLightboxEvent({ id: LIGHTBOX_EVENT.CLOSE, data: null });
     }
+  }
+
+  public downloadExt($event): void {
+    this._lightboxEvent.broadcastLightboxEvent({
+      id: LIGHTBOX_EVENT.DOWNLOAD,
+      data: this.album[this.currentImageIndex]
+    });
   }
 
   public download($event: any): void {
@@ -494,6 +508,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
       this.ui.showZoomButton = this.options.showZoom;
       this.ui.showRotateButton = this.options.showRotate;
       this.ui.showDownloadButton = this.options.showDownloadButton;
+      this.ui.showDownloadExtButton = this.options.showDownloadExtButton;
     }, 0);
   }
 
