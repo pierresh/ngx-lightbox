@@ -1603,7 +1603,7 @@
   dependencies:
     "@types/node" "*"
 
-"@types/node@*", "@types/node@^18.0.0 || >=20.0.0", "@types/node@^20.12.12", "@types/node@>=10.0.0":
+"@types/node@*", "@types/node@^18.0.0 || >=20.0.0", "@types/node@>=10.0.0":
   version "20.12.12"
   resolved "https://registry.npmjs.org/@types/node/-/node-20.12.12.tgz"
   integrity sha512-eWLDGF/FOSPtAvEqeRAQ4C8LSA7M1I7i0ky1I8U7kD1J5ITyW3AsRhQrKVoWf5pFKZ2kILsEGJhsI9r93PYnOw==
@@ -4766,21 +4766,6 @@ ngx-filesaver@14.0.0:
   dependencies:
     tslib "^2.3.0"
 
-ngx-filesaver@8.1.0:
-  version "8.1.0"
-  resolved "https://registry.npmjs.org/ngx-filesaver/-/ngx-filesaver-8.1.0.tgz"
-  integrity sha512-xAwThsB/ap9qs7BRgW+mJPWBK60uaqkfPnw3vzbykTdfIvGf62U/6osDCq4TCPl/POWLFui6b3Bu+gfDMqoZhw==
-  dependencies:
-    tslib "^1.9.0"
-
-ngx-lightbox@^2.6.2:
-  version "2.6.2"
-  resolved "https://registry.npmjs.org/ngx-lightbox/-/ngx-lightbox-2.6.2.tgz"
-  integrity sha512-+41RTijWtEjZSWKERXDqAFt+HBcDSjxtgtqgUU3FoLPjE3kEXQu5+fUPIWwiKkDv/hxdYK+yAGkdIqucqBML2A==
-  dependencies:
-    file-saver "^2.0.5"
-    ngx-filesaver "8.1.0"
-
 nice-napi@^1.0.2:
   version "1.0.2"
   resolved "https://registry.npmjs.org/nice-napi/-/nice-napi-1.0.2.tgz"
@@ -6471,11 +6456,6 @@ tslib@^1.13.0:
   integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
 
 tslib@^1.8.1:
-  version "1.14.1"
-  resolved "https://registry.npmjs.org/tslib/-/tslib-1.14.1.tgz"
-  integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
-
-tslib@^1.9.0:
   version "1.14.1"
   resolved "https://registry.npmjs.org/tslib/-/tslib-1.14.1.tgz"
   integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==

@@ -11,3 +11,4 @@ src/*.js
 *.ngsummary.json
 
 .angular
+.DS_Store
