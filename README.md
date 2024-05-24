@@ -4,24 +4,19 @@
 
 A [lightbox2](https://github.com/lokesh/lightbox2) implementation port to use with new Angular without the need for jQuery
 
-## Version
-
-- For Angular 5, 6, 7, please use ngx-lightbox 1.x.x. `npm install ngx-lightbox@1.2.0`
-- For Angular >= 8, please use ngx-lightbox 2.x.x. `npm install ngx-lightbox@2.0.0`
-- For Angular 2, 4, please use [angular2-lightbox](https://github.com/themyth92/angular2-lightbox)
 
 ## [Demo](https://themyth92.com/project/ngx-lightbox)
 
 ## Installation
 
-`npm install --save ngx-lightbox`
+`npm install --save @pierresh/ngx-lightbox`
 
 Update your `angular.json`
 
 ```
 {
   "styles": [
-    "./node_modules/ngx-lightbox/lightbox.css",
+    "./node_modules/@pierresh/ngx-lightbox/lightbox.css",
     ...
   ],
 }
@@ -31,10 +26,10 @@ Update your `angular.json`
 
 ### Module:
 
-Import `LightboxModule` from `ngx-lightbox`
+Import `LightboxModule` from `@pierresh/ngx-lightbox`
 
 ```javascript
-import { LightboxModule } from 'ngx-lightbox';
+import { LightboxModule } from '@pierresh/ngx-lightbox';
 
 @NgModule({
   imports: [ LightboxModule ]
@@ -54,7 +49,7 @@ import { LightboxModule } from 'ngx-lightbox';
 2. Component method
 
 ```javascript
-import { Lightbox } from 'ngx-lightbox';
+import { Lightbox } from '@pierresh/ngx-lightbox';
 
 export class AppComponent {
   private _album: Array = [];
@@ -99,7 +94,7 @@ Each `object` of `album` array inside your component may contains 3 properties :
 You can listen to 3 events, which are either **CHANGE_PAGE**, **CLOSE** or **OPEN**.
 
 ```javascript
-import { LightboxEvent, LIGHTBOX_EVENT } from 'ngx-lightbox';
+import { LightboxEvent, LIGHTBOX_EVENT } from '@pierresh/ngx-lightbox';
 import { Subscription } from 'rxjs';
 
 export class AppComponent {
@@ -160,7 +155,7 @@ Available options based on lightbox2 options
 1. Override default config
 
 ```javascript
-import { LightboxConfig } from 'ngx-lightbox';
+import { LightboxConfig } from '@pierresh/ngx-lightbox';
 
 export class AppComponent {
   constructor(private _lightboxConfig: LightboxConfig) {
@@ -173,7 +168,7 @@ export class AppComponent {
 2. Set config in a specific opening window
 
 ```javascript
-import { LightboxConfig, Lightbox } from 'ngx-lightbox';
+import { LightboxConfig, Lightbox } from '@pierresh/ngx-lightbox';
 
 export class AppComponent {
   constructor(private _lightboxConfig: LightboxConfig, private _lightbox: Lightbox) {}
@@ -211,12 +206,4 @@ This project works with universal out of the box with no additional configuratio
 
 MIT
 
-## Donation
 
-Buy me a beer if you like
-
-BTC: 1MFx5waJ7Sitn961DaXe3mQXrb7pEoSJct
-
-ETH: 0x2211F3d683eB1C2d753aD21D9Bd9110729C80B72
-
-NEO: ARrUrnbq1ogfsoabvCgJ5SHgknhzyUmtuS
