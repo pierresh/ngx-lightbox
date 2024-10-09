@@ -1,7 +1,7 @@
 {
-  "name": "@pierresh/ngx-lightbox",
-  "version": "17.0.1",
-  "description": "A port >= Angular 17 for lightbox2",
+  "name": "@jjmhalew/ngx-lightbox",
+  "version": "18.0.0",
+  "description": "A port >= Angular 18 for lightbox2",
   "main": "index.js",
   "dependencies": {
     "file-saver": "^2.0.5",
