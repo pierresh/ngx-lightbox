@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed, inject } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { LightboxEvent, LightboxWindowRef, LIGHTBOX_EVENT } from './lightbox-event.service';
 import { LightboxComponent } from './lightbox.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('[ Unit - LightboxComponent ]', () => {
   let fixture: ComponentFixture<LightboxComponent>;
@@ -35,10 +36,10 @@ describe('[ Unit - LightboxComponent ]', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ LightboxComponent ],
-      providers: [ LightboxEvent, LightboxWindowRef ],
-      imports: [ HttpClientTestingModule ]
-    });
+    declarations: [LightboxComponent],
+    imports: [],
+    providers: [LightboxEvent, LightboxWindowRef, provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
     createComponent();
   });
 
