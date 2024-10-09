@@ -3,6 +3,7 @@ import { FileSaverService } from 'ngx-filesaver';
 import { DOCUMENT } from '@angular/common';
 import {
   AfterViewInit,
+  ChangeDetectionStrategy,
   Component,
   ElementRef,
   Inject,
@@ -74,7 +75,8 @@ import {
   host: {
     '(click)': 'close($event)',
     '[class]': 'ui.classList'
-  }
+  },
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnInit {
   @Input() album: Array<IAlbum>;
