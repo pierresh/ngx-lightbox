@@ -7,7 +7,8 @@ import {
   Component,
   ElementRef,
   Inject,
-  Input,
+  input,
+  model,
   OnDestroy,
   OnInit,
   Renderer2,
@@ -30,7 +31,7 @@ import {
       <div class="lb-container" #container id="container">
         <img class="lb-image"
              id="image"
-             [src]="album[currentImageIndex].src"
+             [src]="album()![currentImageIndex()!].src"
              class="lb-image animation fadeIn"
              [hidden]="ui.showReloader"
              #image>
@@ -46,7 +47,7 @@ import {
     <div class="lb-dataContainer" [hidden]="ui.showReloader" #dataContainer>
       <div class="lb-data">
         <div class="lb-details">
-          <span class="lb-caption animation fadeIn" [hidden]="!ui.showCaption" [innerHtml]="album[currentImageIndex].caption" #caption>
+          <span class="lb-caption animation fadeIn" [hidden]="!ui.showCaption" [innerHtml]="album()![currentImageIndex()!].caption" #caption>
           </span>
           <span class="lb-number animation fadeIn" [hidden]="!ui.showPageNumber" #number>{{ content.pageNumber }}</span>
         </div>
@@ -79,10 +80,10 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnInit {
-  @Input() album: Array<IAlbum>;
-  @Input() currentImageIndex: number;
-  @Input() options: any;
-  @Input() cmpRef: any;
+  album = model<Array<IAlbum>>([]);
+  currentImageIndex = model<number>(0);
+  options = model<any>({});
+  cmpRef = input<any>();
   @ViewChild('outerContainer', { static: false }) _outerContainerElem: ElementRef;
   @ViewChild('container', { static: false }) _containerElem: ElementRef;
   @ViewChild('leftArrow', { static: false }) _leftArrowElem: ElementRef;
@@ -109,9 +110,6 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
     @Inject(DOCUMENT) private _documentRef
   ) {
     // initialize data
-    this.options = this.options || {};
-    this.album = this.album || [];
-    this.currentImageIndex = this.currentImageIndex || 0;
     this._windowRef = this._lightboxWindowRef.nativeWindow;
 
     // control the interactive of the directive
@@ -158,7 +156,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   }
 
   ngOnInit(): void {
-    this.album.forEach(album => {
+    this.album()?.forEach(album => {
       if (album.caption) {
         album.caption = this._sanitizer.sanitize(SecurityContext.HTML, album.caption);
       }
@@ -186,7 +184,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   }
 
   public ngOnDestroy(): void {
-    if (!this.options.disableKeyboardNav) {
+    if (!this.options().disableKeyboardNav) {
       // unbind keyboard event
       this._disableKeyboardNav();
     }
@@ -206,14 +204,14 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   public downloadExt($event): void {
     this._lightboxEvent.broadcastLightboxEvent({
       id: LIGHTBOX_EVENT.DOWNLOAD,
-      data: this.album[this.currentImageIndex]
+      data: this.album()![this.currentImageIndex()!]
     });
   }
 
   public download($event: any): void {
     $event.stopPropagation();
-    const url = this.album[this.currentImageIndex].src;
-    const downloadUrl = this.album[this.currentImageIndex].downloadUrl;
+    const url = this.album()![this.currentImageIndex()!].src;
+    const downloadUrl = this.album()![this.currentImageIndex()!].downloadUrl;
     const parts = url.split('/');
     const fileName = parts[parts.length - 1];
     const canvas = document.createElement('canvas');
@@ -322,33 +320,33 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   }
 
   public nextImage(): void {
-    if (this.album.length === 1) {
+    if (this.album()!.length === 1) {
       return;
-    } else if (this.currentImageIndex === this.album.length - 1) {
+    } else if (this.currentImageIndex() === this.album()!.length - 1) {
       this._changeImage(0);
     } else {
-      this._changeImage(this.currentImageIndex + 1);
+      this._changeImage(this.currentImageIndex()! + 1);
     }
   }
 
   public prevImage(): void {
-    if (this.album.length === 1) {
+    if (this.album()!.length === 1) {
       return;
-    } else if (this.currentImageIndex === 0 && this.album.length > 1) {
-      this._changeImage(this.album.length - 1);
+    } else if (this.currentImageIndex() === 0 && this.album()!.length > 1) {
+      this._changeImage(this.album()!.length - 1);
     } else {
-      this._changeImage(this.currentImageIndex - 1);
+      this._changeImage(this.currentImageIndex()! - 1);
     }
   }
 
   private _validateInputData(): boolean {
-    if (this.album &&
-      this.album instanceof Array &&
-      this.album.length > 0) {
-      for (let i = 0; i < this.album.length; i++) {
+    if (this.album() &&
+      this.album() instanceof Array &&
+      this.album()!.length > 0) {
+      for (let i = 0; i < this.album()!.length; i++) {
         // check whether each _nside
         // album has src data or not
-        if (this.album[i].src) {
+        if (this.album()![i].src) {
           continue;
         }
 
@@ -360,10 +358,10 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
 
     // to prevent data understand as string
     // convert it to number
-    if (isNaN(this.currentImageIndex)) {
+    if (isNaN(this.currentImageIndex()!)) {
       throw new Error('Current image index is not a number');
     } else {
-      this.currentImageIndex = Number(this.currentImageIndex);
+      this.currentImageIndex.set(Number(this.currentImageIndex()));
     }
 
     return true;
@@ -376,7 +374,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
       this._onLoadImageSuccess();
     }
 
-    const src: any = this.album[this.currentImageIndex].src;
+    const src: any = this.album()![this.currentImageIndex()!].src;
     preloader.src = this._sanitizer.sanitize(SecurityContext.URL, src);
   }
 
@@ -384,7 +382,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
    * Fire when the image is loaded
    */
   private _onLoadImageSuccess(): void {
-    if (!this.options.disableKeyboardNav) {
+    if (!this.options().disableKeyboardNav) {
       // unbind keyboard event during transition
       this._disableKeyboardNav();
     }
@@ -401,7 +399,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
     // set default width and height of image to be its natural
     imageWidth = naturalImageWidth = this._imageElem.nativeElement.naturalWidth;
     imageHeight = naturalImageHeight = this._imageElem.nativeElement.naturalHeight;
-    if (this.options.fitImageInViewPort) {
+    if (this.options().fitImageInViewPort) {
       windowWidth = this._windowRef.innerWidth;
       windowHeight = this._windowRef.innerHeight;
       maxImageWidth = windowWidth - this._cssValue.containerLeftPadding -
@@ -426,7 +424,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
 
     this._sizeContainer(imageWidth, imageHeight);
 
-    if (this.options.centerVertically) {
+    if (this.options().centerVertically) {
       this._centerVertically(imageWidth, imageHeight);
     }
   }
@@ -456,7 +454,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
 
       // bind resize event to outer container
       // use enableTransition to prevent infinite loader
-      if (this.options.enableTransition) {
+      if (this.options().enableTransition) {
         this._event.transitions = [];
         ['transitionend', 'webkitTransitionEnd', 'oTransitionEnd', 'MSTransitionEnd'].forEach(eventName => {
           this._event.transitions.push(
@@ -493,7 +491,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
     this.ui.showReloader = false;
     this._updateNav();
     this._updateDetails();
-    if (!this.options.disableKeyboardNav) {
+    if (!this.options().disableKeyboardNav) {
       this._enableKeyboardNav();
     }
   }
@@ -507,20 +505,20 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
 
     // update controls visibility on next view generation
     setTimeout(() => {
-      this.ui.showZoomButton = this.options.showZoom;
-      this.ui.showRotateButton = this.options.showRotate;
-      this.ui.showDownloadButton = this.options.showDownloadButton;
-      this.ui.showDownloadExtButton = this.options.showDownloadExtButton;
+      this.ui.showZoomButton = this.options().showZoom;
+      this.ui.showRotateButton = this.options().showRotate;
+      this.ui.showDownloadButton = this.options().showDownloadButton;
+      this.ui.showDownloadExtButton = this.options().showDownloadExtButton;
     }, 0);
   }
 
   private _positionLightBox(): void {
     // @see https://stackoverflow.com/questions/3464876/javascript-get-window-x-y-position-for-scroll
     const top = (this._windowRef.pageYOffset || this._documentRef.documentElement.scrollTop) +
-      this.options.positionFromTop;
+      this.options().positionFromTop;
     const left = this._windowRef.pageXOffset || this._documentRef.documentElement.scrollLeft;
 
-    if (!this.options.centerVertically) {
+    if (!this.options().centerVertically) {
       this._rendererRef.setStyle(this._lightboxElem.nativeElement, 'top', `${top}px`);
     }
 
@@ -528,7 +526,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
     this._rendererRef.setStyle(this._lightboxElem.nativeElement, 'display', 'block');
 
     // disable scrolling of the page while open
-    if (this.options.disableScrolling) {
+    if (this.options().disableScrolling) {
       this._rendererRef.addClass(this._documentRef.documentElement, 'lb-disable-scrolling');
     }
   }
@@ -537,8 +535,8 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
    * addCssAnimation add css3 classes for animate lightbox
    */
   private _addCssAnimation(): void {
-    const resizeDuration = this.options.resizeDuration;
-    const fadeDuration = this.options.fadeDuration;
+    const resizeDuration = this.options().resizeDuration;
+    const fadeDuration = this.options().fadeDuration;
 
     this._rendererRef.setStyle(this._lightboxElem.nativeElement,
       '-webkit-animation-duration', `${fadeDuration}s`);
@@ -568,38 +566,38 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
 
   private _end(): void {
     this.ui.classList = 'lightbox animation fadeOut';
-    if (this.options.disableScrolling) {
+    if (this.options().disableScrolling) {
       this._rendererRef.removeClass(this._documentRef.documentElement, 'lb-disable-scrolling');
     }
     setTimeout(() => {
-      this.cmpRef.destroy();
-    }, this.options.fadeDuration * 1000);
+      this.cmpRef().destroy();
+    }, this.options().fadeDuration * 1000);
   }
 
   private _updateDetails(): void {
     // update the caption
-    if (typeof this.album[this.currentImageIndex].caption !== 'undefined' &&
-      this.album[this.currentImageIndex].caption !== '') {
+    if (typeof this.album()![this.currentImageIndex()!].caption !== 'undefined' &&
+      this.album()![this.currentImageIndex()!].caption !== '') {
       this.ui.showCaption = true;
     }
 
     // update the page number if user choose to do so
     // does not perform numbering the page if the
     // array length in album <= 1
-    if (this.album.length > 1 && this.options.showImageNumberLabel) {
+    if (this.album()!.length > 1 && this.options().showImageNumberLabel) {
       this.ui.showPageNumber = true;
       this.content.pageNumber = this._albumLabel();
     }
   }
 
   private _albumLabel(): string {
-    // due to {this.currentImageIndex} is set from 0 to {this.album.length} - 1
-    return this.options.albumLabel.replace(/%1/g, Number(this.currentImageIndex + 1)).replace(/%2/g, this.album.length);
+    // due to {this.currentImageIndex()!} is set from 0 to {this.album()!.length} - 1
+    return this.options().albumLabel.replace(/%1/g, Number(this.currentImageIndex()! + 1)).replace(/%2/g, this.album()!.length);
   }
 
   private _changeImage(newIndex: number): void {
     this._resetImage();
-    this.currentImageIndex = newIndex;
+    this.currentImageIndex.set(newIndex);
     this._hideImage();
     this._registerImageLoadingEvent();
     this._lightboxEvent.broadcastLightboxEvent({ id: LIGHTBOX_EVENT.CHANGE_PAGE, data: newIndex });
@@ -620,7 +618,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
     // check to see the browser support touch event
     try {
       this._documentRef.createEvent('TouchEvent');
-      alwaysShowNav = (this.options.alwaysShowNavOnTouchDevices) ? true : false;
+      alwaysShowNav = (this.options().alwaysShowNavOnTouchDevices) ? true : false;
     } catch (e) {
       // noop
     }
@@ -628,8 +626,8 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
     // initially show the arrow nav
     // which is the parent of both left and right nav
     this._showArrowNav();
-    if (this.album.length > 1) {
-      if (this.options.wrapAround) {
+    if (this.album()!.length > 1) {
+      if (this.options().wrapAround) {
         if (alwaysShowNav) {
           // alternatives this.$lightbox.find('.lb-prev, .lb-next').css('opacity', '1');
           this._rendererRef.setStyle(this._leftArrowElem.nativeElement, 'opacity', '1');
@@ -640,7 +638,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
         this._showLeftArrowNav();
         this._showRightArrowNav();
       } else {
-        if (this.currentImageIndex > 0) {
+        if (this.currentImageIndex()! > 0) {
           // alternatives this.$lightbox.find('.lb-prev').show();
           this._showLeftArrowNav();
           if (alwaysShowNav) {
@@ -649,7 +647,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
           }
         }
 
-        if (this.currentImageIndex < this.album.length - 1) {
+        if (this.currentImageIndex()! < this.album()!.length - 1) {
           // alternatives this.$lightbox.find('.lb-next').show();
           this._showRightArrowNav();
           if (alwaysShowNav) {
@@ -670,7 +668,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   }
 
   private _showArrowNav(): void {
-    this.ui.showArrowNav = (this.album.length !== 1);
+    this.ui.showArrowNav = (this.album()!.length !== 1);
   }
 
   private _enableKeyboardNav(): void {
@@ -695,15 +693,15 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
     if (keycode === KEYCODE_ESC || key.match(/x|o|c/)) {
       this._lightboxEvent.broadcastLightboxEvent({ id: LIGHTBOX_EVENT.CLOSE, data: null });
     } else if (key === 'p' || keycode === KEYCODE_LEFTARROW) {
-      if (this.currentImageIndex !== 0) {
-        this._changeImage(this.currentImageIndex - 1);
-      } else if (this.options.wrapAround && this.album.length > 1) {
-        this._changeImage(this.album.length - 1);
+      if (this.currentImageIndex() !== 0) {
+        this._changeImage(this.currentImageIndex()! - 1);
+      } else if (this.options().wrapAround && this.album()!.length > 1) {
+        this._changeImage(this.album()!.length - 1);
       }
     } else if (key === 'n' || keycode === KEYCODE_RIGHTARROW) {
-      if (this.currentImageIndex !== this.album.length - 1) {
-        this._changeImage(this.currentImageIndex + 1);
-      } else if (this.options.wrapAround && this.album.length > 1) {
+      if (this.currentImageIndex() !== this.album()!.length - 1) {
+        this._changeImage(this.currentImageIndex()! + 1);
+      } else if (this.options().wrapAround && this.album()!.length > 1) {
         this._changeImage(0);
       }
     }
