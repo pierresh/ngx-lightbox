@@ -158,7 +158,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   ngOnInit(): void {
     this.album()?.forEach(album => {
       if (album.caption) {
-        album.caption = this._sanitizer.sanitize(SecurityContext.HTML, album.caption);
+        album.caption = this._sanitizer.sanitize(SecurityContext.HTML, album.caption) ?? "";
       }
     });
   }
@@ -233,9 +233,9 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
     };
     preloader.crossOrigin = '';
     if(downloadUrl && downloadUrl.length > 0)
-      preloader.src = this._sanitizer.sanitize(SecurityContext.URL, downloadUrl);
+      preloader.src = this._sanitizer.sanitize(SecurityContext.URL, downloadUrl) ?? "";
     else
-      preloader.src = this._sanitizer.sanitize(SecurityContext.URL, url);
+      preloader.src = this._sanitizer.sanitize(SecurityContext.URL, url) ?? "";
   }
 
   public control($event: any): void {
@@ -375,7 +375,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
     }
 
     const src: any = this.album()![this.currentImageIndex()!].src;
-    preloader.src = this._sanitizer.sanitize(SecurityContext.URL, src);
+    preloader.src = this._sanitizer.sanitize(SecurityContext.URL, src) ?? "";
   }
 
   /**
