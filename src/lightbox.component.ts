@@ -78,25 +78,28 @@ import { IAlbum, IEvent, LIGHTBOX_EVENT, LightboxEvent, LightboxWindowRef } from
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnInit {
-  album = model<IAlbum[]>([]);
-  currentImageIndex = model<number>(0);
-  options = model<any>({});
-  cmpRef = model<any>();
-  _outerContainerElem = viewChild<ElementRef>("outerContainer");
-  _containerElem = viewChild<ElementRef>("container");
-  _leftArrowElem = viewChild<ElementRef>("leftArrow");
-  _rightArrowElem = viewChild<ElementRef>("rightArrow");
-  _navArrowElem = viewChild<ElementRef>("navArrow");
-  _dataContainerElem = viewChild<ElementRef>("dataContainer");
-  _imageElem = viewChild<ElementRef>("image");
-  _captionElem = viewChild<ElementRef>("caption");
-  _numberElem = viewChild<ElementRef>("number");
+  public album = model<IAlbum[]>([]);
+  public currentImageIndex = model<number>(0);
+  public options = model<any>({});
+  public cmpRef = model<any>();
+
+  protected _outerContainerElem = viewChild<ElementRef>("outerContainer");
+  protected _containerElem = viewChild<ElementRef>("container");
+  protected _leftArrowElem = viewChild<ElementRef>("leftArrow");
+  protected _rightArrowElem = viewChild<ElementRef>("rightArrow");
+  protected _navArrowElem = viewChild<ElementRef>("navArrow");
+  protected _dataContainerElem = viewChild<ElementRef>("dataContainer");
+  protected _imageElem = viewChild<ElementRef>("image");
+  protected _captionElem = viewChild<ElementRef>("caption");
+  protected _numberElem = viewChild<ElementRef>("number");
+
   public content: any;
   public ui: any;
   private _cssValue: any;
   private _event: any;
   private _windowRef: any;
   private rotate: number;
+
   constructor(
     private _elemRef: ElementRef,
     private _rendererRef: Renderer2,
@@ -154,7 +157,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
     this.rotate = 0;
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.album()?.forEach(album => {
       if (album.caption) {
         album.caption = this._sanitizer.sanitize(SecurityContext.HTML, album.caption) ?? "";
