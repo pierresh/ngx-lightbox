@@ -1,4 +1,4 @@
-import { DOCUMENT } from "@angular/common";
+import { CommonModule, DOCUMENT } from "@angular/common";
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -74,6 +74,7 @@ import { IAlbum, IEvent, LIGHTBOX_EVENT, LightboxEvent, LightboxWindowRef } from
     "[class]": "ui.classList",
   },
   standalone: true,
+  imports: [CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnInit {

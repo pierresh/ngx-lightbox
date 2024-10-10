@@ -8,14 +8,18 @@ import { IAlbum, IEvent, Lightbox, LIGHTBOX_EVENT, LightboxConfig, LightboxEvent
   selector: "demo",
   template: `
     <div class="column has-text-centered">
-      <div class="img-row" *ngFor="let image of albums(); let i = index">
-        <img class="img-frame" [src]="image.thumb" (click)="open(i)" />
-      </div>
+      @for (image of albums(); track $index) {
+        <div class="img-row">
+          <img class="img-frame" [src]="image.thumb" (click)="open($index)" />
+        </div>
+      }
     </div>
     <div class="huge-margin-top column has-text-centered">
-      <div class="img-row" *ngFor="let image of albums(); let i = index">
-        <img class="img-frame" [src]="image.thumb" (click)="open(i)" />
-      </div>
+      @for (image of albums(); track $index) {
+        <div class="img-row">
+          <img class="img-frame" [src]="image.thumb" (click)="open($index)" />
+        </div>
+      }
     </div>
   `,
   host: {

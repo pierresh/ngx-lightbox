@@ -1,4 +1,4 @@
-import { DOCUMENT } from "@angular/common";
+import { CommonModule, DOCUMENT } from "@angular/common";
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -21,6 +21,7 @@ import { IEvent, LIGHTBOX_EVENT, LightboxEvent } from "./lightbox-event.service"
     "[class]": "classList",
   },
   standalone: true,
+  imports: [CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LightboxOverlayComponent implements AfterViewInit, OnDestroy {
