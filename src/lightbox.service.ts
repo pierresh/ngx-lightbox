@@ -20,7 +20,7 @@ export class Lightbox {
     private _applicationRef: ApplicationRef,
     private _lightboxConfig: LightboxConfig,
     private _lightboxEvent: LightboxEvent,
-    @Inject(DOCUMENT) private _documentRef
+    @Inject(DOCUMENT) private _documentRef: any
   ) { }
 
   open(album: IAlbum[], curIndex = 0, options = {}): void {
@@ -55,7 +55,7 @@ export class Lightbox {
         this._applicationRef.detachView(componentRef.hostView);
       });
 
-      const containerElement = newOptions.containerElementResolver(this._documentRef);
+      const containerElement = newOptions.containerElementResolver!(this._documentRef);
       containerElement.appendChild(overlayComponentRef.location.nativeElement);
       containerElement.appendChild(componentRef.location.nativeElement);
     });

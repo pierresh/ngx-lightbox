@@ -36,9 +36,10 @@ export class LightboxOverlayComponent implements AfterViewInit, OnDestroy {
     private _elemRef: ElementRef,
     private _rendererRef: Renderer2,
     private _lightboxEvent: LightboxEvent,
-    @Inject(DOCUMENT) private _documentRef,
+    @Inject(DOCUMENT) private _documentRef: any,
   ) {
     this.classList = 'lightboxOverlay animation fadeInOverlay';
+    // @ts-ignore
     this._subscription = this._lightboxEvent.lightboxEvent$.subscribe((event: IEvent) => this._onReceivedEvent(event));
   }
 

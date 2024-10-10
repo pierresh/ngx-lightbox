@@ -21,9 +21,6 @@
       "ES2022",
       "dom"
     ],
-    "typeRoots": [
-      "node_modules/@types"
-    ],
     "useDefineForClassFields": false
   },
   "include": [

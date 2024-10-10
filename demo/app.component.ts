@@ -25,7 +25,7 @@ import { IAlbum, IEvent, Lightbox, LIGHTBOX_EVENT, LightboxConfig, LightboxEvent
 })
 export class AppComponent {
   protected albums = signal<IAlbum[]>([]);
-  private _subscription: Subscription;
+  private _subscription: Subscription | null = null;
   constructor(
     private _lightbox: Lightbox,
     private _lightboxEvent: LightboxEvent,
@@ -50,6 +50,7 @@ export class AppComponent {
   }
 
   open(index: number): void {
+    // @ts-ignore
     this._subscription = this._lightboxEvent.lightboxEvent$.subscribe((event: IEvent) => this._onReceivedEvent(event));
 
     // override the default config
@@ -68,7 +69,7 @@ export class AppComponent {
     if (event.id === LIGHTBOX_EVENT.DOWNLOAD) {
       console.log("Implement the download of the picture");
     } else if (event.id === LIGHTBOX_EVENT.CLOSE) {
-      this._subscription.unsubscribe();
+      this._subscription?.unsubscribe();
     }
   }
 }

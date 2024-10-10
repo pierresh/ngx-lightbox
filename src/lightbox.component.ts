@@ -107,7 +107,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
     private _lightboxWindowRef: LightboxWindowRef,
     private _fileSaverService: FileSaverService,
     private _sanitizer: DomSanitizer,
-    @Inject(DOCUMENT) private _documentRef
+    @Inject(DOCUMENT) private _documentRef: any
   ) {
     // initialize data
     this._windowRef = this._lightboxWindowRef.nativeWindow;
@@ -151,6 +151,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
     this._event = {};
     this._lightboxElem = this._elemRef;
     this._event.subscription = this._lightboxEvent.lightboxEvent$
+    // @ts-ignore
       .subscribe((event: IEvent) => this._onReceivedEvent(event));
     this.rotate = 0;
   }
@@ -201,6 +202,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
     }
   }
 
+  // @ts-ignore
   public downloadExt($event): void {
     this._lightboxEvent.broadcastLightboxEvent({
       id: LIGHTBOX_EVENT.DOWNLOAD,

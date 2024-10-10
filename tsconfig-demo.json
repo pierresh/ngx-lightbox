@@ -2,23 +2,35 @@
   "compileOnSave": false,
   "compilerOptions": {
     "outDir": "./compiled",
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
     "sourceMap": true,
-    "declaration": true,
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
+    "declaration": false,
+    "isolatedModules": true,
     "experimentalDecorators": true,
-    "noUnusedLocals": true,
+    "moduleResolution": "bundler",
+    "importHelpers": true,
     "target": "ES2022",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
+    "module": "ES2022",
     "lib": [
-      "es2017",
+      "ES2022",
       "dom"
     ],
     "useDefineForClassFields": false
   },
   "include": [
     "demo/**/*"
-  ]
+  ],
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  }
 }
