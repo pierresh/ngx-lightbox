@@ -1,3 +1,4 @@
+import { CommonModule } from "@angular/common";
 import { ChangeDetectionStrategy, Component, signal } from "@angular/core";
 import { Subscription } from "rxjs";
 
@@ -20,6 +21,8 @@ import { IAlbum, IEvent, Lightbox, LIGHTBOX_EVENT, LightboxConfig, LightboxEvent
   host: {
     class: "columns",
   },
+  standalone: true,
+  imports: [CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {

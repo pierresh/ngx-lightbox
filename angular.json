@@ -19,7 +19,6 @@
             },
             "index": "index.html",
             "polyfills": [
-              "demo/polyfills.ts"
             ],
             "tsConfig": "tsconfig-demo.json",
             "styles": [

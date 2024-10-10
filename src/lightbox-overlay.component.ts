@@ -6,7 +6,7 @@ import {
   ElementRef,
   HostListener,
   Inject,
-  input,
+  model,
   OnDestroy,
   Renderer2,
 } from "@angular/core";
@@ -20,18 +20,19 @@ import { IEvent, LIGHTBOX_EVENT, LightboxEvent } from "./lightbox-event.service"
   host: {
     "[class]": "classList",
   },
+  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LightboxOverlayComponent implements AfterViewInit, OnDestroy {
-  options = input<any>();
-  cmpRef = input<any>();
+  options = model<any>();
+  cmpRef = model<any>();
   public classList;
   private _subscription: Subscription;
   constructor(
     private _elemRef: ElementRef,
     private _rendererRef: Renderer2,
     private _lightboxEvent: LightboxEvent,
-    @Inject(DOCUMENT) private _documentRef: any
+    @Inject(DOCUMENT) private _documentRef: Document
   ) {
     this.classList = "lightboxOverlay animation fadeInOverlay";
     // @ts-ignore

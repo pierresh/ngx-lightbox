@@ -8,8 +8,8 @@ import { LightboxEvent, LightboxWindowRef } from "./lightbox-event.service";
 import { LightboxOverlayComponent } from "./lightbox-overlay.component";
 
 @NgModule({
-  declarations: [LightboxOverlayComponent, LightboxComponent],
+  declarations: [],
   providers: [Lightbox, LightboxConfig, LightboxEvent, LightboxWindowRef],
-  imports: [FileSaverModule],
+  imports: [FileSaverModule, LightboxOverlayComponent, LightboxComponent],
 })
 export class LightboxModule {}
