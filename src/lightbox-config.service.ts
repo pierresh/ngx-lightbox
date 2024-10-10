@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
 @Injectable()
 export class LightboxConfig {
@@ -31,9 +31,9 @@ export class LightboxConfig {
     this.disableScrolling = false;
     this.centerVertically = false;
     this.enableTransition = true;
-    this.albumLabel = 'Image %1 of %2';
+    this.albumLabel = "Image %1 of %2";
     this.showZoom = false;
     this.showRotate = false;
-    this.containerElementResolver = (documentRef) => documentRef.querySelector('body');
+    this.containerElementResolver = documentRef => documentRef.querySelector("body");
   }
 }

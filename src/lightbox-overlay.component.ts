@@ -1,6 +1,4 @@
-import { Subscription } from 'rxjs';
-
-import { DOCUMENT } from '@angular/common';
+import { DOCUMENT } from "@angular/common";
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -11,21 +9,18 @@ import {
   input,
   OnDestroy,
   Renderer2,
-} from '@angular/core';
+} from "@angular/core";
+import { Subscription } from "rxjs";
 
-import {
-  IEvent,
-  LIGHTBOX_EVENT,
-  LightboxEvent,
-} from './lightbox-event.service';
+import { IEvent, LIGHTBOX_EVENT, LightboxEvent } from "./lightbox-event.service";
 
 @Component({
-  selector: '[lb-overlay]',
-  template: '',
+  selector: "[lb-overlay]",
+  template: "",
   host: {
-    '[class]': 'classList'
+    "[class]": "classList",
   },
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LightboxOverlayComponent implements AfterViewInit, OnDestroy {
   options = input<any>();
@@ -36,14 +31,14 @@ export class LightboxOverlayComponent implements AfterViewInit, OnDestroy {
     private _elemRef: ElementRef,
     private _rendererRef: Renderer2,
     private _lightboxEvent: LightboxEvent,
-    @Inject(DOCUMENT) private _documentRef: any,
+    @Inject(DOCUMENT) private _documentRef: any
   ) {
-    this.classList = 'lightboxOverlay animation fadeInOverlay';
+    this.classList = "lightboxOverlay animation fadeInOverlay";
     // @ts-ignore
     this._subscription = this._lightboxEvent.lightboxEvent$.subscribe((event: IEvent) => this._onReceivedEvent(event));
   }
 
-  @HostListener('click')
+  @HostListener("click")
   public close(): void {
     // broadcast to itself and all others subscriber including the components
     this._lightboxEvent.broadcastLightboxEvent({ id: LIGHTBOX_EVENT.CLOSE, data: null });
@@ -52,14 +47,12 @@ export class LightboxOverlayComponent implements AfterViewInit, OnDestroy {
   public ngAfterViewInit(): void {
     const fadeDuration = this.options().fadeDuration;
 
-    this._rendererRef.setStyle(this._elemRef.nativeElement,
-      '-webkit-animation-duration', `${fadeDuration}s`);
-    this._rendererRef.setStyle(this._elemRef.nativeElement,
-      'animation-duration', `${fadeDuration}s`);
+    this._rendererRef.setStyle(this._elemRef.nativeElement, "-webkit-animation-duration", `${fadeDuration}s`);
+    this._rendererRef.setStyle(this._elemRef.nativeElement, "animation-duration", `${fadeDuration}s`);
     this._sizeOverlay();
   }
 
-  @HostListener('window:resize')
+  @HostListener("window:resize")
   public onResize(): void {
     this._sizeOverlay();
   }
@@ -72,22 +65,22 @@ export class LightboxOverlayComponent implements AfterViewInit, OnDestroy {
     const width = this._getOverlayWidth();
     const height = this._getOverlayHeight();
 
-    this._rendererRef.setStyle(this._elemRef.nativeElement, 'width', `${width}px`);
-    this._rendererRef.setStyle(this._elemRef.nativeElement, 'height', `${height}px`);
+    this._rendererRef.setStyle(this._elemRef.nativeElement, "width", `${width}px`);
+    this._rendererRef.setStyle(this._elemRef.nativeElement, "height", `${height}px`);
   }
 
   private _onReceivedEvent(event: IEvent): void {
     switch (event.id) {
       case LIGHTBOX_EVENT.CLOSE:
         this._end();
-      break;
+        break;
       default:
-      break;
+        break;
     }
   }
 
   private _end(): void {
-    this.classList = 'lightboxOverlay animation fadeOutOverlay';
+    this.classList = "lightboxOverlay animation fadeOutOverlay";
 
     // queue self destruction after the animation has finished
     // FIXME: not sure if there is any way better than this

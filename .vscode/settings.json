@@ -1,0 +1,11 @@
+{
+    "files.eol": "\r\n",
+    "editor.tabSize": 2,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    },
+    "eslint.validate": ["javascript", "typescript"],
+    "eslint.rules.customizations": [{ "rule": "*", "severity": "warn" }],
+    "typescript.inlayHints.parameterNames.enabled": "all",
+    "typescript.inlayHints.parameterTypes.enabled": true
+  }

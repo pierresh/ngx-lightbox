@@ -1,21 +1,15 @@
-import { FileSaverModule } from 'ngx-filesaver';
+import { NgModule } from "@angular/core";
+import { FileSaverModule } from "ngx-filesaver";
 
-import { NgModule } from '@angular/core';
-
-import { LightboxConfig } from './lightbox-config.service';
-import { LightboxEvent, LightboxWindowRef } from './lightbox-event.service';
-import { LightboxOverlayComponent } from './lightbox-overlay.component';
-import { LightboxComponent } from './lightbox.component';
-import { Lightbox } from './lightbox.service';
+import { LightboxComponent } from "./lightbox.component";
+import { Lightbox } from "./lightbox.service";
+import { LightboxConfig } from "./lightbox-config.service";
+import { LightboxEvent, LightboxWindowRef } from "./lightbox-event.service";
+import { LightboxOverlayComponent } from "./lightbox-overlay.component";
 
 @NgModule({
-  declarations: [ LightboxOverlayComponent, LightboxComponent ],
-  providers: [
-    Lightbox,
-    LightboxConfig,
-    LightboxEvent,
-    LightboxWindowRef
-  ],
-  imports: [ FileSaverModule ]
+  declarations: [LightboxOverlayComponent, LightboxComponent],
+  providers: [Lightbox, LightboxConfig, LightboxEvent, LightboxWindowRef],
+  imports: [FileSaverModule],
 })
-export class LightboxModule { }
+export class LightboxModule {}

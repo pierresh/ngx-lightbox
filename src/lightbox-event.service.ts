@@ -1,6 +1,5 @@
-import { Observable, Subject } from 'rxjs';
-
-import { Injectable} from '@angular/core';
+import { Injectable } from "@angular/core";
+import { Observable, Subject } from "rxjs";
 
 export interface IEvent {
   id: number;
@@ -22,7 +21,7 @@ export const LIGHTBOX_EVENT = {
   ZOOM_OUT: 5,
   ROTATE_LEFT: 6,
   ROTATE_RIGHT: 7,
-  DOWNLOAD: 8
+  DOWNLOAD: 8,
 };
 
 @Injectable()
@@ -34,18 +33,18 @@ export class LightboxEvent {
     this.lightboxEvent$ = this._lightboxEventSource.asObservable();
   }
 
-  broadcastLightboxEvent(event: any): void {
+  public broadcastLightboxEvent(event: any): void {
     this._lightboxEventSource.next(event);
   }
 }
 
-function getWindow (): any {
+function getWindow(): any {
   return window;
 }
 
 @Injectable()
 export class LightboxWindowRef {
-  get nativeWindow (): any {
-      return getWindow();
+  get nativeWindow(): any {
+    return getWindow();
   }
 }
