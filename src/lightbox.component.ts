@@ -13,7 +13,7 @@ import {
   OnInit,
   Renderer2,
   SecurityContext,
-  ViewChild,
+  viewChild,
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -84,15 +84,15 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   currentImageIndex = model<number>(0);
   options = model<any>({});
   cmpRef = input<any>();
-  @ViewChild('outerContainer', { static: false }) _outerContainerElem: ElementRef;
-  @ViewChild('container', { static: false }) _containerElem: ElementRef;
-  @ViewChild('leftArrow', { static: false }) _leftArrowElem: ElementRef;
-  @ViewChild('rightArrow', { static: false }) _rightArrowElem: ElementRef;
-  @ViewChild('navArrow', { static: false }) _navArrowElem: ElementRef;
-  @ViewChild('dataContainer', { static: false }) _dataContainerElem: ElementRef;
-  @ViewChild('image', { static: false }) _imageElem: ElementRef;
-  @ViewChild('caption', { static: false }) _captionElem: ElementRef;
-  @ViewChild('number', { static: false }) _numberElem: ElementRef;
+  _outerContainerElem = viewChild<ElementRef>('outerContainer');
+  _containerElem = viewChild<ElementRef>('container');
+  _leftArrowElem = viewChild<ElementRef>('leftArrow');
+  _rightArrowElem = viewChild<ElementRef>('rightArrow');
+  _navArrowElem = viewChild<ElementRef>('navArrow');
+  _dataContainerElem = viewChild<ElementRef>('dataContainer');
+  _imageElem = viewChild<ElementRef>('image');
+  _captionElem = viewChild<ElementRef>('caption');
+  _numberElem = viewChild<ElementRef>('number');
   public content: any;
   public ui: any;
   private _cssValue: any;
@@ -397,8 +397,8 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
     let naturalImageHeight;
 
     // set default width and height of image to be its natural
-    imageWidth = naturalImageWidth = this._imageElem.nativeElement.naturalWidth;
-    imageHeight = naturalImageHeight = this._imageElem.nativeElement.naturalHeight;
+    imageWidth = naturalImageWidth = this._imageElem()!.nativeElement.naturalWidth;
+    imageHeight = naturalImageHeight = this._imageElem()!.nativeElement.naturalHeight;
     if (this.options().fitImageInViewPort) {
       windowWidth = this._windowRef.innerWidth;
       windowHeight = this._windowRef.innerHeight;
@@ -418,8 +418,8 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
         }
       }
 
-      this._rendererRef.setStyle(this._imageElem.nativeElement, 'width', `${imageWidth}px`);
-      this._rendererRef.setStyle(this._imageElem.nativeElement, 'height', `${imageHeight}px`);
+      this._rendererRef.setStyle(this._imageElem()!.nativeElement, 'width', `${imageWidth}px`);
+      this._rendererRef.setStyle(this._imageElem()!.nativeElement, 'height', `${imageHeight}px`);
     }
 
     this._sizeContainer(imageWidth, imageHeight);
@@ -440,8 +440,8 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   }
 
   private _sizeContainer(imageWidth: number, imageHeight: number): void {
-    const oldWidth = this._outerContainerElem.nativeElement.offsetWidth;
-    const oldHeight = this._outerContainerElem.nativeElement.offsetHeight;
+    const oldWidth = this._outerContainerElem()!.nativeElement.offsetWidth;
+    const oldHeight = this._outerContainerElem()!.nativeElement.offsetHeight;
     const newWidth = imageWidth + this._cssValue.containerRightPadding + this._cssValue.containerLeftPadding +
       this._cssValue.imageBorderWidthLeft + this._cssValue.imageBorderWidthRight;
     const newHeight = imageHeight + this._cssValue.containerTopPadding + this._cssValue.containerBottomPadding +
@@ -449,8 +449,8 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
 
     // make sure that distances are large enough for transitionend event to be fired, at least 5px.
     if (Math.abs(oldWidth - newWidth) + Math.abs(oldHeight - newHeight) > 5) {
-      this._rendererRef.setStyle(this._outerContainerElem.nativeElement, 'width', `${newWidth}px`);
-      this._rendererRef.setStyle(this._outerContainerElem.nativeElement, 'height', `${newHeight}px`);
+      this._rendererRef.setStyle(this._outerContainerElem()!.nativeElement, 'width', `${newWidth}px`);
+      this._rendererRef.setStyle(this._outerContainerElem()!.nativeElement, 'height', `${newHeight}px`);
 
       // bind resize event to outer container
       // use enableTransition to prevent infinite loader
@@ -458,7 +458,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
         this._event.transitions = [];
         ['transitionend', 'webkitTransitionEnd', 'oTransitionEnd', 'MSTransitionEnd'].forEach(eventName => {
           this._event.transitions.push(
-            this._rendererRef.listen(this._outerContainerElem.nativeElement, eventName, (event: any) => {
+            this._rendererRef.listen(this._outerContainerElem()!.nativeElement, eventName, (event: any) => {
               if (event.target === event.currentTarget) {
                 this._postResize(newWidth, newHeight);
               }
@@ -483,7 +483,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
       this._event.transitions = [];
     }
 
-    this._rendererRef.setStyle(this._dataContainerElem.nativeElement, 'width', `${newWidth}px`);
+    this._rendererRef.setStyle(this._dataContainerElem()!.nativeElement, 'width', `${newWidth}px`);
     this._showImage();
   }
 
@@ -542,25 +542,25 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
       '-webkit-animation-duration', `${fadeDuration}s`);
     this._rendererRef.setStyle(this._lightboxElem.nativeElement,
       'animation-duration', `${fadeDuration}s`);
-    this._rendererRef.setStyle(this._outerContainerElem.nativeElement,
+    this._rendererRef.setStyle(this._outerContainerElem()!.nativeElement,
       '-webkit-transition-duration', `${resizeDuration}s`);
-    this._rendererRef.setStyle(this._outerContainerElem.nativeElement,
+    this._rendererRef.setStyle(this._outerContainerElem()!.nativeElement,
       'transition-duration', `${resizeDuration}s`);
-    this._rendererRef.setStyle(this._dataContainerElem.nativeElement,
+    this._rendererRef.setStyle(this._dataContainerElem()!.nativeElement,
       '-webkit-animation-duration', `${fadeDuration}s`);
-    this._rendererRef.setStyle(this._dataContainerElem.nativeElement,
+    this._rendererRef.setStyle(this._dataContainerElem()!.nativeElement,
       'animation-duration', `${fadeDuration}s`);
-    this._rendererRef.setStyle(this._imageElem.nativeElement,
+    this._rendererRef.setStyle(this._imageElem()!.nativeElement,
       '-webkit-animation-duration', `${fadeDuration}s`);
-    this._rendererRef.setStyle(this._imageElem.nativeElement,
+    this._rendererRef.setStyle(this._imageElem()!.nativeElement,
       'animation-duration', `${fadeDuration}s`);
-    this._rendererRef.setStyle(this._captionElem.nativeElement,
+    this._rendererRef.setStyle(this._captionElem()!.nativeElement,
       '-webkit-animation-duration', `${fadeDuration}s`);
-    this._rendererRef.setStyle(this._captionElem.nativeElement,
+    this._rendererRef.setStyle(this._captionElem()!.nativeElement,
       'animation-duration', `${fadeDuration}s`);
-    this._rendererRef.setStyle(this._numberElem.nativeElement,
+    this._rendererRef.setStyle(this._numberElem()!.nativeElement,
       '-webkit-animation-duration', `${fadeDuration}s`);
-    this._rendererRef.setStyle(this._numberElem.nativeElement,
+    this._rendererRef.setStyle(this._numberElem()!.nativeElement,
       'animation-duration', `${fadeDuration}s`);
   }
 
@@ -630,8 +630,8 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
       if (this.options().wrapAround) {
         if (alwaysShowNav) {
           // alternatives this.$lightbox.find('.lb-prev, .lb-next').css('opacity', '1');
-          this._rendererRef.setStyle(this._leftArrowElem.nativeElement, 'opacity', '1');
-          this._rendererRef.setStyle(this._rightArrowElem.nativeElement, 'opacity', '1');
+          this._rendererRef.setStyle(this._leftArrowElem()!.nativeElement, 'opacity', '1');
+          this._rendererRef.setStyle(this._rightArrowElem()!.nativeElement, 'opacity', '1');
         }
 
         // alternatives this.$lightbox.find('.lb-prev, .lb-next').show();
@@ -643,7 +643,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
           this._showLeftArrowNav();
           if (alwaysShowNav) {
             // alternatives this.$lightbox.find('.lb-prev').css('opacity', '1');
-            this._rendererRef.setStyle(this._leftArrowElem.nativeElement, 'opacity', '1');
+            this._rendererRef.setStyle(this._leftArrowElem()!.nativeElement, 'opacity', '1');
           }
         }
 
@@ -652,7 +652,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
           this._showRightArrowNav();
           if (alwaysShowNav) {
             // alternatives this.$lightbox.find('.lb-next').css('opacity', '1');
-            this._rendererRef.setStyle(this._rightArrowElem.nativeElement, 'opacity', '1');
+            this._rendererRef.setStyle(this._rightArrowElem()!.nativeElement, 'opacity', '1');
           }
         }
       }
