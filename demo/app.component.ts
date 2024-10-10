@@ -24,7 +24,7 @@ import { IAlbum, IEvent, Lightbox, LIGHTBOX_EVENT, LightboxConfig, LightboxEvent
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
-  public albums = signal<Array<IAlbum>>([]);
+  protected albums = signal<IAlbum[]>([]);
   private _subscription: Subscription;
   constructor(
     private _lightbox: Lightbox,

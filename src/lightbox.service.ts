@@ -23,7 +23,7 @@ export class Lightbox {
     @Inject(DOCUMENT) private _documentRef
   ) { }
 
-  open(album: Array<IAlbum>, curIndex = 0, options = {}): void {
+  open(album: IAlbum[], curIndex = 0, options = {}): void {
     const overlayComponentRef = this._createComponent(LightboxOverlayComponent);
     const componentRef = this._createComponent(LightboxComponent);
     const newOptions: Partial<LightboxConfig> = {};

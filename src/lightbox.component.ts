@@ -80,7 +80,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnInit {
-  album = model<Array<IAlbum>>([]);
+  album = model<IAlbum[]>([]);
   currentImageIndex = model<number>(0);
   options = model<any>({});
   cmpRef = input<any>();
