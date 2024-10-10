@@ -24,10 +24,12 @@ import { IEvent, LIGHTBOX_EVENT, LightboxEvent } from "./lightbox-event.service"
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LightboxOverlayComponent implements AfterViewInit, OnDestroy {
-  options = model<any>();
-  cmpRef = model<any>();
+  public options = model<any>();
+  public cmpRef = model<any>();
+
   public classList;
   private _subscription: Subscription;
+
   constructor(
     private _elemRef: ElementRef,
     private _rendererRef: Renderer2,
