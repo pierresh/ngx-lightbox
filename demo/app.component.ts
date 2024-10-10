@@ -1,6 +1,6 @@
 import { Subscription } from 'rxjs';
 
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 
 import { IAlbum, IEvent, Lightbox, LIGHTBOX_EVENT, LightboxConfig, LightboxEvent } from '../src';
 
@@ -8,29 +8,30 @@ import { IAlbum, IEvent, Lightbox, LIGHTBOX_EVENT, LightboxConfig, LightboxEvent
   selector: 'demo',
   template: `
     <div class="column has-text-centered">
-      <div class="img-row" *ngFor="let image of albums; let i=index">
+      <div class="img-row" *ngFor="let image of albums(); let i=index">
         <img class="img-frame" [src]="image.thumb" (click)="open(i)"/>
       </div>
     </div>
     <div class="huge-margin-top column has-text-centered">
-        <div class="img-row" *ngFor="let image of albums; let i=index">
+        <div class="img-row" *ngFor="let image of albums(); let i=index">
             <img class="img-frame" [src]="image.thumb" (click)="open(i)"/>
         </div>
     </div>
   `,
   host: {
     class: 'columns'
-  }
+  },
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
-  public albums: Array<IAlbum>;
+  public albums = signal<Array<IAlbum>>([]);
   private _subscription: Subscription;
   constructor(
     private _lightbox: Lightbox,
     private _lightboxEvent: LightboxEvent,
     private _lighboxConfig: LightboxConfig
   ) {
-    this.albums = [];
+    this.albums.set([]);
     for (let i = 1; i <= 4; i++) {
       const src = 'demo/img/image' + i + '.jpg';
       const caption = 'Image ' + i + ' caption here';
@@ -41,7 +42,7 @@ export class AppComponent {
          thumb: thumb
       };
 
-      this.albums.push(album);
+      this.albums().push(album);
     }
 
     // set default config
@@ -52,7 +53,7 @@ export class AppComponent {
     this._subscription = this._lightboxEvent.lightboxEvent$.subscribe((event: IEvent) => this._onReceivedEvent(event));
 
     // override the default config
-    this._lightbox.open(this.albums, index, {
+    this._lightbox.open(this.albums(), index, {
       wrapAround: true,
       showImageNumberLabel: true,
       disableScrolling: true,
