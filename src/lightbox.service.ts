@@ -23,7 +23,7 @@ export class Lightbox {
     @Inject(DOCUMENT) private _documentRef: any
   ) { }
 
-  open(album: IAlbum[], curIndex = 0, options = {}): void {
+  public open(album: IAlbum[], curIndex = 0, options = {}): void {
     const overlayComponentRef = this._createComponent(LightboxOverlayComponent);
     const componentRef = this._createComponent(LightboxComponent);
     const newOptions: Partial<LightboxConfig> = {};
@@ -61,13 +61,13 @@ export class Lightbox {
     });
   }
 
-  close(): void {
+  public close(): void {
     if (this._lightboxEvent) {
       this._lightboxEvent.broadcastLightboxEvent({ id: LIGHTBOX_EVENT.CLOSE });
     }
   }
 
-  _createComponent(ComponentClass: any): ComponentRef<any> {
+  private _createComponent(ComponentClass: any): ComponentRef<any> {
     const factory = this._componentFactoryResolver.resolveComponentFactory(ComponentClass);
     const component = factory.create(this._injector);
 
