@@ -41,9 +41,11 @@ import { LightboxModule } from '@jjmhalew/ngx-lightbox';
 1. Markup
 
 ```html
-<div *ngFor="let image of _albums; let i=index">
-  <img [src]="image.thumb" (click)="open(i)" />
-</div>
+@for (image of albums(); track $index) {
+  <div>
+    <img [src]="image.thumb" (click)="open($index)" />
+  </div>
+}
 ```
 
 2. Component method
@@ -52,7 +54,7 @@ import { LightboxModule } from '@jjmhalew/ngx-lightbox';
 import { Lightbox } from '@jjmhalew/ngx-lightbox';
 
 export class AppComponent {
-  private _album: Array = [];
+  private _album: IAlbum[] = [];
   constructor(private _lightbox: Lightbox) {
     for (let i = 1; i <= 4; i++) {
       const src = 'demo/img/image' + i + '.jpg';
@@ -99,8 +101,10 @@ import { Subscription } from 'rxjs';
 
 export class AppComponent {
   private _subscription: Subscription;
+
   constructor(private _lightboxEvent: LightboxEvent) {}
-  open(index: number): void {
+
+  public open(index: number): void {
     // register your subscription and callback whe open lightbox is fired
     this._subscription = this._lightboxEvent.lightboxEvent$
       .subscribe(event => this._onReceivedEvent(event));
@@ -172,7 +176,7 @@ import { LightboxConfig, Lightbox } from '@jjmhalew/ngx-lightbox';
 
 export class AppComponent {
   constructor(private _lightboxConfig: LightboxConfig, private _lightbox: Lightbox) {}
-  open(index: number) {
+  public open(index: number): void {
     // override the default config on second parameter
     this._lightbox.open(this._albums, index, { wrapAround: true, showImageNumberLabel: true });
   }
@@ -193,9 +197,10 @@ export class MyLightBoxTrigger {
     _lighboxConfig.containerElementResolver = (doc: Document) => doc.getElementById('my-lightbox-host');
   }
 
-  open(index: number): void {
+  public open(index: number): void {
     this._lightbox.open(this.images, index); // will put the lightbox child into e.g. <div id="my-lightbox-host"></div>
   }
+}
 ```
 
 ## Angular Universal
