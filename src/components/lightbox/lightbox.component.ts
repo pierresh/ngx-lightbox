@@ -614,7 +614,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
     }
   }
 
-  private _keyboardAction($event: any): void {
+  private _keyboardAction($event: KeyboardEvent): void {
     const KEYCODE_ESC = 27;
     const KEYCODE_LEFTARROW = 37;
     const KEYCODE_RIGHTARROW = 39;
