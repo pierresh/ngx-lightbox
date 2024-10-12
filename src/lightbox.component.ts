@@ -2,7 +2,6 @@ import { CommonModule, DOCUMENT } from "@angular/common";
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   ComponentRef,
   ElementRef,
@@ -30,43 +29,43 @@ import { LightboxUiConfig } from "./lightbox-ui-config";
           id="image"
           [src]="album()![currentImageIndex()!].src"
           class="lb-image animation fadeIn"
-          [hidden]="ui.showReloader"
+          [hidden]="ui().showReloader"
           #image />
-        <div class="lb-nav" [hidden]="!ui.showArrowNav" #navArrow>
-          <a class="lb-prev" [hidden]="!ui.showLeftArrow" (click)="prevImage()" #leftArrow></a>
-          <a class="lb-next" [hidden]="!ui.showRightArrow" (click)="nextImage()" #rightArrow></a>
+        <div class="lb-nav" [hidden]="!ui().showArrowNav" #navArrow>
+          <a class="lb-prev" [hidden]="!ui().showLeftArrow" (click)="prevImage()" #leftArrow></a>
+          <a class="lb-next" [hidden]="!ui().showRightArrow" (click)="nextImage()" #rightArrow></a>
         </div>
-        <div class="lb-loader" [hidden]="!ui.showReloader" (click)="close($event)">
+        <div class="lb-loader" [hidden]="!ui().showReloader" (click)="close($event)">
           <a class="lb-cancel"></a>
         </div>
       </div>
     </div>
-    <div class="lb-dataContainer" [hidden]="ui.showReloader" #dataContainer>
+    <div class="lb-dataContainer" [hidden]="ui().showReloader" #dataContainer>
       <div class="lb-data">
         <div class="lb-details">
           <span
             class="lb-caption animation fadeIn"
-            [hidden]="!ui.showCaption"
+            [hidden]="!ui().showCaption"
             [innerHtml]="album()![currentImageIndex()!].caption"
             #caption>
           </span>
-          <span class="lb-number animation fadeIn" [hidden]="!ui.showPageNumber" #number>{{ contentPageNumber() }}</span>
+          <span class="lb-number animation fadeIn" [hidden]="!ui().showPageNumber" #number>{{ contentPageNumber() }}</span>
         </div>
         <div class="lb-controlContainer">
           <div class="lb-closeContainer">
             <a class="lb-close" (click)="close($event)"></a>
           </div>
-          <div class="lb-downloadContainer" [hidden]="!ui.showDownloadButton">
+          <div class="lb-downloadContainer" [hidden]="!ui().showDownloadButton">
             <a class="lb-download" (click)="download($event)"></a>
           </div>
-          <div class="lb-downloadContainer" [hidden]="!ui.showDownloadExtButton">
+          <div class="lb-downloadContainer" [hidden]="!ui().showDownloadExtButton">
             <a class="lb-download" (click)="downloadExt()"></a>
           </div>
-          <div class="lb-turnContainer" [hidden]="!ui.showRotateButton">
+          <div class="lb-turnContainer" [hidden]="!ui().showRotateButton">
             <a class="lb-turnLeft" (click)="control($event)"></a>
             <a class="lb-turnRight" (click)="control($event)"></a>
           </div>
-          <div class="lb-zoomContainer" [hidden]="!ui.showZoomButton">
+          <div class="lb-zoomContainer" [hidden]="!ui().showZoomButton">
             <a class="lb-zoomOut" (click)="control($event)"></a>
             <a class="lb-zoomIn" (click)="control($event)"></a>
           </div>
@@ -76,7 +75,7 @@ import { LightboxUiConfig } from "./lightbox-ui-config";
   selector: "[lb-content]",
   host: {
     "(click)": "close($event)",
-    "[class]": "ui.classList",
+    "[class]": "ui().classList",
   },
   standalone: true,
   imports: [CommonModule],
@@ -90,7 +89,6 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   public _lightboxElem = inject(ElementRef);
   private _lightboxWindowRef = inject(LightboxWindowRef);
   private _fileSaverService = inject(FileSaverService);
-  private _changeDetectorRef = inject(ChangeDetectorRef);
   private _sanitizer = inject(DomSanitizer);
   private _documentRef: Document = inject(DOCUMENT);
 
@@ -111,7 +109,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
 
   public contentPageNumber = signal<string>("");
   /* control the interactive of the directive */
-  public ui: LightboxUiConfig = new LightboxUiConfig();
+  public ui = signal<LightboxUiConfig>(new LightboxUiConfig());
   private _cssValue: any; /* {
     containerTopPadding: number;
     containerRightPadding: number;
@@ -484,13 +482,12 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   }
 
   private _showImage(): void {
-    this.ui.showReloader = false;
+    this.ui().showReloader = false;
     this._updateNav();
     this._updateDetails();
     if (!this.options().disableKeyboardNav) {
       this._enableKeyboardNav();
     }
-    this._changeDetectorRef.detectChanges();
   }
 
   private _prepareComponent(): void {
@@ -502,11 +499,10 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
 
     // update controls visibility on next view generation
     setTimeout(() => {
-      this.ui.showZoomButton = this.options().showZoom!;
-      this.ui.showRotateButton = this.options().showRotate!;
-      this.ui.showDownloadButton = this.options().showDownloadButton!;
-      // this.ui.showDownloadExtButton = this.options().showDownloadExtButton; // TODO: re-enable
-      this._changeDetectorRef.detectChanges();
+      this.ui().showZoomButton = this.options().showZoom!;
+      this.ui().showRotateButton = this.options().showRotate!;
+      this.ui().showDownloadButton = this.options().showDownloadButton!;
+      // this.ui().showDownloadExtButton = this.options().showDownloadExtButton; // TODO: re-enable
     }, 0);
   }
 
@@ -544,7 +540,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   }
 
   private _end(): void {
-    this.ui.classList = "lightbox animation fadeOut";
+    this.ui().classList = "lightbox animation fadeOut";
     if (this.options().disableScrolling) {
       this._rendererRef.removeClass(this._documentRef.documentElement, "lb-disable-scrolling");
     }
@@ -559,14 +555,14 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
       typeof this.album()![this.currentImageIndex()!].caption !== "undefined" &&
       this.album()![this.currentImageIndex()!].caption !== ""
     ) {
-      this.ui.showCaption = true;
+      this.ui().showCaption = true;
     }
 
     // update the page number if user choose to do so
     // does not perform numbering the page if the
     // array length in album <= 1
     if (this.album()!.length > 1 && this.options().showImageNumberLabel) {
-      this.ui.showPageNumber = true;
+      this.ui().showPageNumber = true;
       this.contentPageNumber.set(this._albumLabel());
     }
   }
@@ -587,13 +583,12 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   }
 
   private _hideImage(): void {
-    this.ui.showReloader = true;
-    this.ui.showArrowNav = false;
-    this.ui.showLeftArrow = false;
-    this.ui.showRightArrow = false;
-    this.ui.showPageNumber = false;
-    this.ui.showCaption = false;
-    this._changeDetectorRef.detectChanges();
+    this.ui().showReloader = true;
+    this.ui().showArrowNav = false;
+    this.ui().showLeftArrow = false;
+    this.ui().showRightArrow = false;
+    this.ui().showPageNumber = false;
+    this.ui().showCaption = false;
   }
 
   private _updateNav(): void {
@@ -644,15 +639,15 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   }
 
   private _showLeftArrowNav(): void {
-    this.ui.showLeftArrow = true;
+    this.ui().showLeftArrow = true;
   }
 
   private _showRightArrowNav(): void {
-    this.ui.showRightArrow = true;
+    this.ui().showRightArrow = true;
   }
 
   private _showArrowNav(): void {
-    this.ui.showArrowNav = this.album()!.length !== 1;
+    this.ui().showArrowNav = this.album()!.length !== 1;
   }
 
   private _enableKeyboardNav(): void {
