@@ -22,6 +22,7 @@ import { IEvent, LIGHTBOX_EVENT, LightboxEvent } from "./lightbox-event.service"
   },
   standalone: true,
   imports: [CommonModule],
+  providers: [LightboxEvent],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LightboxOverlayComponent implements AfterViewInit, OnDestroy {

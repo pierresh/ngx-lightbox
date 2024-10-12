@@ -75,6 +75,7 @@ import { IAlbum, IEvent, LIGHTBOX_EVENT, LightboxEvent, LightboxWindowRef } from
   },
   standalone: true,
   imports: [CommonModule],
+  providers: [LightboxEvent, LightboxWindowRef],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnInit {
