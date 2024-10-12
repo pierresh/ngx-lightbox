@@ -1,4 +1,4 @@
-import { CommonModule, DOCUMENT } from "@angular/common";
+import { DOCUMENT } from "@angular/common";
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -21,7 +21,7 @@ import { IEvent, LIGHTBOX_EVENT, LightboxEvent } from "./lightbox-event.service"
     "[class]": "classList",
   },
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   providers: [LightboxEvent],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
