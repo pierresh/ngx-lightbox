@@ -34,7 +34,7 @@ export class LightboxOverlayComponent implements AfterViewInit, OnDestroy {
   public options = model<any>();
   public cmpRef = model<any>();
 
-  public classList;
+  public classList: string;
   private _subscription: Subscription;
 
   constructor() {
