@@ -63,7 +63,7 @@ describe("[ Unit - LightboxComponent ]", () => {
       showDownloadButton: false,
       classList: "lightbox animation fadeIn",
     });
-    expect(fixture.componentInstance.content).toEqual({ pageNumber: "" });
+    expect(fixture.componentInstance.contentPageNumber).toEqual({ pageNumber: "" });
     expect(fixture.componentInstance.album).toEqual(mockData.album);
     expect(fixture.componentInstance.options).toEqual(mockData.options);
     expect(fixture.componentInstance.currentImageIndex).toEqual(mockData.currentIndex);
@@ -200,6 +200,7 @@ describe("[ Unit - LightboxComponent ]", () => {
     fixture.componentInstance.options = mockData.options;
     fixture.componentInstance.album = mockData.album;
     fixture.componentInstance.currentImageIndex = mockData.currentIndex;
+    // @ts-ignore
     fixture.componentInstance.cmpRef.set({ destroy: jasmine.createSpy("spy") });
     fixture.detectChanges();
   }
