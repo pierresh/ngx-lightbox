@@ -1,5 +1,5 @@
 import { DOCUMENT } from "@angular/common";
-import { ApplicationRef, Inject, inject, Injectable, ViewContainerRef } from "@angular/core";
+import { ApplicationRef, inject, Injectable, ViewContainerRef } from "@angular/core";
 
 import { LightboxComponent } from "./lightbox.component";
 import { LightboxConfig } from "./lightbox-config.service";
@@ -12,8 +12,9 @@ export class Lightbox {
   private _lightboxConfig = inject(LightboxConfig);
   private _lightboxEvent = inject(LightboxEvent);
   private viewContainerRef = inject(ViewContainerRef);
+  private _documentRef: Document = inject(DOCUMENT);
 
-  constructor(@Inject(DOCUMENT) private _documentRef: Document) {}
+  constructor() {}
 
   public open(album: IAlbum[], curIndex = 0, options = {}): void {
     const overlayComponentRef = this.viewContainerRef.createComponent(LightboxOverlayComponent);

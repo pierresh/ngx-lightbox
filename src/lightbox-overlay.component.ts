@@ -5,7 +5,7 @@ import {
   Component,
   ElementRef,
   HostListener,
-  Inject,
+  inject,
   model,
   OnDestroy,
   Renderer2,
@@ -26,18 +26,18 @@ import { IEvent, LIGHTBOX_EVENT, LightboxEvent } from "./lightbox-event.service"
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LightboxOverlayComponent implements AfterViewInit, OnDestroy {
+  private _elemRef = inject(ElementRef);
+  private _rendererRef = inject(Renderer2);
+  private _lightboxEvent = inject(LightboxEvent);
+  private _documentRef: Document = inject(DOCUMENT);
+
   public options = model<any>();
   public cmpRef = model<any>();
 
   public classList;
   private _subscription: Subscription;
 
-  constructor(
-    private _elemRef: ElementRef,
-    private _rendererRef: Renderer2,
-    private _lightboxEvent: LightboxEvent,
-    @Inject(DOCUMENT) private _documentRef: Document
-  ) {
+  constructor() {
     this.classList = "lightboxOverlay animation fadeInOverlay";
     // @ts-ignore
     this._subscription = this._lightboxEvent.lightboxEvent$.subscribe((event: IEvent) => this._onReceivedEvent(event));
