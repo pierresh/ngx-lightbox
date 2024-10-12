@@ -318,15 +318,15 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
       temp *= -1;
     }
     if ((temp / 90) % 4 === 1 || (temp / 90) % 4 === 3) {
-      this._documentRef.getElementById("outerContainer")!.style.height = this._documentRef.getElementById("image")!.style.width;
-      this._documentRef.getElementById("outerContainer")!.style.width = this._documentRef.getElementById("image")!.style.height;
-      this._documentRef.getElementById("container")!.style.height = this._documentRef.getElementById("image")!.style.width;
-      this._documentRef.getElementById("container")!.style.width = this._documentRef.getElementById("image")!.style.height;
+      this._outerContainerElem()!.nativeElement.style.height = this._documentRef.getElementById("image")!.style.width;
+      this._outerContainerElem()!.nativeElement.style.width = this._documentRef.getElementById("image")!.style.height;
+      this._containerElem()!.nativeElement.style.height = this._documentRef.getElementById("image")!.style.width;
+      this._containerElem()!.nativeElement.style.width = this._documentRef.getElementById("image")!.style.height;
     } else {
-      this._documentRef.getElementById("outerContainer")!.style.height = this._documentRef.getElementById("image")!.style.height;
-      this._documentRef.getElementById("outerContainer")!.style.width = this._documentRef.getElementById("image")!.style.width;
-      this._documentRef.getElementById("container")!.style.height = this._documentRef.getElementById("image")!.style.width;
-      this._documentRef.getElementById("container")!.style.width = this._documentRef.getElementById("image")!.style.height;
+      this._outerContainerElem()!.nativeElement.style.height = this._documentRef.getElementById("image")!.style.height;
+      this._outerContainerElem()!.nativeElement.style.width = this._documentRef.getElementById("image")!.style.width;
+      this._containerElem()!.nativeElement.style.height = this._documentRef.getElementById("image")!.style.width;
+      this._containerElem()!.nativeElement.style.width = this._documentRef.getElementById("image")!.style.height;
     }
   }
 
