@@ -3,7 +3,7 @@ import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { ComponentFixture, inject, TestBed } from "@angular/core/testing";
 
 import { LightboxComponent } from "./lightbox.component";
-import { LIGHTBOX_EVENT, LightboxEvent, LightboxWindowRef } from "./lightbox-event.service";
+import { LIGHTBOX_EVENT, LightboxEvent, LightboxWindowRef } from "../../services/lightbox-event.service";
 
 describe("[ Unit - LightboxComponent ]", () => {
   let fixture: ComponentFixture<LightboxComponent>;

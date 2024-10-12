@@ -17,9 +17,9 @@ import {
 import { DomSanitizer } from "@angular/platform-browser";
 import { FileSaverService } from "ngx-filesaver";
 
-import { LightboxConfig } from "./lightbox-config.service";
-import { IAlbum, IEvent, LIGHTBOX_EVENT, LightboxEvent, LightboxWindowRef } from "./lightbox-event.service";
-import { LightboxUiConfig } from "./lightbox-ui-config";
+import { LightboxConfig } from "../../services/lightbox-config.service";
+import { IAlbum, IEvent, LIGHTBOX_EVENT, LightboxEvent, LightboxWindowRef } from "../../services/lightbox-event.service";
+import { LightboxUiConfig } from "../../services/lightbox-ui-config";
 
 @Component({
   template: ` <div class="lb-outerContainer transition" #outerContainer id="outerContainer">

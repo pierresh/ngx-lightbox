@@ -1,6 +1,6 @@
 import { ComponentFixture, fakeAsync, inject, TestBed, tick } from "@angular/core/testing";
 
-import { LIGHTBOX_EVENT, LightboxEvent } from "./lightbox-event.service";
+import { LIGHTBOX_EVENT, LightboxEvent } from "../../services/lightbox-event.service";
 import { LightboxOverlayComponent } from "./lightbox-overlay.component";
 
 describe("[ Unit - LightboxOverlayComponent ]", () => {

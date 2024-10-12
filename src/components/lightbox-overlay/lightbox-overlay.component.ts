@@ -14,8 +14,8 @@ import {
 } from "@angular/core";
 import { Subscription } from "rxjs";
 
-import { LightboxConfig } from "./lightbox-config.service";
-import { IEvent, LIGHTBOX_EVENT, LightboxEvent } from "./lightbox-event.service";
+import { LightboxConfig } from "../../services/lightbox-config.service";
+import { IEvent, LIGHTBOX_EVENT, LightboxEvent } from "../../services/lightbox-event.service";
 
 @Component({
   selector: "[lb-overlay]",

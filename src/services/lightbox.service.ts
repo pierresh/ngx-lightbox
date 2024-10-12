@@ -1,10 +1,10 @@
 import { DOCUMENT } from "@angular/common";
 import { ApplicationRef, ComponentFactoryResolver, ComponentRef, inject, Injectable, Injector } from "@angular/core";
 
-import { LightboxComponent } from "./lightbox.component";
+import { LightboxComponent } from "../components/lightbox/lightbox.component";
+import { LightboxOverlayComponent } from "../components/lightbox-overlay/lightbox-overlay.component";
 import { LightboxConfig } from "./lightbox-config.service";
 import { IAlbum, LIGHTBOX_EVENT, LightboxEvent } from "./lightbox-event.service";
-import { LightboxOverlayComponent } from "./lightbox-overlay.component";
 
 @Injectable()
 export class Lightbox {
