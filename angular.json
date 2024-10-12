@@ -25,7 +25,7 @@
               { "glob": "**/*", "input": "./demo/img/", "output": "./demo/img/" }
             ],
             "styles": [
-              "./src/lightbox.css",
+              "./src/styles/lightbox.scss",
               "demo/app.css"
             ],
             "scripts": []
