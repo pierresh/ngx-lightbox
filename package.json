@@ -56,17 +56,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/themyth92/ngx-lightbox.git"
+    "url": "git+https://github.com/jjmhalew/ngx-lightbox.git"
   },
   "keywords": [
     "lightbox2",
     "angular",
     "directives"
   ],
-  "author": "themyth92",
+  "author": "jjmhalew (OG themyth92)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/themyth92/ngx-lightbox/issues"
+    "url": "https://github.com/jjmhalew/ngx-lightbox/issues"
   },
-  "homepage": "https://github.com/themyth92/ngx-lightbox#readme"
+  "homepage": "https://github.com/jjmhalew/ngx-lightbox#readme"
 }
