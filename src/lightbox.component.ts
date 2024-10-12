@@ -290,20 +290,20 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
       this._imageElem()!.nativeElement.style.transform = `rotate(${this.rotate}deg)`;
       this._lightboxEvent.broadcastLightboxEvent({ id: LIGHTBOX_EVENT.ROTATE_RIGHT, data: null });
     } else if ($event.target.classList.contains("lb-zoomOut")) {
-      height = parseInt(this._documentRef.getElementById("outerContainer")!.style.height, 10) / 1.5;
-      width = parseInt(this._documentRef.getElementById("outerContainer")!.style.width, 10) / 1.5;
-      this._documentRef.getElementById("outerContainer")!.style.height = height + "px";
-      this._documentRef.getElementById("outerContainer")!.style.width = width + "px";
+      height = parseInt(this._outerContainerElem()!.nativeElement.style.height, 10) / 1.5;
+      width = parseInt(this._outerContainerElem()!.nativeElement.style.width, 10) / 1.5;
+      this._outerContainerElem()!.nativeElement.style.height = height + "px";
+      this._outerContainerElem()!.nativeElement.style.width = width + "px";
       height = parseInt(this._imageElem()!.nativeElement.style.height, 10) / 1.5;
       width = parseInt(this._imageElem()!.nativeElement.style.width, 10) / 1.5;
       this._imageElem()!.nativeElement.style.height = height + "px";
       this._imageElem()!.nativeElement.style.width = width + "px";
       this._lightboxEvent.broadcastLightboxEvent({ id: LIGHTBOX_EVENT.ZOOM_OUT, data: null });
     } else if ($event.target.classList.contains("lb-zoomIn")) {
-      height = parseInt(this._documentRef.getElementById("outerContainer")!.style.height, 10) * 1.5;
-      width = parseInt(this._documentRef.getElementById("outerContainer")!.style.width, 10) * 1.5;
-      this._documentRef.getElementById("outerContainer")!.style.height = height + "px";
-      this._documentRef.getElementById("outerContainer")!.style.width = width + "px";
+      height = parseInt(this._outerContainerElem()!.nativeElement.style.height, 10) * 1.5;
+      width = parseInt(this._outerContainerElem()!.nativeElement.style.width, 10) * 1.5;
+      this._outerContainerElem()!.nativeElement.style.height = height + "px";
+      this._outerContainerElem()!.nativeElement.style.width = width + "px";
       height = parseInt(this._imageElem()!.nativeElement.style.height, 10) * 1.5;
       width = parseInt(this._imageElem()!.nativeElement.style.width, 10) * 1.5;
       this._imageElem()!.nativeElement.style.height = height + "px";
