@@ -38,7 +38,7 @@ export class LightboxEvent {
   }
 }
 
-function getWindow(): any {
+function getWindow(): Window & typeof globalThis {
   return window;
 }
 
