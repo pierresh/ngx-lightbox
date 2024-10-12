@@ -19,6 +19,7 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { FileSaverService } from "ngx-filesaver";
 
 import { IAlbum, IEvent, LIGHTBOX_EVENT, LightboxEvent, LightboxWindowRef } from "./lightbox-event.service";
+import { LightboxOverlayComponent } from "./lightbox-overlay.component";
 
 @Component({
   template: ` <div class="lb-outerContainer transition" #outerContainer id="outerContainer">
@@ -95,7 +96,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   public album = model<IAlbum[]>([]);
   public currentImageIndex = model<number>(0);
   public options = model<any>({});
-  public cmpRef = model<ComponentRef<LightboxComponent>>();
+  public cmpRef = model<ComponentRef<LightboxOverlayComponent>>();
 
   protected _outerContainerElem = viewChild<ElementRef<HTMLDivElement>>("outerContainer");
   protected _containerElem = viewChild<ElementRef<HTMLDivElement>>("container");

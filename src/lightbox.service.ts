@@ -37,7 +37,7 @@ export class Lightbox {
     componentRef.instance.album.set(album);
     componentRef.instance.currentImageIndex.set(curIndex);
     componentRef.instance.options.set(newOptions);
-    componentRef.instance.cmpRef.set(componentRef);
+    componentRef.instance.cmpRef.set(overlayComponentRef);
 
     // attach input to overlay
     overlayComponentRef.instance.options.set(newOptions);
