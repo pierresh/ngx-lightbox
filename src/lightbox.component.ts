@@ -104,7 +104,37 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   protected _numberElem = viewChild<ElementRef<HTMLSpanElement>>("number");
 
   public content: { pageNumber: string };
-  public ui: any;
+  /* control the interactive of the directive */
+  public ui: {
+    /* control the appear of the reloader
+    // false: image has loaded completely and ready to be shown
+    // true: image is still loading */
+    showReloader: boolean;
+
+    // control the appear of the nav arrow
+    // the arrowNav is the parent of both left and right arrow
+    // in some cases, the parent shows but the child does not show
+    showLeftArrow: boolean;
+    showRightArrow: boolean;
+    showArrowNav: boolean;
+
+    // control the appear of the zoom and rotate buttons
+    showZoomButton: boolean;
+    showRotateButton: boolean;
+
+    // control whether to show the
+    // page number or not
+    showPageNumber: boolean;
+    showCaption: boolean;
+
+    // control whether to show the download button or not
+    showDownloadButton: boolean;
+
+    // control whether to show the download button or not
+    showDownloadExtButton: boolean;
+
+    classList: string;
+  };
   private _cssValue: any;
   private _event: any;
   private _windowRef: any;
@@ -114,33 +144,21 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
     // initialize data
     this._windowRef = this._lightboxWindowRef.nativeWindow;
 
-    // control the interactive of the directive
     this.ui = {
-      // control the appear of the reloader
-      // false: image has loaded completely and ready to be shown
-      // true: image is still loading
       showReloader: true,
 
-      // control the appear of the nav arrow
-      // the arrowNav is the parent of both left and right arrow
-      // in some cases, the parent shows but the child does not show
       showLeftArrow: false,
       showRightArrow: false,
       showArrowNav: false,
 
-      // control the appear of the zoom and rotate buttons
       showZoomButton: false,
       showRotateButton: false,
 
-      // control whether to show the
-      // page number or not
       showPageNumber: false,
       showCaption: false,
 
-      // control whether to show the download button or not
       showDownloadButton: false,
 
-      // control whether to show the download button or not
       showDownloadExtButton: false,
 
       classList: "lightbox animation fadeIn",
