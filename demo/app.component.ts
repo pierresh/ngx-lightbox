@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { ChangeDetectionStrategy, Component, signal } from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject, signal } from "@angular/core";
 import { Subscription } from "rxjs";
 
 import { IAlbum, IEvent, Lightbox, LIGHTBOX_EVENT, LightboxConfig, LightboxEvent, LightboxModule } from "../src";
@@ -30,14 +30,14 @@ import { IAlbum, IEvent, Lightbox, LIGHTBOX_EVENT, LightboxConfig, LightboxEvent
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
+  private _lightbox = inject(Lightbox);
+  private _lightboxEvent = inject(LightboxEvent);
+  private _lighboxConfig = inject(LightboxConfig);
+
   protected albums = signal<IAlbum[]>([]);
   private _subscription: Subscription | null = null;
-  constructor(
-    private _lightbox: Lightbox,
-    private _lightboxEvent: LightboxEvent,
-    private _lighboxConfig: LightboxConfig
-  ) {
-    this.albums.set([]);
+
+  constructor() {
     for (let i = 1; i <= 4; i++) {
       const src = "demo/img/image" + i + ".jpg";
       const caption = "Image " + i + " caption here";
