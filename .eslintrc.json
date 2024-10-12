@@ -69,6 +69,20 @@
             ]
           },
           {
+            "selector": "method",
+            "format": [
+              "camelCase"
+            ],
+            "leadingUnderscore": "allow"
+          },
+          {
+            "selector": "property",
+            "format": [
+              "camelCase"
+            ],
+            "leadingUnderscore": "allow"
+          },
+          {
             "selector": "variable",
             "format": [
               "camelCase",
