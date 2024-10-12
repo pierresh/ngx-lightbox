@@ -1,15 +1,11 @@
-[![Build Status](https://travis-ci.org/themyth92/ngx-lightbox.svg?branch=master)](https://travis-ci.org/themyth92/ngx-lightbox)
-
 # Ngx-Lightbox
 
-A [lightbox2](https://github.com/lokesh/lightbox2) implementation port to use with new Angular without the need for jQuery
+A [lightbox2](https://github.com/lokesh/lightbox2) implementation port to use with Angular >= 18 (zoneless)
 
-
-## [Demo](https://themyth92.com/project/ngx-lightbox)
 
 ## Installation
 
-`npm install --save @jjmhalew/ngx-lightbox`
+`npm install @jjmhalew/ngx-lightbox`
 
 Update your `angular.json`
 
@@ -26,7 +22,7 @@ Update your `angular.json`
 
 ### Module:
 
-Import `LightboxModule` from `@jjmhalew/ngx-lightbox`
+Import `LightboxModule` from `@jjmhalew/ngx-lightbox` in your `NgModule` or `Component`
 
 ```javascript
 import { LightboxModule } from '@jjmhalew/ngx-lightbox';
