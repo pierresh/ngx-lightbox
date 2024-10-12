@@ -253,14 +253,12 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
       this._rotateContainer();
       this._calcTransformPoint();
       this._documentRef.getElementById("image")!.style.transform = `rotate(${this.rotate}deg)`;
-      this._documentRef.getElementById("image")!.style.webkitTransform = `rotate(${this.rotate}deg)`;
       this._lightboxEvent.broadcastLightboxEvent({ id: LIGHTBOX_EVENT.ROTATE_LEFT, data: null });
     } else if ($event.target.classList.contains("lb-turnRight")) {
       this.rotate = this.rotate + 90;
       this._rotateContainer();
       this._calcTransformPoint();
       this._documentRef.getElementById("image")!.style.transform = `rotate(${this.rotate}deg)`;
-      this._documentRef.getElementById("image")!.style.webkitTransform = `rotate(${this.rotate}deg)`;
       this._lightboxEvent.broadcastLightboxEvent({ id: LIGHTBOX_EVENT.ROTATE_RIGHT, data: null });
     } else if ($event.target.classList.contains("lb-zoomOut")) {
       height = parseInt(this._documentRef.getElementById("outerContainer")!.style.height, 10) / 1.5;
