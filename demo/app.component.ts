@@ -55,7 +55,7 @@ export class AppComponent {
     this._lighboxConfig.fadeDuration = 1;
   }
 
-  open(index: number): void {
+  protected open(index: number): void {
     // @ts-ignore
     this._subscription = this._lightboxEvent.lightboxEvent$.subscribe((event: IEvent) => this._onReceivedEvent(event));
 
