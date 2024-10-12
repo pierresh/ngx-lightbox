@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Observable, Subject } from "rxjs";
 
 export interface IEvent {
-  id: number;
+  id: LIGHTBOX_EVENT;
   data?: any;
 }
 
@@ -13,16 +13,16 @@ export interface IAlbum {
   downloadUrl?: string;
 }
 
-export const LIGHTBOX_EVENT = {
-  CHANGE_PAGE: 1,
-  CLOSE: 2,
-  OPEN: 3,
-  ZOOM_IN: 4,
-  ZOOM_OUT: 5,
-  ROTATE_LEFT: 6,
-  ROTATE_RIGHT: 7,
-  DOWNLOAD: 8,
-};
+export enum LIGHTBOX_EVENT {
+  CHANGE_PAGE = 1,
+  CLOSE = 2,
+  OPEN = 3,
+  ZOOM_IN = 4,
+  ZOOM_OUT = 5,
+  ROTATE_LEFT = 6,
+  ROTATE_RIGHT = 7,
+  DOWNLOAD = 8,
+}
 
 @Injectable()
 export class LightboxEvent {
