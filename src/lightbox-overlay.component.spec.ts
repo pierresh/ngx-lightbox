@@ -18,7 +18,7 @@ describe("[ Unit - LightboxOverlayComponent ]", () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [LightboxOverlayComponent],
+      imports: [LightboxOverlayComponent],
       providers: [LightboxEvent],
     });
 
