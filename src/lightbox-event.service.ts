@@ -28,6 +28,7 @@ export const LIGHTBOX_EVENT = {
 export class LightboxEvent {
   private _lightboxEventSource: Subject<IEvent>;
   public lightboxEvent$: Observable<IEvent>;
+
   constructor() {
     this._lightboxEventSource = new Subject<IEvent>();
     this.lightboxEvent$ = this._lightboxEventSource.asObservable();
