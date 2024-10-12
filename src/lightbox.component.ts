@@ -135,7 +135,16 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
 
     classList: string;
   };
-  private _cssValue: any;
+  private _cssValue: any; /* {
+    containerTopPadding: number;
+    containerRightPadding: number;
+    containerBottomPadding: number;
+    containerLeftPadding: number;
+    imageBorderWidthTop: number;
+    imageBorderWidthBottom: number;
+    imageBorderWidthLeft: number;
+    imageBorderWidthRight: number;
+  }; */
   private _event: any;
   private _windowRef: any;
   private rotate: number;
