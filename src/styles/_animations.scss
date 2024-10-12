@@ -1,0 +1,36 @@
+/* animations */
+@keyframes fadeIn {    
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
+@keyframes fadeOut {    
+  0% {opacity: 1;}
+  100% {opacity: 0;}
+}
+
+@keyframes fadeInOverlay {    
+  0% {opacity: 0;}
+  100% {opacity: 0.8;}
+}
+
+@keyframes fadeOutOverlay {    
+  0% {opacity: 0.8;}
+  100% {opacity: 0;}
+}
+
+.fadeIn {
+  animation-name: fadeIn; 
+}
+
+.fadeInOverlay {
+  animation-name: fadeInOverlay;
+}
+
+.fadeOut {
+  animation-name: fadeOut;
+}
+
+.fadeOutOverlay {
+  animation-name: fadeOutOverlay;
+}
