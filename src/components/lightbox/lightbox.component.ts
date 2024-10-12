@@ -136,14 +136,14 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   public downloadExt(): void {
     this._lightboxEvent.broadcastLightboxEvent({
       id: LIGHTBOX_EVENT.DOWNLOAD,
-      data: this.album()![this.currentImageIndex()!],
+      data: this.album()[this.currentImageIndex()!],
     });
   }
 
   public download($event: any): void {
     $event.stopPropagation();
-    const url = this.album()![this.currentImageIndex()!].src;
-    const downloadUrl = this.album()![this.currentImageIndex()!].downloadUrl;
+    const url = this.album()[this.currentImageIndex()!].src;
+    const downloadUrl = this.album()[this.currentImageIndex()!].downloadUrl;
     const parts = url.split("/");
     const fileName = parts[parts.length - 1];
     const canvas = document.createElement("canvas");
@@ -252,9 +252,9 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   }
 
   public nextImage(): void {
-    if (this.album()!.length === 1) {
+    if (this.album().length === 1) {
       return;
-    } else if (this.currentImageIndex() === this.album()!.length - 1) {
+    } else if (this.currentImageIndex() === this.album().length - 1) {
       this._changeImage(0);
     } else {
       this._changeImage(this.currentImageIndex()! + 1);
@@ -262,21 +262,21 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   }
 
   public prevImage(): void {
-    if (this.album()!.length === 1) {
+    if (this.album().length === 1) {
       return;
-    } else if (this.currentImageIndex() === 0 && this.album()!.length > 1) {
-      this._changeImage(this.album()!.length - 1);
+    } else if (this.currentImageIndex() === 0 && this.album().length > 1) {
+      this._changeImage(this.album().length - 1);
     } else {
       this._changeImage(this.currentImageIndex()! - 1);
     }
   }
 
   private _validateInputData(): boolean {
-    if (this.album() && this.album() instanceof Array && this.album()!.length > 0) {
-      for (let i = 0; i < this.album()!.length; i++) {
+    if (this.album() && this.album() instanceof Array && this.album().length > 0) {
+      for (let i = 0; i < this.album().length; i++) {
         // check whether each _nside
         // album has src data or not
-        if (this.album()![i].src) {
+        if (this.album()[i].src) {
           continue;
         }
 
@@ -304,7 +304,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
       this._onLoadImageSuccess();
     };
 
-    const src: string = this.album()![this.currentImageIndex()!].src;
+    const src: string = this.album()[this.currentImageIndex()!].src;
     preloader.src = this._sanitizer.sanitize(SecurityContext.URL, src) ?? "";
   }
 
@@ -503,27 +503,24 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
 
   private _updateDetails(): void {
     // update the caption
-    if (
-      typeof this.album()![this.currentImageIndex()!].caption !== "undefined" &&
-      this.album()![this.currentImageIndex()!].caption !== ""
-    ) {
+    if (typeof this.album()[this.currentImageIndex()!].caption !== "undefined" && this.album()[this.currentImageIndex()!].caption !== "") {
       this.ui().showCaption = true;
     }
 
     // update the page number if user choose to do so
     // does not perform numbering the page if the
     // array length in album <= 1
-    if (this.album()!.length > 1 && this.options().showImageNumberLabel) {
+    if (this.album().length > 1 && this.options().showImageNumberLabel) {
       this.ui().showPageNumber = true;
       this.contentPageNumber.set(this._albumLabel());
     }
   }
 
   private _albumLabel(): string {
-    // due to {this.currentImageIndex()!} is set from 0 to {this.album()!.length} - 1
+    // due to {this.currentImageIndex()!} is set from 0 to {this.album().length} - 1
     return this.options()
       .albumLabel!.replace(/%1/g, (this.currentImageIndex()! + 1).toString())
-      .replace(/%2/g, this.album()!.length.toString());
+      .replace(/%2/g, this.album().length.toString());
   }
 
   private _changeImage(newIndex: number): void {
@@ -557,7 +554,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
     // initially show the arrow nav
     // which is the parent of both left and right nav
     this._showArrowNav();
-    if (this.album()!.length > 1) {
+    if (this.album().length > 1) {
       if (this.options().wrapAround) {
         if (alwaysShowNav) {
           // alternatives this.$lightbox.find('.lb-prev, .lb-next').css('opacity', '1');
@@ -578,7 +575,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
           }
         }
 
-        if (this.currentImageIndex()! < this.album()!.length - 1) {
+        if (this.currentImageIndex()! < this.album().length - 1) {
           // alternatives this.$lightbox.find('.lb-next').show();
           this._showRightArrowNav();
           if (alwaysShowNav) {
@@ -599,7 +596,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   }
 
   private _showArrowNav(): void {
-    this.ui().showArrowNav = this.album()!.length !== 1;
+    this.ui().showArrowNav = this.album().length !== 1;
   }
 
   private _enableKeyboardNav(): void {
@@ -626,13 +623,13 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
     } else if (key === "p" || keycode === KEYCODE_LEFTARROW) {
       if (this.currentImageIndex() !== 0) {
         this._changeImage(this.currentImageIndex()! - 1);
-      } else if (this.options().wrapAround && this.album()!.length > 1) {
-        this._changeImage(this.album()!.length - 1);
+      } else if (this.options().wrapAround && this.album().length > 1) {
+        this._changeImage(this.album().length - 1);
       }
     } else if (key === "n" || keycode === KEYCODE_RIGHTARROW) {
-      if (this.currentImageIndex() !== this.album()!.length - 1) {
+      if (this.currentImageIndex() !== this.album().length - 1) {
         this._changeImage(this.currentImageIndex()! + 1);
-      } else if (this.options().wrapAround && this.album()!.length > 1) {
+      } else if (this.options().wrapAround && this.album().length > 1) {
         this._changeImage(0);
       }
     }
