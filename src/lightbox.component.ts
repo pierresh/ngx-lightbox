@@ -168,14 +168,14 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
     // need to init css value here, after the view ready
     // actually these values are always 0
     this._cssValue = {
-      containerTopPadding: Math.round(this._getCssStyleValue(this._containerElem, "padding-top")),
-      containerRightPadding: Math.round(this._getCssStyleValue(this._containerElem, "padding-right")),
-      containerBottomPadding: Math.round(this._getCssStyleValue(this._containerElem, "padding-bottom")),
-      containerLeftPadding: Math.round(this._getCssStyleValue(this._containerElem, "padding-left")),
-      imageBorderWidthTop: Math.round(this._getCssStyleValue(this._imageElem, "border-top-width")),
-      imageBorderWidthBottom: Math.round(this._getCssStyleValue(this._imageElem, "border-bottom-width")),
-      imageBorderWidthLeft: Math.round(this._getCssStyleValue(this._imageElem, "border-left-width")),
-      imageBorderWidthRight: Math.round(this._getCssStyleValue(this._imageElem, "border-right-width")),
+      containerTopPadding: Math.round(this._getCssStyleValue(this._containerElem()!, "padding-top")),
+      containerRightPadding: Math.round(this._getCssStyleValue(this._containerElem()!, "padding-right")),
+      containerBottomPadding: Math.round(this._getCssStyleValue(this._containerElem()!, "padding-bottom")),
+      containerLeftPadding: Math.round(this._getCssStyleValue(this._containerElem()!, "padding-left")),
+      imageBorderWidthTop: Math.round(this._getCssStyleValue(this._imageElem()!, "border-top-width")),
+      imageBorderWidthBottom: Math.round(this._getCssStyleValue(this._imageElem()!, "border-bottom-width")),
+      imageBorderWidthLeft: Math.round(this._getCssStyleValue(this._imageElem()!, "border-left-width")),
+      imageBorderWidthRight: Math.round(this._getCssStyleValue(this._imageElem()!, "border-right-width")),
     };
 
     if (this._validateInputData()) {
@@ -718,7 +718,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
     }
   }
 
-  private _getCssStyleValue(elem: any, propertyName: string): number {
+  private _getCssStyleValue(elem: ElementRef, propertyName: string): number {
     return parseFloat(this._windowRef.getComputedStyle(elem.nativeElement, null).getPropertyValue(propertyName));
   }
 
