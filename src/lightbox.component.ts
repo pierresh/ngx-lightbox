@@ -18,6 +18,7 @@ import {
 import { DomSanitizer } from "@angular/platform-browser";
 import { FileSaverService } from "ngx-filesaver";
 
+import { LightboxConfig } from "./lightbox-config.service";
 import { IAlbum, IEvent, LIGHTBOX_EVENT, LightboxEvent, LightboxWindowRef } from "./lightbox-event.service";
 
 @Component({
@@ -94,7 +95,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
 
   public album = model<IAlbum[]>([]);
   public currentImageIndex = model<number>(0);
-  public options = model<any>({});
+  public options = model<Partial<LightboxConfig>>({});
   public cmpRef = model<ComponentRef<LightboxComponent>>();
 
   protected _outerContainerElem = viewChild<ElementRef<HTMLDivElement>>("outerContainer");
@@ -551,17 +552,17 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
 
     // update controls visibility on next view generation
     setTimeout(() => {
-      this.ui.showZoomButton = this.options().showZoom;
-      this.ui.showRotateButton = this.options().showRotate;
-      this.ui.showDownloadButton = this.options().showDownloadButton;
-      this.ui.showDownloadExtButton = this.options().showDownloadExtButton;
+      this.ui.showZoomButton = this.options().showZoom!;
+      this.ui.showRotateButton = this.options().showRotate!;
+      this.ui.showDownloadButton = this.options().showDownloadButton!;
+      // this.ui.showDownloadExtButton = this.options().showDownloadExtButton; // TODO: re-enable
       this._changeDetectorRef.detectChanges();
     }, 0);
   }
 
   private _positionLightBox(): void {
     // @see https://stackoverflow.com/questions/3464876/javascript-get-window-x-y-position-for-scroll
-    const top = (this._windowRef.scrollY || this._documentRef.documentElement.scrollTop) + this.options().positionFromTop;
+    const top = (this._windowRef.scrollY || this._documentRef.documentElement.scrollTop) + this.options().positionFromTop!;
     const left = this._windowRef.scrollX || this._documentRef.documentElement.scrollLeft;
 
     if (!this.options().centerVertically) {
@@ -599,7 +600,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
     }
     setTimeout(() => {
       this.cmpRef()?.destroy();
-    }, this.options().fadeDuration * 1000);
+    }, this.options().fadeDuration! * 1000);
   }
 
   private _updateDetails(): void {
@@ -623,8 +624,8 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   private _albumLabel(): string {
     // due to {this.currentImageIndex()!} is set from 0 to {this.album()!.length} - 1
     return this.options()
-      .albumLabel.replace(/%1/g, Number(this.currentImageIndex()! + 1))
-      .replace(/%2/g, this.album()!.length);
+      .albumLabel!.replace(/%1/g, (this.currentImageIndex()! + 1).toString())
+      .replace(/%2/g, this.album()!.length.toString());
   }
 
   private _changeImage(newIndex: number): void {
