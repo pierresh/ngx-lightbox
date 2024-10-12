@@ -103,7 +103,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   protected _captionElem = viewChild<ElementRef<HTMLSpanElement>>("caption");
   protected _numberElem = viewChild<ElementRef<HTMLSpanElement>>("number");
 
-  public content: any;
+  public content: { pageNumber: string };
   public ui: any;
   private _cssValue: any;
   private _event: any;
