@@ -78,7 +78,8 @@
           {
             "selector": "property",
             "format": [
-              "camelCase"
+              "camelCase",
+              "UPPER_CASE"
             ],
             "leadingUnderscore": "allow"
           },
