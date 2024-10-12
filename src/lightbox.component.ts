@@ -586,17 +586,11 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
     const resizeDuration = this.options().resizeDuration;
     const fadeDuration = this.options().fadeDuration;
 
-    this._rendererRef.setStyle(this._lightboxElem.nativeElement, "-webkit-animation-duration", `${fadeDuration}s`);
     this._rendererRef.setStyle(this._lightboxElem.nativeElement, "animation-duration", `${fadeDuration}s`);
-    this._rendererRef.setStyle(this._outerContainerElem()!.nativeElement, "-webkit-transition-duration", `${resizeDuration}s`);
     this._rendererRef.setStyle(this._outerContainerElem()!.nativeElement, "transition-duration", `${resizeDuration}s`);
-    this._rendererRef.setStyle(this._dataContainerElem()!.nativeElement, "-webkit-animation-duration", `${fadeDuration}s`);
     this._rendererRef.setStyle(this._dataContainerElem()!.nativeElement, "animation-duration", `${fadeDuration}s`);
-    this._rendererRef.setStyle(this._imageElem()!.nativeElement, "-webkit-animation-duration", `${fadeDuration}s`);
     this._rendererRef.setStyle(this._imageElem()!.nativeElement, "animation-duration", `${fadeDuration}s`);
-    this._rendererRef.setStyle(this._captionElem()!.nativeElement, "-webkit-animation-duration", `${fadeDuration}s`);
     this._rendererRef.setStyle(this._captionElem()!.nativeElement, "animation-duration", `${fadeDuration}s`);
-    this._rendererRef.setStyle(this._numberElem()!.nativeElement, "-webkit-animation-duration", `${fadeDuration}s`);
     this._rendererRef.setStyle(this._numberElem()!.nativeElement, "animation-duration", `${fadeDuration}s`);
   }
 
