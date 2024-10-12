@@ -74,7 +74,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   }; */
   private _event: any;
   private _windowRef: Window & typeof globalThis;
-  private rotate: number = 0;
+  private rotate = signal<number>(0);
 
   constructor() {
     // initialize data
@@ -177,16 +177,16 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
     let height: number;
     let width: number;
     if ($event.target.classList.contains("lb-turnLeft")) {
-      this.rotate = this.rotate - 90;
+      this.rotate.set(this.rotate() - 90);
       this._rotateContainer();
       this._calcTransformPoint();
-      this._imageElem()!.nativeElement.style.transform = `rotate(${this.rotate}deg)`;
+      this._imageElem()!.nativeElement.style.transform = `rotate(${this.rotate()}deg)`;
       this._lightboxEvent.broadcastLightboxEvent({ id: LIGHTBOX_EVENT.ROTATE_LEFT, data: null });
     } else if ($event.target.classList.contains("lb-turnRight")) {
-      this.rotate = this.rotate + 90;
+      this.rotate.set(this.rotate() + 90);
       this._rotateContainer();
       this._calcTransformPoint();
-      this._imageElem()!.nativeElement.style.transform = `rotate(${this.rotate}deg)`;
+      this._imageElem()!.nativeElement.style.transform = `rotate(${this.rotate()}deg)`;
       this._lightboxEvent.broadcastLightboxEvent({ id: LIGHTBOX_EVENT.ROTATE_RIGHT, data: null });
     } else if ($event.target.classList.contains("lb-zoomOut")) {
       height = parseInt(this._outerContainerElem()!.nativeElement.style.height, 10) / 1.5;
@@ -212,7 +212,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   }
 
   private _rotateContainer(): void {
-    let temp = this.rotate;
+    let temp = this.rotate();
     if (temp < 0) {
       temp *= -1;
     }
@@ -230,15 +230,15 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   }
 
   private _resetImage(): void {
-    this.rotate = 0;
-    this._imageElem()!.nativeElement.style.transform = `rotate(${this.rotate}deg)`;
-    this._imageElem()!.nativeElement.style.webkitTransform = `rotate(${this.rotate}deg)`;
+    this.rotate.set(0);
+    this._imageElem()!.nativeElement.style.transform = `rotate(${this.rotate()}deg)`;
+    this._imageElem()!.nativeElement.style.webkitTransform = `rotate(${this.rotate()}deg)`;
   }
 
   private _calcTransformPoint(): void {
     const height = parseInt(this._imageElem()!.nativeElement.style.height, 10);
     const width = parseInt(this._imageElem()!.nativeElement.style.width, 10);
-    let temp = this.rotate % 360;
+    let temp = this.rotate() % 360;
     if (temp < 0) {
       temp = 360 + temp;
     }
