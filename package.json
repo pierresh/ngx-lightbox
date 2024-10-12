@@ -54,6 +54,9 @@
     "prepublishOnly": "rm -r ./.angular && ./node_modules/.bin/ngc && ./node_modules/.bin/copyfiles -u 1 src/img/* src/*.js src/*.d.ts src/*.js.map src/*.metadata.json src/*.css .",
     "postpublish": "./node_modules/.bin/del '*.{service,component,module,spec,ngfactory}.js' '*.{metadata,ngsummary}.json' index.js webpack.config.js  '*.{ts,css,map}' '{compiled,img}' 'src/*.{d.ts,ngfactory.ts,js,map,json}'"
   },
+  "engines": {
+    "node": ">=22"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jjmhalew/ngx-lightbox.git"
