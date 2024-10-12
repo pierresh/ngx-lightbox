@@ -12,6 +12,7 @@ import {
 } from "@angular/core";
 import { Subscription } from "rxjs";
 
+import { LightboxConfig } from "./lightbox-config.service";
 import { IEvent, LIGHTBOX_EVENT, LightboxEvent } from "./lightbox-event.service";
 
 @Component({
@@ -31,7 +32,7 @@ export class LightboxOverlayComponent implements AfterViewInit, OnDestroy {
   private _lightboxEvent = inject(LightboxEvent);
   private _documentRef: Document = inject(DOCUMENT);
 
-  public options = model<any>();
+  public options = model<Partial<LightboxConfig>>();
   public cmpRef = model<any>();
 
   public classList: string;
@@ -49,7 +50,7 @@ export class LightboxOverlayComponent implements AfterViewInit, OnDestroy {
   }
 
   public ngAfterViewInit(): void {
-    const fadeDuration = this.options().fadeDuration;
+    const fadeDuration = this.options()!.fadeDuration;
 
     this._rendererRef.setStyle(this._elemRef.nativeElement, "animation-duration", `${fadeDuration}s`);
     this._sizeOverlay();
@@ -89,7 +90,7 @@ export class LightboxOverlayComponent implements AfterViewInit, OnDestroy {
     // FIXME: not sure if there is any way better than this
     setTimeout(() => {
       this.cmpRef().destroy();
-    }, this.options().fadeDuration * 1000);
+    }, this.options()!.fadeDuration! * 1000);
   }
 
   private _getOverlayWidth(): number {
