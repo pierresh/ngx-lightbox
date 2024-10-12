@@ -31,7 +31,6 @@ import { LightboxUiConfig } from "../../services/lightbox-ui-config";
   standalone: true,
   styleUrl: "./lightbox.component.scss",
   imports: [],
-  providers: [LightboxEvent, LightboxWindowRef],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnInit {

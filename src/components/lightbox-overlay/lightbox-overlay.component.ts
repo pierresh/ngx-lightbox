@@ -25,7 +25,6 @@ import { IEvent, LIGHTBOX_EVENT, LightboxEvent } from "../../services/lightbox-e
   },
   standalone: true,
   imports: [],
-  providers: [LightboxEvent],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LightboxOverlayComponent implements AfterViewInit, OnDestroy {
@@ -37,7 +36,7 @@ export class LightboxOverlayComponent implements AfterViewInit, OnDestroy {
   public options = model<Partial<LightboxConfig>>();
   public cmpRef = model<ComponentRef<LightboxOverlayComponent>>();
 
-  public classList = signal<string>("");
+  private classList = signal<string>("");
   private _subscription: Subscription;
 
   constructor() {
