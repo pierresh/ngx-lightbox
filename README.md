@@ -12,7 +12,7 @@ Update your `angular.json`
 ```
 {
   "styles": [
-    "./node_modules/@jjmhalew/ngx-lightbox/lightbox.css",
+    "./node_modules/@jjmhalew/ngx-lightbox/lightbox.scss",
     ...
   ],
 }
