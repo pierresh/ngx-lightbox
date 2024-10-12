@@ -93,15 +93,15 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   public options = model<any>({});
   public cmpRef = model<any>();
 
-  protected _outerContainerElem = viewChild<ElementRef>("outerContainer");
-  protected _containerElem = viewChild<ElementRef>("container");
-  protected _leftArrowElem = viewChild<ElementRef>("leftArrow");
-  protected _rightArrowElem = viewChild<ElementRef>("rightArrow");
-  protected _navArrowElem = viewChild<ElementRef>("navArrow");
-  protected _dataContainerElem = viewChild<ElementRef>("dataContainer");
-  protected _imageElem = viewChild<ElementRef>("image");
-  protected _captionElem = viewChild<ElementRef>("caption");
-  protected _numberElem = viewChild<ElementRef>("number");
+  protected _outerContainerElem = viewChild<ElementRef<HTMLDivElement>>("outerContainer");
+  protected _containerElem = viewChild<ElementRef<HTMLDivElement>>("container");
+  protected _leftArrowElem = viewChild<ElementRef<HTMLAnchorElement>>("leftArrow");
+  protected _rightArrowElem = viewChild<ElementRef<HTMLAnchorElement>>("rightArrow");
+  protected _navArrowElem = viewChild<ElementRef<HTMLDivElement>>("navArrow");
+  protected _dataContainerElem = viewChild<ElementRef<HTMLDivElement>>("dataContainer");
+  protected _imageElem = viewChild<ElementRef<HTMLImageElement>>("image");
+  protected _captionElem = viewChild<ElementRef<HTMLSpanElement>>("caption");
+  protected _numberElem = viewChild<ElementRef<HTMLSpanElement>>("number");
 
   public content: any;
   public ui: any;
