@@ -60,7 +60,7 @@ import { LightboxUiConfig } from "./lightbox-ui-config";
             <a class="lb-download" (click)="download($event)"></a>
           </div>
           <div class="lb-downloadContainer" [hidden]="!ui.showDownloadExtButton">
-            <a class="lb-download" (click)="downloadExt($event)"></a>
+            <a class="lb-download" (click)="downloadExt()"></a>
           </div>
           <div class="lb-turnContainer" [hidden]="!ui.showRotateButton">
             <a class="lb-turnLeft" (click)="control($event)"></a>
@@ -183,8 +183,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
     }
   }
 
-  // @ts-ignore
-  public downloadExt($event): void {
+  public downloadExt(): void {
     this._lightboxEvent.broadcastLightboxEvent({
       id: LIGHTBOX_EVENT.DOWNLOAD,
       data: this.album()![this.currentImageIndex()!],
