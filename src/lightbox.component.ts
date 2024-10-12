@@ -146,7 +146,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
     imageBorderWidthRight: number;
   }; */
   private _event: any;
-  private _windowRef: any;
+  private _windowRef: Window & typeof globalThis;
   private rotate: number;
 
   constructor() {
@@ -559,8 +559,8 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
 
   private _positionLightBox(): void {
     // @see https://stackoverflow.com/questions/3464876/javascript-get-window-x-y-position-for-scroll
-    const top = (this._windowRef.pageYOffset || this._documentRef.documentElement.scrollTop) + this.options().positionFromTop;
-    const left = this._windowRef.pageXOffset || this._documentRef.documentElement.scrollLeft;
+    const top = (this._windowRef.scrollY || this._documentRef.documentElement.scrollTop) + this.options().positionFromTop;
+    const left = this._windowRef.scrollX || this._documentRef.documentElement.scrollLeft;
 
     if (!this.options().centerVertically) {
       this._rendererRef.setStyle(this._lightboxElem.nativeElement, "top", `${top}px`);
