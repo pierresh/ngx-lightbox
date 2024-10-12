@@ -4,6 +4,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  ComponentRef,
   ElementRef,
   inject,
   model,
@@ -94,7 +95,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   public album = model<IAlbum[]>([]);
   public currentImageIndex = model<number>(0);
   public options = model<any>({});
-  public cmpRef = model<any>();
+  public cmpRef = model<ComponentRef<LightboxComponent>>();
 
   protected _outerContainerElem = viewChild<ElementRef<HTMLDivElement>>("outerContainer");
   protected _containerElem = viewChild<ElementRef<HTMLDivElement>>("container");
@@ -597,7 +598,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
       this._rendererRef.removeClass(this._documentRef.documentElement, "lb-disable-scrolling");
     }
     setTimeout(() => {
-      this.cmpRef().destroy();
+      this.cmpRef()?.destroy();
     }, this.options().fadeDuration * 1000);
   }
 
