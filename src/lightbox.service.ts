@@ -24,8 +24,8 @@ export class Lightbox {
     // const componentRef = this.viewContainerRef.createComponent(LightboxComponent);
 
     // TODO: replace old way with new way (viewContainerRef)
-    const overlayComponentRef = this._createComponent(LightboxOverlayComponent);
-    const componentRef = this._createComponent(LightboxComponent);
+    const overlayComponentRef: ComponentRef<LightboxOverlayComponent> = this._createComponent(LightboxOverlayComponent);
+    const componentRef: ComponentRef<LightboxComponent> = this._createComponent(LightboxComponent);
 
     const newOptions: Partial<LightboxConfig> = {};
 
