@@ -1,4 +1,4 @@
-import { CommonModule, DOCUMENT } from "@angular/common";
+import { DOCUMENT } from "@angular/common";
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -22,56 +22,7 @@ import { IAlbum, IEvent, LIGHTBOX_EVENT, LightboxEvent, LightboxWindowRef } from
 import { LightboxUiConfig } from "../../services/lightbox-ui-config";
 
 @Component({
-  template: ` <div class="lb-outerContainer transition" #outerContainer id="outerContainer">
-      <div class="lb-container" #container id="container">
-        <img
-          class="lb-image"
-          id="image"
-          [src]="album()![currentImageIndex()!].src"
-          class="lb-image animation fadeIn"
-          [hidden]="ui().showReloader"
-          #image />
-        <div class="lb-nav" [hidden]="!ui().showArrowNav" #navArrow>
-          <a class="lb-prev" [hidden]="!ui().showLeftArrow" (click)="prevImage()" #leftArrow></a>
-          <a class="lb-next" [hidden]="!ui().showRightArrow" (click)="nextImage()" #rightArrow></a>
-        </div>
-        <div class="lb-loader" [hidden]="!ui().showReloader" (click)="close($event)">
-          <a class="lb-cancel"></a>
-        </div>
-      </div>
-    </div>
-    <div class="lb-dataContainer" [hidden]="ui().showReloader" #dataContainer>
-      <div class="lb-data">
-        <div class="lb-details">
-          <span
-            class="lb-caption animation fadeIn"
-            [hidden]="!ui().showCaption"
-            [innerHtml]="album()![currentImageIndex()!].caption"
-            #caption>
-          </span>
-          <span class="lb-number animation fadeIn" [hidden]="!ui().showPageNumber" #number>{{ contentPageNumber() }}</span>
-        </div>
-        <div class="lb-controlContainer">
-          <div class="lb-closeContainer">
-            <a class="lb-close" (click)="close($event)"></a>
-          </div>
-          <div class="lb-downloadContainer" [hidden]="!ui().showDownloadButton">
-            <a class="lb-download" (click)="download($event)"></a>
-          </div>
-          <div class="lb-downloadContainer" [hidden]="!ui().showDownloadExtButton">
-            <a class="lb-download" (click)="downloadExt()"></a>
-          </div>
-          <div class="lb-turnContainer" [hidden]="!ui().showRotateButton">
-            <a class="lb-turnLeft" (click)="control($event)"></a>
-            <a class="lb-turnRight" (click)="control($event)"></a>
-          </div>
-          <div class="lb-zoomContainer" [hidden]="!ui().showZoomButton">
-            <a class="lb-zoomOut" (click)="control($event)"></a>
-            <a class="lb-zoomIn" (click)="control($event)"></a>
-          </div>
-        </div>
-      </div>
-    </div>`,
+  templateUrl: "./lightbox.component.html",
   selector: "[lb-content]",
   host: {
     "(click)": "close($event)",
@@ -79,7 +30,7 @@ import { LightboxUiConfig } from "../../services/lightbox-ui-config";
   },
   standalone: true,
   styleUrl: "./lightbox.component.scss",
-  imports: [CommonModule],
+  imports: [],
   providers: [LightboxEvent, LightboxWindowRef],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
