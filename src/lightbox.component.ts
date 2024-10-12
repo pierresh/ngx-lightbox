@@ -707,7 +707,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   }
 
   private _enableKeyboardNav(): void {
-    this._event.keyup = this._rendererRef.listen("document", "keyup", (event: any) => {
+    this._event.keyup = this._rendererRef.listen("document", "keyup", (event: KeyboardEvent) => {
       this._keyboardAction(event);
     });
   }
