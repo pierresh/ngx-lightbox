@@ -124,7 +124,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   }; */
   private _event: any;
   private _windowRef: Window & typeof globalThis;
-  private rotate: number;
+  private rotate: number = 0;
 
   constructor() {
     // initialize data
@@ -133,7 +133,6 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
     this._event = {};
     this._lightboxElem = this._elemRef;
     this._event.subscription = this._lightboxEvent.lightboxEvent$.subscribe((event: IEvent) => this._onReceivedEvent(event));
-    this.rotate = 0;
   }
 
   public ngOnInit(): void {
