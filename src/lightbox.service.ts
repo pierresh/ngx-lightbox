@@ -62,12 +62,6 @@ export class Lightbox {
     });
   }
 
-  public close(): void {
-    if (this._lightboxEvent) {
-      this._lightboxEvent.broadcastLightboxEvent({ id: LIGHTBOX_EVENT.CLOSE });
-    }
-  }
-
   private _createComponent<T>(ComponentClass: new (...args: any[]) => T): ComponentRef<T> {
     const factory = this._componentFactoryResolver.resolveComponentFactory(ComponentClass);
     const component = factory.create(this._injector);
