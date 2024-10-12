@@ -2,6 +2,7 @@ import { CommonModule, DOCUMENT } from "@angular/common";
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   inject,
@@ -85,6 +86,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   public _lightboxElem = inject(ElementRef);
   private _lightboxWindowRef = inject(LightboxWindowRef);
   private _fileSaverService = inject(FileSaverService);
+  private _changeDetectorRef = inject(ChangeDetectorRef);
   private _sanitizer = inject(DomSanitizer);
   private _documentRef: Document = inject(DOCUMENT);
 
@@ -539,6 +541,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
     if (!this.options().disableKeyboardNav) {
       this._enableKeyboardNav();
     }
+    this._changeDetectorRef.detectChanges();
   }
 
   private _prepareComponent(): void {
@@ -554,6 +557,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
       this.ui.showRotateButton = this.options().showRotate;
       this.ui.showDownloadButton = this.options().showDownloadButton;
       this.ui.showDownloadExtButton = this.options().showDownloadExtButton;
+      this._changeDetectorRef.detectChanges();
     }, 0);
   }
 
@@ -646,6 +650,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
     this.ui.showRightArrow = false;
     this.ui.showPageNumber = false;
     this.ui.showCaption = false;
+    this._changeDetectorRef.detectChanges();
   }
 
   private _updateNav(): void {
