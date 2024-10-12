@@ -10,6 +10,7 @@ import {
   model,
   OnDestroy,
   Renderer2,
+  signal,
 } from "@angular/core";
 import { Subscription } from "rxjs";
 
@@ -20,7 +21,7 @@ import { IEvent, LIGHTBOX_EVENT, LightboxEvent } from "./lightbox-event.service"
   selector: "[lb-overlay]",
   template: "",
   host: {
-    "[class]": "classList",
+    "[class]": "classList()",
   },
   standalone: true,
   imports: [],
@@ -36,11 +37,11 @@ export class LightboxOverlayComponent implements AfterViewInit, OnDestroy {
   public options = model<Partial<LightboxConfig>>();
   public cmpRef = model<ComponentRef<LightboxOverlayComponent>>();
 
-  public classList: string;
+  public classList = signal<string>("");
   private _subscription: Subscription;
 
   constructor() {
-    this.classList = "lightboxOverlay animation fadeInOverlay";
+    this.classList.set("lightboxOverlay animation fadeInOverlay");
     this._subscription = this._lightboxEvent.lightboxEvent$.subscribe((event: IEvent) => this._onReceivedEvent(event));
   }
 
@@ -85,7 +86,7 @@ export class LightboxOverlayComponent implements AfterViewInit, OnDestroy {
   }
 
   private _end(): void {
-    this.classList = "lightboxOverlay animation fadeOutOverlay";
+    this.classList.set("lightboxOverlay animation fadeOutOverlay");
 
     // queue self destruction after the animation has finished
     // FIXME: not sure if there is any way better than this
