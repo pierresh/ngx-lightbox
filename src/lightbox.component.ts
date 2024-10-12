@@ -5,6 +5,7 @@ import {
   Component,
   ElementRef,
   Inject,
+  inject,
   model,
   OnDestroy,
   OnInit,
@@ -79,6 +80,14 @@ import { IAlbum, IEvent, LIGHTBOX_EVENT, LightboxEvent, LightboxWindowRef } from
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnInit {
+  private _elemRef = inject(ElementRef);
+  private _rendererRef = inject(Renderer2);
+  private _lightboxEvent = inject(LightboxEvent);
+  public _lightboxElem = inject(ElementRef);
+  private _lightboxWindowRef = inject(LightboxWindowRef);
+  private _fileSaverService = inject(FileSaverService);
+  private _sanitizer = inject(DomSanitizer);
+
   public album = model<IAlbum[]>([]);
   public currentImageIndex = model<number>(0);
   public options = model<any>({});
@@ -101,16 +110,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   private _windowRef: any;
   private rotate: number;
 
-  constructor(
-    private _elemRef: ElementRef,
-    private _rendererRef: Renderer2,
-    private _lightboxEvent: LightboxEvent,
-    public _lightboxElem: ElementRef,
-    private _lightboxWindowRef: LightboxWindowRef,
-    private _fileSaverService: FileSaverService,
-    private _sanitizer: DomSanitizer,
-    @Inject(DOCUMENT) private _documentRef: Document
-  ) {
+  constructor(@Inject(DOCUMENT) private _documentRef: Document) {
     // initialize data
     this._windowRef = this._lightboxWindowRef.nativeWindow;
 

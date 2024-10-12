@@ -44,7 +44,7 @@ function getWindow(): any {
 
 @Injectable()
 export class LightboxWindowRef {
-  get nativeWindow(): any {
+  public get nativeWindow(): any {
     return getWindow();
   }
 }
