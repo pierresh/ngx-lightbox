@@ -39,7 +39,6 @@ export class LightboxOverlayComponent implements AfterViewInit, OnDestroy {
 
   constructor() {
     this.classList = "lightboxOverlay animation fadeInOverlay";
-    // @ts-ignore
     this._subscription = this._lightboxEvent.lightboxEvent$.subscribe((event: IEvent) => this._onReceivedEvent(event));
   }
 

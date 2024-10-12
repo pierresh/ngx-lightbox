@@ -26,14 +26,14 @@ export const LIGHTBOX_EVENT = {
 
 @Injectable()
 export class LightboxEvent {
-  private _lightboxEventSource: Subject<Object>;
-  public lightboxEvent$: Observable<Object>;
+  private _lightboxEventSource: Subject<IEvent>;
+  public lightboxEvent$: Observable<IEvent>;
   constructor() {
-    this._lightboxEventSource = new Subject<Object>();
+    this._lightboxEventSource = new Subject<IEvent>();
     this.lightboxEvent$ = this._lightboxEventSource.asObservable();
   }
 
-  public broadcastLightboxEvent(event: any): void {
+  public broadcastLightboxEvent(event: IEvent): void {
     this._lightboxEventSource.next(event);
   }
 }

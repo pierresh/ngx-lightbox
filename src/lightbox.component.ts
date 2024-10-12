@@ -152,9 +152,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
 
     this._event = {};
     this._lightboxElem = this._elemRef;
-    this._event.subscription = this._lightboxEvent.lightboxEvent$
-      // @ts-ignore
-      .subscribe((event: IEvent) => this._onReceivedEvent(event));
+    this._event.subscription = this._lightboxEvent.lightboxEvent$.subscribe((event: IEvent) => this._onReceivedEvent(event));
     this.rotate = 0;
   }
 
