@@ -136,14 +136,14 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   public downloadExt(): void {
     this._lightboxEvent.broadcastLightboxEvent({
       id: LIGHTBOX_EVENT.DOWNLOAD,
-      data: this.albums()[this.currentImageIndex()!],
+      data: this.albums()[this.currentImageIndex()],
     });
   }
 
   public download($event: any): void {
     $event.stopPropagation();
-    const url = this.albums()[this.currentImageIndex()!].src;
-    const downloadUrl = this.albums()[this.currentImageIndex()!].downloadUrl;
+    const url = this.albums()[this.currentImageIndex()].src;
+    const downloadUrl = this.albums()[this.currentImageIndex()].downloadUrl;
     const parts = url.split("/");
     const fileName = parts[parts.length - 1];
     const canvas = document.createElement("canvas");
@@ -257,7 +257,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
     } else if (this.currentImageIndex() === this.albums().length - 1) {
       this._changeImage(0);
     } else {
-      this._changeImage(this.currentImageIndex()! + 1);
+      this._changeImage(this.currentImageIndex() + 1);
     }
   }
 
@@ -267,7 +267,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
     } else if (this.currentImageIndex() === 0 && this.albums().length > 1) {
       this._changeImage(this.albums().length - 1);
     } else {
-      this._changeImage(this.currentImageIndex()! - 1);
+      this._changeImage(this.currentImageIndex() - 1);
     }
   }
 
@@ -288,7 +288,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
 
     // to prevent data understand as string
     // convert it to number
-    if (isNaN(this.currentImageIndex()!)) {
+    if (isNaN(this.currentImageIndex())) {
       throw new Error("Current image index is not a number");
     } else {
       this.currentImageIndex.set(Number(this.currentImageIndex()));
@@ -304,7 +304,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
       this._onLoadImageSuccess();
     };
 
-    const src: string = this.albums()[this.currentImageIndex()!].src;
+    const src: string = this.albums()[this.currentImageIndex()].src;
     preloader.src = this._sanitizer.sanitize(SecurityContext.URL, src) ?? "";
   }
 
@@ -503,10 +503,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
 
   private _updateDetails(): void {
     // update the caption
-    if (
-      typeof this.albums()[this.currentImageIndex()!].caption !== "undefined" &&
-      this.albums()[this.currentImageIndex()!].caption !== ""
-    ) {
+    if (typeof this.albums()[this.currentImageIndex()].caption !== "undefined" && this.albums()[this.currentImageIndex()].caption !== "") {
       this.ui().showCaption = true;
     }
 
@@ -520,9 +517,9 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   }
 
   private _albumLabel(): string {
-    // due to {this.currentImageIndex()!} is set from 0 to {this.album().length} - 1
+    // due to {this.currentImageIndex()} is set from 0 to {this.album().length} - 1
     return this.options()
-      .albumLabel!.replace(/%1/g, (this.currentImageIndex()! + 1).toString())
+      .albumLabel!.replace(/%1/g, (this.currentImageIndex() + 1).toString())
       .replace(/%2/g, this.albums().length.toString());
   }
 
@@ -569,7 +566,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
         this._showLeftArrowNav();
         this._showRightArrowNav();
       } else {
-        if (this.currentImageIndex()! > 0) {
+        if (this.currentImageIndex() > 0) {
           // alternatives this.$lightbox.find('.lb-prev').show();
           this._showLeftArrowNav();
           if (alwaysShowNav) {
@@ -578,7 +575,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
           }
         }
 
-        if (this.currentImageIndex()! < this.albums().length - 1) {
+        if (this.currentImageIndex() < this.albums().length - 1) {
           // alternatives this.$lightbox.find('.lb-next').show();
           this._showRightArrowNav();
           if (alwaysShowNav) {
@@ -625,13 +622,13 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
       this._lightboxEvent.broadcastLightboxEvent({ id: LIGHTBOX_EVENT.CLOSE, data: null });
     } else if (key === "p" || keycode === KEYCODE_LEFTARROW) {
       if (this.currentImageIndex() !== 0) {
-        this._changeImage(this.currentImageIndex()! - 1);
+        this._changeImage(this.currentImageIndex() - 1);
       } else if (this.options().wrapAround && this.albums().length > 1) {
         this._changeImage(this.albums().length - 1);
       }
     } else if (key === "n" || keycode === KEYCODE_RIGHTARROW) {
       if (this.currentImageIndex() !== this.albums().length - 1) {
-        this._changeImage(this.currentImageIndex()! + 1);
+        this._changeImage(this.currentImageIndex() + 1);
       } else if (this.options().wrapAround && this.albums().length > 1) {
         this._changeImage(0);
       }
