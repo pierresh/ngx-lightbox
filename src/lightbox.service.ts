@@ -1,5 +1,5 @@
 import { DOCUMENT } from "@angular/common";
-import { ApplicationRef, inject, Injectable, ViewContainerRef } from "@angular/core";
+import { ApplicationRef, ComponentFactoryResolver, ComponentRef, inject, Injectable, Injector } from "@angular/core";
 
 import { LightboxComponent } from "./lightbox.component";
 import { LightboxConfig } from "./lightbox-config.service";
@@ -11,14 +11,22 @@ export class Lightbox {
   private _applicationRef = inject(ApplicationRef);
   private _lightboxConfig = inject(LightboxConfig);
   private _lightboxEvent = inject(LightboxEvent);
-  private viewContainerRef = inject(ViewContainerRef);
   private _documentRef: Document = inject(DOCUMENT);
+
+  // private viewContainerRef = inject(ViewContainerRef);
+  private _componentFactoryResolver = inject(ComponentFactoryResolver);
+  private _injector = inject(Injector);
 
   constructor() {}
 
   public open(album: IAlbum[], curIndex = 0, options = {}): void {
-    const overlayComponentRef = this.viewContainerRef.createComponent(LightboxOverlayComponent);
-    const componentRef = this.viewContainerRef.createComponent(LightboxComponent);
+    // const overlayComponentRef = this.viewContainerRef.createComponent(LightboxOverlayComponent);
+    // const componentRef = this.viewContainerRef.createComponent(LightboxComponent);
+
+    // TODO: replace old way with new way (viewContainerRef)
+    const overlayComponentRef = this._createComponent(LightboxOverlayComponent);
+    const componentRef = this._createComponent(LightboxComponent);
+
     const newOptions: Partial<LightboxConfig> = {};
 
     // broadcast open event
@@ -58,5 +66,12 @@ export class Lightbox {
     if (this._lightboxEvent) {
       this._lightboxEvent.broadcastLightboxEvent({ id: LIGHTBOX_EVENT.CLOSE });
     }
+  }
+
+  private _createComponent(ComponentClass: any): ComponentRef<any> {
+    const factory = this._componentFactoryResolver.resolveComponentFactory(ComponentClass);
+    const component = factory.create(this._injector);
+
+    return component;
   }
 }
