@@ -18,40 +18,43 @@
               "base": "dist"
             },
             "index": "index.html",
-            "polyfills": [
-            ],
+            "browser": "demo/main.ts",
+            "polyfills": [],
             "tsConfig": "tsconfig-demo.json",
+            "assets": [
+              { "glob": "**/*", "input": "./demo/img/", "output": "./demo/img/" }
+            ],
             "styles": [
               "./src/lightbox.css",
               "demo/app.css"
             ],
-            "assets": [
-              { "glob": "**/*", "input": "./demo/img/", "output": "./demo/img/" }
-            ],
-            "scripts": [],
-            "browser": "demo/main.ts"
+            "scripts": []
           },
           "configurations": {
             "production": {
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": true,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true
+              "budgets": [],
+              "fileReplacements": [],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
             }
-          }
+          },
+          "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "buildTarget": "ngx-lightbox:build"
-          },
           "configurations": {
             "production": {
               "buildTarget": "ngx-lightbox:build:production"
+            },
+            "development": {
+              "buildTarget": "ngx-lightbox:build:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
