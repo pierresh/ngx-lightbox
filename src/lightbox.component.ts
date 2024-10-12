@@ -372,11 +372,11 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   private _registerImageLoadingEvent(): void {
     const preloader = new Image();
 
-    preloader.onload = () => {
+    preloader.onload = (): void => {
       this._onLoadImageSuccess();
     };
 
-    const src: any = this.album()![this.currentImageIndex()!].src;
+    const src: string = this.album()![this.currentImageIndex()!].src;
     preloader.src = this._sanitizer.sanitize(SecurityContext.URL, src) ?? "";
   }
 
