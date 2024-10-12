@@ -3,7 +3,7 @@
     <img
       class="lb-image"
       id="image"
-      [src]="album()![currentImageIndex()!].src"
+      [src]="albums()[currentImageIndex()!].src"
       class="lb-image animation fadeIn"
       [hidden]="ui().showReloader"
       #image />
@@ -22,7 +22,7 @@
       <span
         class="lb-caption animation fadeIn"
         [hidden]="!ui().showCaption"
-        [innerHtml]="album()![currentImageIndex()!].caption"
+        [innerHtml]="albums()[currentImageIndex()!].caption"
         #caption>
       </span>
       <span class="lb-number animation fadeIn" [hidden]="!ui().showPageNumber" #number>{{ contentPageNumber() }}</span>

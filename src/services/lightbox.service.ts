@@ -34,7 +34,7 @@ export class Lightbox {
     Object.assign(newOptions, this._lightboxConfig, options);
 
     // attach input to lightbox
-    componentRef.instance.album.set(album);
+    componentRef.instance.albums.set(album);
     componentRef.instance.currentImageIndex.set(curIndex);
     componentRef.instance.options.set(newOptions);
     componentRef.instance.cmpRef.set(componentRef);
