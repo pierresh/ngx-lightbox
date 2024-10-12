@@ -2,38 +2,20 @@ import { Injectable } from "@angular/core";
 
 @Injectable()
 export class LightboxConfig {
-  public fadeDuration: number;
-  public resizeDuration: number;
-  public fitImageInViewPort: boolean;
-  public positionFromTop: number;
-  public showImageNumberLabel: boolean;
-  public alwaysShowNavOnTouchDevices: boolean;
-  public wrapAround: boolean;
-  public disableKeyboardNav: boolean;
-  public disableScrolling: boolean;
-  public centerVertically: boolean;
-  public enableTransition: boolean;
-  public albumLabel: string;
-  public showZoom: boolean;
-  public showRotate: boolean;
+  public fadeDuration: number = 0.7;
+  public resizeDuration: number = 0.5;
+  public fitImageInViewPort: boolean = true;
+  public positionFromTop: number = 20;
+  public showImageNumberLabel: boolean = false;
+  public alwaysShowNavOnTouchDevices: boolean = false;
+  public wrapAround: boolean = false;
+  public disableKeyboardNav: boolean = false;
+  public disableScrolling: boolean = false;
+  public centerVertically: boolean = false;
+  public enableTransition: boolean = true;
+  public albumLabel: string = "Image %1 of %2";
+  public showZoom: boolean = false;
+  public showRotate: boolean = false;
   public showDownloadButton: boolean = false;
-  public containerElementResolver: (document: any) => HTMLElement;
-
-  constructor() {
-    this.fadeDuration = 0.7;
-    this.resizeDuration = 0.5;
-    this.fitImageInViewPort = true;
-    this.positionFromTop = 20;
-    this.showImageNumberLabel = false;
-    this.alwaysShowNavOnTouchDevices = false;
-    this.wrapAround = false;
-    this.disableKeyboardNav = false;
-    this.disableScrolling = false;
-    this.centerVertically = false;
-    this.enableTransition = true;
-    this.albumLabel = "Image %1 of %2";
-    this.showZoom = false;
-    this.showRotate = false;
-    this.containerElementResolver = documentRef => documentRef.querySelector("body");
-  }
+  public containerElementResolver: (document: any) => HTMLElement = documentRef => documentRef.querySelector("body");
 }
