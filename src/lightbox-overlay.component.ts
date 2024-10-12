@@ -3,6 +3,7 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
+  ComponentRef,
   ElementRef,
   HostListener,
   inject,
@@ -33,7 +34,7 @@ export class LightboxOverlayComponent implements AfterViewInit, OnDestroy {
   private _documentRef: Document = inject(DOCUMENT);
 
   public options = model<Partial<LightboxConfig>>();
-  public cmpRef = model<any>();
+  public cmpRef = model<ComponentRef<LightboxOverlayComponent>>();
 
   public classList: string;
   private _subscription: Subscription;
@@ -89,7 +90,7 @@ export class LightboxOverlayComponent implements AfterViewInit, OnDestroy {
     // queue self destruction after the animation has finished
     // FIXME: not sure if there is any way better than this
     setTimeout(() => {
-      this.cmpRef().destroy();
+      this.cmpRef()?.destroy();
     }, this.options()!.fadeDuration! * 1000);
   }
 
