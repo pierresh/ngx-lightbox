@@ -69,10 +69,4 @@
   animation-name: fadeOutOverlay;
 }
 
-.transition {
-  /* Standard syntax */
-  transition-property: all;
-  transition-timing-function: ease;
-}
-
 /* animation */
