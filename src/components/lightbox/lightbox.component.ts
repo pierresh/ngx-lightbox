@@ -78,6 +78,7 @@ import { LightboxUiConfig } from "../../services/lightbox-ui-config";
     "[class]": "ui().classList",
   },
   standalone: true,
+  styleUrl: "./lightbox.component.scss",
   imports: [CommonModule],
   providers: [LightboxEvent, LightboxWindowRef],
   changeDetection: ChangeDetectionStrategy.OnPush,
