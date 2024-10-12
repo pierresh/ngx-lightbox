@@ -11,6 +11,7 @@ import {
   OnInit,
   Renderer2,
   SecurityContext,
+  signal,
   viewChild,
 } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
@@ -46,7 +47,7 @@ import { IAlbum, IEvent, LIGHTBOX_EVENT, LightboxEvent, LightboxWindowRef } from
             [innerHtml]="album()![currentImageIndex()!].caption"
             #caption>
           </span>
-          <span class="lb-number animation fadeIn" [hidden]="!ui.showPageNumber" #number>{{ content.pageNumber }}</span>
+          <span class="lb-number animation fadeIn" [hidden]="!ui.showPageNumber" #number>{{ contentPageNumber() }}</span>
         </div>
         <div class="lb-controlContainer">
           <div class="lb-closeContainer">
@@ -105,7 +106,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   protected _captionElem = viewChild<ElementRef<HTMLSpanElement>>("caption");
   protected _numberElem = viewChild<ElementRef<HTMLSpanElement>>("number");
 
-  public content: { pageNumber: string };
+  public contentPageNumber = signal<string>("");
   /* control the interactive of the directive */
   public ui: {
     /* control the appear of the reloader
@@ -173,10 +174,6 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
       showDownloadExtButton: false,
 
       classList: "lightbox animation fadeIn",
-    };
-
-    this.content = {
-      pageNumber: "",
     };
 
     this._event = {};
@@ -618,7 +615,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
     // array length in album <= 1
     if (this.album()!.length > 1 && this.options().showImageNumberLabel) {
       this.ui.showPageNumber = true;
-      this.content.pageNumber = this._albumLabel();
+      this.contentPageNumber.set(this._albumLabel());
     }
   }
 
