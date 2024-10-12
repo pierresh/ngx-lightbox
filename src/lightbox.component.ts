@@ -20,6 +20,7 @@ import { FileSaverService } from "ngx-filesaver";
 
 import { LightboxConfig } from "./lightbox-config.service";
 import { IAlbum, IEvent, LIGHTBOX_EVENT, LightboxEvent, LightboxWindowRef } from "./lightbox-event.service";
+import { LightboxUiConfig } from "./lightbox-ui-config";
 
 @Component({
   template: ` <div class="lb-outerContainer transition" #outerContainer id="outerContainer">
@@ -110,36 +111,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
 
   public contentPageNumber = signal<string>("");
   /* control the interactive of the directive */
-  public ui: {
-    /* control the appear of the reloader
-    // false: image has loaded completely and ready to be shown
-    // true: image is still loading */
-    showReloader: boolean;
-
-    // control the appear of the nav arrow
-    // the arrowNav is the parent of both left and right arrow
-    // in some cases, the parent shows but the child does not show
-    showLeftArrow: boolean;
-    showRightArrow: boolean;
-    showArrowNav: boolean;
-
-    // control the appear of the zoom and rotate buttons
-    showZoomButton: boolean;
-    showRotateButton: boolean;
-
-    // control whether to show the
-    // page number or not
-    showPageNumber: boolean;
-    showCaption: boolean;
-
-    // control whether to show the download button or not
-    showDownloadButton: boolean;
-
-    // control whether to show the download button or not
-    showDownloadExtButton: boolean;
-
-    classList: string;
-  };
+  public ui: LightboxUiConfig = new LightboxUiConfig();
   private _cssValue: any; /* {
     containerTopPadding: number;
     containerRightPadding: number;
@@ -157,26 +129,6 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   constructor() {
     // initialize data
     this._windowRef = this._lightboxWindowRef.nativeWindow;
-
-    this.ui = {
-      showReloader: true,
-
-      showLeftArrow: false,
-      showRightArrow: false,
-      showArrowNav: false,
-
-      showZoomButton: false,
-      showRotateButton: false,
-
-      showPageNumber: false,
-      showCaption: false,
-
-      showDownloadButton: false,
-
-      showDownloadExtButton: false,
-
-      classList: "lightbox animation fadeIn",
-    };
 
     this._event = {};
     this._lightboxElem = this._elemRef;
