@@ -19,11 +19,12 @@ import {
 } from './lightbox-event.service';
 
 @Component({
-  selector: '[lb-overlay]',
-  template: '',
-  host: {
-    '[class]': 'classList'
-  }
+    selector: '[lb-overlay]',
+    template: '',
+    host: {
+        '[class]': 'classList'
+    },
+    standalone: false
 })
 export class LightboxOverlayComponent implements AfterViewInit, OnDestroy {
   @Input() options: any;

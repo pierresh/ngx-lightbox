@@ -24,7 +24,7 @@ import {
 } from './lightbox-event.service';
 
 @Component({
-  template: `
+    template: `
     <div class="lb-outerContainer transition" #outerContainer id="outerContainer">
       <div class="lb-container" #container id="container">
         <img class="lb-image"
@@ -70,11 +70,12 @@ import {
         </div>
       </div>
     </div>`,
-  selector: '[lb-content]',
-  host: {
-    '(click)': 'close($event)',
-    '[class]': 'ui.classList'
-  }
+    selector: '[lb-content]',
+    host: {
+        '(click)': 'close($event)',
+        '[class]': 'ui.classList'
+    },
+    standalone: false
 })
 export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnInit {
   @Input() album: Array<IAlbum>;

@@ -5,8 +5,8 @@ import { Component } from '@angular/core';
 import { IAlbum, IEvent, Lightbox, LIGHTBOX_EVENT, LightboxConfig, LightboxEvent } from '../src';
 
 @Component({
-  selector: 'demo',
-  template: `
+    selector: 'demo',
+    template: `
     <div class="column has-text-centered">
       <div class="img-row" *ngFor="let image of albums; let i=index">
         <img class="img-frame" [src]="image.thumb" (click)="open(i)"/>
@@ -18,9 +18,10 @@ import { IAlbum, IEvent, Lightbox, LIGHTBOX_EVENT, LightboxConfig, LightboxEvent
         </div>
     </div>
   `,
-  host: {
-    class: 'columns'
-  }
+    host: {
+        class: 'columns'
+    },
+    standalone: false
 })
 export class AppComponent {
   public albums: Array<IAlbum>;

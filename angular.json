@@ -11,12 +11,15 @@
       "schematics": {},
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist",
+            "outputPath": {
+              "base": "dist"
+            },
             "index": "index.html",
-            "main": "demo/main.ts",
-            "polyfills": "demo/polyfills.ts",
+            "polyfills": [
+              "demo/polyfills.ts"
+            ],
             "tsConfig": "tsconfig-demo.json",
             "styles": [
               "./src/lightbox.css",
@@ -25,7 +28,8 @@
             "assets": [
               { "glob": "**/*", "input": "./demo/img/", "output": "./demo/img/" }
             ],
-            "scripts": []
+            "scripts": [],
+            "browser": "demo/main.ts"
           },
           "configurations": {
             "production": {
@@ -34,9 +38,7 @@
               "sourceMap": true,
               "namedChunks": false,
               "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true
+              "extractLicenses": true
             }
           }
         },
