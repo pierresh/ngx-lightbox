@@ -1,6 +1,6 @@
 import { Subscription } from 'rxjs';
 
-import { DOCUMENT } from '@angular/common';
+
 import {
   AfterViewInit,
   Component,
@@ -10,6 +10,7 @@ import {
   Input,
   OnDestroy,
   Renderer2,
+  DOCUMENT
 } from '@angular/core';
 
 import {

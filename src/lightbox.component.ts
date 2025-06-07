@@ -1,6 +1,6 @@
 import { FileSaverService } from 'ngx-filesaver';
 
-import { DOCUMENT } from '@angular/common';
+
 import {
   AfterViewInit,
   Component,
@@ -12,6 +12,7 @@ import {
   Renderer2,
   SecurityContext,
   ViewChild,
+  DOCUMENT
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 

@@ -4,13 +4,14 @@ import {
   ComponentRef,
   Inject,
   Injectable,
-  Injector
+  Injector,
+  DOCUMENT
 } from '@angular/core';
 import { LightboxComponent } from './lightbox.component';
 import { LightboxConfig } from './lightbox-config.service';
 import { LightboxEvent, LIGHTBOX_EVENT, IAlbum } from './lightbox-event.service';
 import { LightboxOverlayComponent } from './lightbox-overlay.component';
-import { DOCUMENT } from '@angular/common';
+
 
 @Injectable()
 export class Lightbox {
