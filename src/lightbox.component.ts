@@ -224,12 +224,12 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
     const _this = this
 
     preloader.onload = function () {
-      // @ts-ignore
+      // @ts-expect-error `this` refers to the Image element inside this onload callback
       canvas.width = this.naturalWidth;
-      // @ts-ignore
+      // @ts-expect-error `this` refers to the Image element inside this onload callback
       canvas.height = this.naturalHeight;
 
-      // @ts-ignore
+      // @ts-expect-error `this` refers to the Image element inside this onload callback
       ctx.drawImage(this, 0, 0);
       canvas.toBlob(function (blob) {
         _this._fileSaverService.save(blob, fileName)
@@ -308,8 +308,8 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   }
 
   private _calcTransformPoint(): void {
-    let height = parseInt(this._documentRef.getElementById('image').style.height, 10);
-    let width = parseInt(this._documentRef.getElementById('image').style.width, 10);
+    const height = parseInt(this._documentRef.getElementById('image').style.height, 10);
+    const width = parseInt(this._documentRef.getElementById('image').style.width, 10);
     let temp = this.rotate % 360;
     if (temp < 0) {
       temp = 360 + temp;

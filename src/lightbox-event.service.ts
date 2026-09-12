@@ -27,10 +27,10 @@ export const LIGHTBOX_EVENT = {
 
 @Injectable()
 export class LightboxEvent {
-  private _lightboxEventSource: Subject<Object>;
-  public lightboxEvent$: Observable<Object>;
+  private _lightboxEventSource: Subject<object>;
+  public lightboxEvent$: Observable<object>;
   constructor() {
-    this._lightboxEventSource = new Subject<Object>();
+    this._lightboxEventSource = new Subject<object>();
     this.lightboxEvent$ = this._lightboxEventSource.asObservable();
   }
 

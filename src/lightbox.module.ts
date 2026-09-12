@@ -1,5 +1,3 @@
-import { FileSaverModule } from 'ngx-filesaver';
-
 import { NgModule } from '@angular/core';
 
 import { LightboxConfig } from './lightbox-config.service';
@@ -15,7 +13,6 @@ import { Lightbox } from './lightbox.service';
     LightboxConfig,
     LightboxEvent,
     LightboxWindowRef
-  ],
-  imports: [ FileSaverModule ]
+  ]
 })
 export class LightboxModule { }
