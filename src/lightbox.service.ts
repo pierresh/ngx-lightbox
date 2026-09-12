@@ -1,7 +1,8 @@
 import {
   ApplicationRef,
-  ComponentFactoryResolver,
   ComponentRef,
+  createComponent,
+  EnvironmentInjector,
   Inject,
   Injectable,
   Injector,
@@ -16,12 +17,12 @@ import { LightboxOverlayComponent } from './lightbox-overlay.component';
 @Injectable()
 export class Lightbox {
   constructor(
-    private _componentFactoryResolver: ComponentFactoryResolver,
+    private _environmentInjector: EnvironmentInjector,
     private _injector: Injector,
     private _applicationRef: ApplicationRef,
     private _lightboxConfig: LightboxConfig,
     private _lightboxEvent: LightboxEvent,
-    @Inject(DOCUMENT) private _documentRef
+    @Inject(DOCUMENT) private _documentRef: Document
   ) { }
 
   open(album: Array<IAlbum>, curIndex = 0, options = {}): void {
@@ -56,7 +57,7 @@ export class Lightbox {
         this._applicationRef.detachView(componentRef.hostView);
       });
 
-      const containerElement = newOptions.containerElementResolver(this._documentRef);
+      const containerElement = newOptions.containerElementResolver!(this._documentRef);
       containerElement.appendChild(overlayComponentRef.location.nativeElement);
       containerElement.appendChild(componentRef.location.nativeElement);
     });
@@ -69,9 +70,9 @@ export class Lightbox {
   }
 
   _createComponent(ComponentClass: any): ComponentRef<any> {
-    const factory = this._componentFactoryResolver.resolveComponentFactory(ComponentClass);
-    const component = factory.create(this._injector);
-
-    return component;
+    return createComponent(ComponentClass, {
+      environmentInjector: this._environmentInjector,
+      elementInjector: this._injector
+    });
   }
 }

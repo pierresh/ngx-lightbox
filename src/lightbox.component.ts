@@ -12,7 +12,8 @@ import {
   Renderer2,
   SecurityContext,
   ViewChild,
-  DOCUMENT
+  DOCUMENT,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -76,6 +77,7 @@ import {
         '(click)': 'close($event)',
         '[class]': 'ui.classList'
     },
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnInit {
@@ -203,7 +205,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
     }
   }
 
-  public downloadExt($event): void {
+  public downloadExt($event: any): void {
     this._lightboxEvent.broadcastLightboxEvent({
       id: LIGHTBOX_EVENT.DOWNLOAD,
       data: this.album[this.currentImageIndex]
@@ -235,9 +237,9 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
     };
     preloader.crossOrigin = '';
     if(downloadUrl && downloadUrl.length > 0)
-      preloader.src = this._sanitizer.sanitize(SecurityContext.URL, downloadUrl);
+      preloader.src = this._sanitizer.sanitize(SecurityContext.URL, downloadUrl) ?? '';
     else
-      preloader.src = this._sanitizer.sanitize(SecurityContext.URL, url);
+      preloader.src = this._sanitizer.sanitize(SecurityContext.URL, url) ?? '';
   }
 
   public control($event: any): void {
@@ -377,7 +379,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
     }
 
     const src: any = this.album[this.currentImageIndex].src;
-    preloader.src = this._sanitizer.sanitize(SecurityContext.URL, src);
+    preloader.src = this._sanitizer.sanitize(SecurityContext.URL, src) ?? '';
   }
 
   /**

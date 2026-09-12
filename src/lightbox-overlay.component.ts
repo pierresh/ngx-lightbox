@@ -10,7 +10,8 @@ import {
   Input,
   OnDestroy,
   Renderer2,
-  DOCUMENT
+  DOCUMENT,
+  ChangeDetectionStrategy
 } from '@angular/core';
 
 import {
@@ -25,6 +26,7 @@ import {
     host: {
         '[class]': 'classList'
     },
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class LightboxOverlayComponent implements AfterViewInit, OnDestroy {

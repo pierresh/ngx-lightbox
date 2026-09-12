@@ -4,6 +4,7 @@
     "outDir": "./compiled",
     "sourceMap": true,
     "declaration": true,
+    "strict": false,
     "moduleResolution": "bundler",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -16,5 +17,8 @@
   },
   "include": [
     "demo/**/*"
-  ]
+  ],
+  "angularCompilerOptions": {
+    "strictTemplates": false
+  }
 }

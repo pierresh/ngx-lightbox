@@ -4,6 +4,7 @@
     "sourceMap": true,
     "declaration": true,
     "esModuleInterop": true,
+    "strict": false,
     "moduleResolution": "bundler",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -17,5 +18,8 @@
   },
   "include": [
     "src/*.ts"
-  ]
+  ],
+  "angularCompilerOptions": {
+    "strictTemplates": false
+  }
 }
