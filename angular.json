@@ -70,10 +70,13 @@
         "test": {
           "builder": "@angular/build:karma",
           "options": {
-            "main": "src/index.ts",
             "tsConfig": "tsconfig.json",
             "karmaConfig": "karma.conf.js",
-            "scripts": []
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
+            "watch": false
           }
         },
         "lint": {
