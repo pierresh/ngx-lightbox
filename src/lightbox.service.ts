@@ -25,14 +25,14 @@ export class Lightbox {
     Object.assign(newOptions, this._lightboxConfig, options);
 
     // attach input to lightbox
-    componentRef.instance.album = album;
-    componentRef.instance.currentImageIndex = curIndex;
-    componentRef.instance.options = newOptions;
-    componentRef.instance.cmpRef = componentRef;
+    componentRef.setInput('album', album);
+    componentRef.setInput('currentImageIndex', curIndex);
+    componentRef.setInput('options', newOptions);
+    componentRef.setInput('cmpRef', componentRef);
 
     // attach input to overlay
-    overlayComponentRef.instance.options = newOptions;
-    overlayComponentRef.instance.cmpRef = overlayComponentRef;
+    overlayComponentRef.setInput('options', newOptions);
+    overlayComponentRef.setInput('cmpRef', overlayComponentRef);
 
     // FIXME: not sure why last event is broadcasted (which is CLOSED) and make
     // lightbox can not be opened the second time.
