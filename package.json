@@ -8,7 +8,8 @@
     "ngx-filesaver": "22.0.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^22.1.8",
+    "@angular-eslint/builder": "22.5.0",
+    "@angular/build": "^22.1.8",
     "@angular/cli": "^22.1.8",
     "@angular/common": "^22.1.6",
     "@angular/compiler": "^22.1.6",
@@ -16,7 +17,6 @@
     "@angular/core": "^22.1.6",
     "@angular/platform-browser": "^22.1.6",
     "@angular/platform-browser-dynamic": "^22.1.6",
-    "@angular-eslint/builder": "22.5.0",
     "@eslint/js": "^10.0.1",
     "@types/file-saver": "^2.0.7",
     "@types/jasmine": "^4.3.0",

@@ -4,7 +4,7 @@ const webpack = require('webpack');
 module.exports = config => {
   config.set({
     basePath: '',
-    frameworks: ['jasmine', '@angular-devkit/build-angular'],
+    frameworks: ['jasmine'],
     files: [
       { pattern: './src/img/*.png', watched: false, included: false, served: true, nocache: false },
       { pattern: './karma-main.js', watched: false }
@@ -24,8 +24,7 @@ module.exports = config => {
       require('karma-jasmine'),
       require('karma-phantomjs-launcher'),
       require('karma-webpack'),
-      require('karma-sourcemap-loader'),
-      require('@angular-devkit/build-angular/plugins/karma')
+      require('karma-sourcemap-loader')
     ],
     preprocessors: {
       './karma-main.js': ['webpack', 'sourcemap']
