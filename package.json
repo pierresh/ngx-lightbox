@@ -2,10 +2,17 @@
   "name": "@pierresh/ngx-lightbox",
   "version": "22.0.0",
   "description": "A port >= Angular 22 for lightbox2",
-  "main": "index.js",
+  "private": true,
   "dependencies": {
     "file-saver": "^2.0.5",
-    "ngx-filesaver": "22.0.0"
+    "ngx-filesaver": "22.0.0",
+    "tslib": "^2.8.1"
+  },
+  "peerDependencies": {
+    "@angular/core": "^22.0.0",
+    "@angular/common": "^22.0.0",
+    "@angular/platform-browser": "^22.0.0",
+    "rxjs": "^6.5.3 || ^7.4.0"
   },
   "devDependencies": {
     "@angular-eslint/builder": "22.5.0",
@@ -21,7 +28,6 @@
     "@types/file-saver": "^2.0.7",
     "@types/jasmine": "^4.3.0",
     "angular-eslint": "22.5.0",
-    "copyfiles": "^2.4.1",
     "core-js": "^3.25.3",
     "del-cli": "^5.0.0",
     "eslint": "^10.9.1",
@@ -32,6 +38,7 @@
     "karma-phantomjs-launcher": "^1.0.4",
     "karma-sourcemap-loader": "^0.4.0",
     "karma-webpack": "^5.0.0",
+    "ng-packagr": "22.1.1",
     "phantomjs-prebuilt": "^2.1.16",
     "rxjs": "^7.5.7",
     "typescript": "6.0.3",
@@ -42,10 +49,10 @@
   "scripts": {
     "start": "./node_modules/.bin/ng serve",
     "build": "./node_modules/.bin/ng build",
+    "build:lib": "del-cli dist/ngx-lightbox && ./node_modules/.bin/ng-packagr -p ng-package.json -c tsconfig.json",
     "test": " ./node_modules/.bin/ng lint && ./node_modules/.bin/ng test",
     "lint": "./node_modules/.bin/ng lint",
-    "prepublishOnly": "rm -r ./.angular && ./node_modules/.bin/ngc && ./node_modules/.bin/copyfiles -u 1 src/img/* src/*.js src/*.d.ts src/*.js.map src/*.metadata.json src/*.css .",
-    "postpublish": "./node_modules/.bin/del '*.{service,component,module,spec,ngfactory}.js' '*.{metadata,ngsummary}.json' index.js webpack.config.js  '*.{ts,css,map}' '{compiled,img}' 'src/*.{d.ts,ngfactory.ts,js,map,json}'"
+    "release": "yarn build:lib && cd dist/ngx-lightbox && npm pkg delete private && npm publish --access public"
   },
   "repository": {
     "type": "git",

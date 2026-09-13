@@ -21,6 +21,7 @@
     "src/*.ts"
   ],
   "angularCompilerOptions": {
-    "strictTemplates": false
+    "strictTemplates": false,
+    "compilationMode": "partial"
   }
 }
