@@ -1,13 +1,4 @@
-import {
-  ApplicationRef,
-  ComponentRef,
-  createComponent,
-  EnvironmentInjector,
-  Inject,
-  Injectable,
-  Injector,
-  DOCUMENT
-} from '@angular/core';
+import { ApplicationRef, ComponentRef, createComponent, EnvironmentInjector, Injectable, Injector, DOCUMENT, inject } from '@angular/core';
 import { LightboxComponent } from './lightbox.component';
 import { LightboxConfig } from './lightbox-config.service';
 import { LightboxEvent, LIGHTBOX_EVENT, IAlbum } from './lightbox-event.service';
@@ -16,14 +7,13 @@ import { LightboxOverlayComponent } from './lightbox-overlay.component';
 
 @Injectable()
 export class Lightbox {
-  constructor(
-    private _environmentInjector: EnvironmentInjector,
-    private _injector: Injector,
-    private _applicationRef: ApplicationRef,
-    private _lightboxConfig: LightboxConfig,
-    private _lightboxEvent: LightboxEvent,
-    @Inject(DOCUMENT) private _documentRef: Document
-  ) { }
+  private _environmentInjector = inject(EnvironmentInjector);
+  private _injector = inject(Injector);
+  private _applicationRef = inject(ApplicationRef);
+  private _lightboxConfig = inject(LightboxConfig);
+  private _lightboxEvent = inject(LightboxEvent);
+  private _documentRef = inject<Document>(DOCUMENT);
+
 
   open(album: Array<IAlbum>, curIndex = 0, options = {}): void {
     const overlayComponentRef = this._createComponent(LightboxOverlayComponent);

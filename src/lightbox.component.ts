@@ -1,20 +1,7 @@
 import { FileSaverService } from 'ngx-filesaver';
 
 
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  Inject,
-  Input,
-  OnDestroy,
-  OnInit,
-  Renderer2,
-  SecurityContext,
-  ViewChild,
-  DOCUMENT,
-  ChangeDetectionStrategy
-} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, Renderer2, SecurityContext, ViewChild, DOCUMENT, ChangeDetectionStrategy, inject } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import {
@@ -81,6 +68,15 @@ import {
     standalone: false
 })
 export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnInit {
+  private _elemRef = inject(ElementRef);
+  private _rendererRef = inject(Renderer2);
+  private _lightboxEvent = inject(LightboxEvent);
+  _lightboxElem = inject(ElementRef);
+  private _lightboxWindowRef = inject(LightboxWindowRef);
+  private _fileSaverService = inject(FileSaverService);
+  private _sanitizer = inject(DomSanitizer);
+  private _documentRef = inject(DOCUMENT);
+
   @Input() album: Array<IAlbum>;
   @Input() currentImageIndex: number;
   @Input() options: any;
@@ -100,16 +96,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   private _event: any;
   private _windowRef: any;
   private rotate: number;
-  constructor(
-    private _elemRef: ElementRef,
-    private _rendererRef: Renderer2,
-    private _lightboxEvent: LightboxEvent,
-    public _lightboxElem: ElementRef,
-    private _lightboxWindowRef: LightboxWindowRef,
-    private _fileSaverService: FileSaverService,
-    private _sanitizer: DomSanitizer,
-    @Inject(DOCUMENT) private _documentRef
-  ) {
+  constructor() {
     // initialize data
     this.options = this.options || {};
     this.album = this.album || [];

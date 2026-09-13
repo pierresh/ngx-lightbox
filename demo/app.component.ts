@@ -1,6 +1,6 @@
 import { Subscription } from 'rxjs';
 
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 
 import { IAlbum, IEvent, Lightbox, LIGHTBOX_EVENT, LightboxConfig, LightboxEvent } from '../src';
 
@@ -29,13 +29,13 @@ import { IAlbum, IEvent, Lightbox, LIGHTBOX_EVENT, LightboxConfig, LightboxEvent
     standalone: false
 })
 export class AppComponent {
+  private _lightbox = inject(Lightbox);
+  private _lightboxEvent = inject(LightboxEvent);
+  private _lighboxConfig = inject(LightboxConfig);
+
   public albums: Array<IAlbum>;
   private _subscription: Subscription;
-  constructor(
-    private _lightbox: Lightbox,
-    private _lightboxEvent: LightboxEvent,
-    private _lighboxConfig: LightboxConfig
-  ) {
+  constructor() {
     this.albums = [];
     for (let i = 1; i <= 4; i++) {
       const src = 'demo/img/image' + i + '.jpg';
