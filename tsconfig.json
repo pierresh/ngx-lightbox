@@ -5,6 +5,7 @@
     "declaration": true,
     "esModuleInterop": true,
     "strict": false,
+    "module": "preserve",
     "moduleResolution": "bundler",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
