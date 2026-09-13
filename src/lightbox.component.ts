@@ -1,7 +1,7 @@
 import { FileSaverService } from 'ngx-filesaver';
 
 
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, Renderer2, SecurityContext, ViewChild, DOCUMENT, ChangeDetectionStrategy, inject, input, linkedSignal } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, Renderer2, SecurityContext, DOCUMENT, ChangeDetectionStrategy, inject, input, linkedSignal, viewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import {
@@ -82,15 +82,15 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   options = input<any>({});
   cmpRef = input<any>();
   currentIndex = linkedSignal(() => this.currentImageIndex());
-  @ViewChild('outerContainer', { static: false }) _outerContainerElem: ElementRef;
-  @ViewChild('container', { static: false }) _containerElem: ElementRef;
-  @ViewChild('leftArrow', { static: false }) _leftArrowElem: ElementRef;
-  @ViewChild('rightArrow', { static: false }) _rightArrowElem: ElementRef;
-  @ViewChild('navArrow', { static: false }) _navArrowElem: ElementRef;
-  @ViewChild('dataContainer', { static: false }) _dataContainerElem: ElementRef;
-  @ViewChild('image', { static: false }) _imageElem: ElementRef;
-  @ViewChild('caption', { static: false }) _captionElem: ElementRef;
-  @ViewChild('number', { static: false }) _numberElem: ElementRef;
+  readonly _outerContainerElem = viewChild<ElementRef>('outerContainer');
+  readonly _containerElem = viewChild<ElementRef>('container');
+  readonly _leftArrowElem = viewChild<ElementRef>('leftArrow');
+  readonly _rightArrowElem = viewChild<ElementRef>('rightArrow');
+  readonly _navArrowElem = viewChild<ElementRef>('navArrow');
+  readonly _dataContainerElem = viewChild<ElementRef>('dataContainer');
+  readonly _imageElem = viewChild<ElementRef>('image');
+  readonly _captionElem = viewChild<ElementRef>('caption');
+  readonly _numberElem = viewChild<ElementRef>('number');
   public content: any;
   public ui: any;
   private _cssValue: any;
@@ -156,14 +156,14 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
     // need to init css value here, after the view ready
     // actually these values are always 0
     this._cssValue = {
-      containerTopPadding: Math.round(this._getCssStyleValue(this._containerElem, 'padding-top')),
-      containerRightPadding: Math.round(this._getCssStyleValue(this._containerElem, 'padding-right')),
-      containerBottomPadding: Math.round(this._getCssStyleValue(this._containerElem, 'padding-bottom')),
-      containerLeftPadding: Math.round(this._getCssStyleValue(this._containerElem, 'padding-left')),
-      imageBorderWidthTop: Math.round(this._getCssStyleValue(this._imageElem, 'border-top-width')),
-      imageBorderWidthBottom: Math.round(this._getCssStyleValue(this._imageElem, 'border-bottom-width')),
-      imageBorderWidthLeft: Math.round(this._getCssStyleValue(this._imageElem, 'border-left-width')),
-      imageBorderWidthRight: Math.round(this._getCssStyleValue(this._imageElem, 'border-right-width'))
+      containerTopPadding: Math.round(this._getCssStyleValue(this._containerElem(), 'padding-top')),
+      containerRightPadding: Math.round(this._getCssStyleValue(this._containerElem(), 'padding-right')),
+      containerBottomPadding: Math.round(this._getCssStyleValue(this._containerElem(), 'padding-bottom')),
+      containerLeftPadding: Math.round(this._getCssStyleValue(this._containerElem(), 'padding-left')),
+      imageBorderWidthTop: Math.round(this._getCssStyleValue(this._imageElem(), 'border-top-width')),
+      imageBorderWidthBottom: Math.round(this._getCssStyleValue(this._imageElem(), 'border-bottom-width')),
+      imageBorderWidthLeft: Math.round(this._getCssStyleValue(this._imageElem(), 'border-left-width')),
+      imageBorderWidthRight: Math.round(this._getCssStyleValue(this._imageElem(), 'border-right-width'))
     };
 
     if (this._validateInputData()) {
@@ -235,35 +235,35 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
       this.rotate = this.rotate - 90;
       this._rotateContainer();
       this._calcTransformPoint();
-      this._imageElem.nativeElement.style.transform = `rotate(${this.rotate}deg)`;
-      this._imageElem.nativeElement.style.webkitTransform = `rotate(${this.rotate}deg)`;
+      this._imageElem().nativeElement.style.transform = `rotate(${this.rotate}deg)`;
+      this._imageElem().nativeElement.style.webkitTransform = `rotate(${this.rotate}deg)`;
       this._lightboxEvent.broadcastLightboxEvent({ id: LIGHTBOX_EVENT.ROTATE_LEFT, data: null });
     } else if ($event.target.classList.contains('lb-turnRight')) {
       this.rotate = this.rotate + 90;
       this._rotateContainer();
       this._calcTransformPoint();
-      this._imageElem.nativeElement.style.transform = `rotate(${this.rotate}deg)`;
-      this._imageElem.nativeElement.style.webkitTransform = `rotate(${this.rotate}deg)`;
+      this._imageElem().nativeElement.style.transform = `rotate(${this.rotate}deg)`;
+      this._imageElem().nativeElement.style.webkitTransform = `rotate(${this.rotate}deg)`;
       this._lightboxEvent.broadcastLightboxEvent({ id: LIGHTBOX_EVENT.ROTATE_RIGHT, data: null });
     } else if ($event.target.classList.contains('lb-zoomOut')) {
-      height = parseInt(this._outerContainerElem.nativeElement.style.height, 10) / 1.5;
-      width = parseInt(this._outerContainerElem.nativeElement.style.width, 10) / 1.5;
-      this._outerContainerElem.nativeElement.style.height = height + 'px';
-      this._outerContainerElem.nativeElement.style.width = width + 'px';
-      height = parseInt(this._imageElem.nativeElement.style.height, 10) / 1.5;
-      width = parseInt(this._imageElem.nativeElement.style.width, 10) / 1.5;
-      this._imageElem.nativeElement.style.height = height + 'px';
-      this._imageElem.nativeElement.style.width = width + 'px';
+      height = parseInt(this._outerContainerElem().nativeElement.style.height, 10) / 1.5;
+      width = parseInt(this._outerContainerElem().nativeElement.style.width, 10) / 1.5;
+      this._outerContainerElem().nativeElement.style.height = height + 'px';
+      this._outerContainerElem().nativeElement.style.width = width + 'px';
+      height = parseInt(this._imageElem().nativeElement.style.height, 10) / 1.5;
+      width = parseInt(this._imageElem().nativeElement.style.width, 10) / 1.5;
+      this._imageElem().nativeElement.style.height = height + 'px';
+      this._imageElem().nativeElement.style.width = width + 'px';
       this._lightboxEvent.broadcastLightboxEvent({ id: LIGHTBOX_EVENT.ZOOM_OUT, data: null });
     } else if ($event.target.classList.contains('lb-zoomIn')) {
-      height = parseInt(this._outerContainerElem.nativeElement.style.height, 10) * 1.5;
-      width = parseInt(this._outerContainerElem.nativeElement.style.width, 10) * 1.5;
-      this._outerContainerElem.nativeElement.style.height = height + 'px';
-      this._outerContainerElem.nativeElement.style.width = width + 'px';
-      height = parseInt(this._imageElem.nativeElement.style.height, 10) * 1.5;
-      width = parseInt(this._imageElem.nativeElement.style.width, 10) * 1.5;
-      this._imageElem.nativeElement.style.height = height + 'px';
-      this._imageElem.nativeElement.style.width = width + 'px';
+      height = parseInt(this._outerContainerElem().nativeElement.style.height, 10) * 1.5;
+      width = parseInt(this._outerContainerElem().nativeElement.style.width, 10) * 1.5;
+      this._outerContainerElem().nativeElement.style.height = height + 'px';
+      this._outerContainerElem().nativeElement.style.width = width + 'px';
+      height = parseInt(this._imageElem().nativeElement.style.height, 10) * 1.5;
+      width = parseInt(this._imageElem().nativeElement.style.width, 10) * 1.5;
+      this._imageElem().nativeElement.style.height = height + 'px';
+      this._imageElem().nativeElement.style.width = width + 'px';
       this._lightboxEvent.broadcastLightboxEvent({ id: LIGHTBOX_EVENT.ZOOM_IN, data: null });
     }
   }
@@ -274,37 +274,37 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
       temp *= -1;
     }
     if (temp / 90 % 4 === 1 || temp / 90 % 4 === 3) {
-      this._outerContainerElem.nativeElement.style.height = this._imageElem.nativeElement.style.width;
-      this._outerContainerElem.nativeElement.style.width = this._imageElem.nativeElement.style.height;
-      this._containerElem.nativeElement.style.height = this._imageElem.nativeElement.style.width;
-      this._containerElem.nativeElement.style.width = this._imageElem.nativeElement.style.height;
+      this._outerContainerElem().nativeElement.style.height = this._imageElem().nativeElement.style.width;
+      this._outerContainerElem().nativeElement.style.width = this._imageElem().nativeElement.style.height;
+      this._containerElem().nativeElement.style.height = this._imageElem().nativeElement.style.width;
+      this._containerElem().nativeElement.style.width = this._imageElem().nativeElement.style.height;
     } else {
-      this._outerContainerElem.nativeElement.style.height = this._imageElem.nativeElement.style.height;
-      this._outerContainerElem.nativeElement.style.width = this._imageElem.nativeElement.style.width;
-      this._containerElem.nativeElement.style.height = this._imageElem.nativeElement.style.width;
-      this._containerElem.nativeElement.style.width = this._imageElem.nativeElement.style.height;
+      this._outerContainerElem().nativeElement.style.height = this._imageElem().nativeElement.style.height;
+      this._outerContainerElem().nativeElement.style.width = this._imageElem().nativeElement.style.width;
+      this._containerElem().nativeElement.style.height = this._imageElem().nativeElement.style.width;
+      this._containerElem().nativeElement.style.width = this._imageElem().nativeElement.style.height;
     }
   }
 
   private _resetImage(): void {
     this.rotate = 0;
-    this._imageElem.nativeElement.style.transform = `rotate(${this.rotate}deg)`;
-    this._imageElem.nativeElement.style.webkitTransform = `rotate(${this.rotate}deg)`;
+    this._imageElem().nativeElement.style.transform = `rotate(${this.rotate}deg)`;
+    this._imageElem().nativeElement.style.webkitTransform = `rotate(${this.rotate}deg)`;
   }
 
   private _calcTransformPoint(): void {
-    const height = parseInt(this._imageElem.nativeElement.style.height, 10);
-    const width = parseInt(this._imageElem.nativeElement.style.width, 10);
+    const height = parseInt(this._imageElem().nativeElement.style.height, 10);
+    const width = parseInt(this._imageElem().nativeElement.style.width, 10);
     let temp = this.rotate % 360;
     if (temp < 0) {
       temp = 360 + temp;
     }
     if (temp === 90) {
-      this._imageElem.nativeElement.style.transformOrigin = (height / 2) + 'px ' + (height / 2) + 'px';
+      this._imageElem().nativeElement.style.transformOrigin = (height / 2) + 'px ' + (height / 2) + 'px';
     } else if (temp === 180) {
-      this._imageElem.nativeElement.style.transformOrigin = (width / 2) + 'px ' + (height / 2) + 'px';
+      this._imageElem().nativeElement.style.transformOrigin = (width / 2) + 'px ' + (height / 2) + 'px';
     } else if (temp === 270) {
-      this._imageElem.nativeElement.style.transformOrigin = (width / 2) + 'px ' + (width / 2) + 'px';
+      this._imageElem().nativeElement.style.transformOrigin = (width / 2) + 'px ' + (width / 2) + 'px';
     }
   }
 
@@ -386,8 +386,8 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
     let naturalImageHeight;
 
     // set default width and height of image to be its natural
-    imageWidth = naturalImageWidth = this._imageElem.nativeElement.naturalWidth;
-    imageHeight = naturalImageHeight = this._imageElem.nativeElement.naturalHeight;
+    imageWidth = naturalImageWidth = this._imageElem().nativeElement.naturalWidth;
+    imageHeight = naturalImageHeight = this._imageElem().nativeElement.naturalHeight;
     if (this.options().fitImageInViewPort) {
       windowWidth = this._windowRef.innerWidth;
       windowHeight = this._windowRef.innerHeight;
@@ -407,8 +407,9 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
         }
       }
 
-      this._rendererRef.setStyle(this._imageElem.nativeElement, 'width', `${imageWidth}px`);
-      this._rendererRef.setStyle(this._imageElem.nativeElement, 'height', `${imageHeight}px`);
+      const _imageElem = this._imageElem();
+      this._rendererRef.setStyle(_imageElem.nativeElement, 'width', `${imageWidth}px`);
+      this._rendererRef.setStyle(_imageElem.nativeElement, 'height', `${imageHeight}px`);
     }
 
     this._sizeContainer(imageWidth, imageHeight);
@@ -429,8 +430,8 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   }
 
   private _sizeContainer(imageWidth: number, imageHeight: number): void {
-    const oldWidth = this._outerContainerElem.nativeElement.offsetWidth;
-    const oldHeight = this._outerContainerElem.nativeElement.offsetHeight;
+    const oldWidth = this._outerContainerElem().nativeElement.offsetWidth;
+    const oldHeight = this._outerContainerElem().nativeElement.offsetHeight;
     const newWidth = imageWidth + this._cssValue.containerRightPadding + this._cssValue.containerLeftPadding +
       this._cssValue.imageBorderWidthLeft + this._cssValue.imageBorderWidthRight;
     const newHeight = imageHeight + this._cssValue.containerTopPadding + this._cssValue.containerBottomPadding +
@@ -438,8 +439,9 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
 
     // make sure that distances are large enough for transitionend event to be fired, at least 5px.
     if (Math.abs(oldWidth - newWidth) + Math.abs(oldHeight - newHeight) > 5) {
-      this._rendererRef.setStyle(this._outerContainerElem.nativeElement, 'width', `${newWidth}px`);
-      this._rendererRef.setStyle(this._outerContainerElem.nativeElement, 'height', `${newHeight}px`);
+      const _outerContainerElem = this._outerContainerElem();
+      this._rendererRef.setStyle(_outerContainerElem.nativeElement, 'width', `${newWidth}px`);
+      this._rendererRef.setStyle(_outerContainerElem.nativeElement, 'height', `${newHeight}px`);
 
       // bind resize event to outer container
       // use enableTransition to prevent infinite loader
@@ -447,7 +449,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
         this._event.transitions = [];
         ['transitionend', 'webkitTransitionEnd', 'oTransitionEnd', 'MSTransitionEnd'].forEach(eventName => {
           this._event.transitions.push(
-            this._rendererRef.listen(this._outerContainerElem.nativeElement, eventName, (event: any) => {
+            this._rendererRef.listen(this._outerContainerElem().nativeElement, eventName, (event: any) => {
               if (event.target === event.currentTarget) {
                 this._postResize(newWidth);
               }
@@ -472,7 +474,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
       this._event.transitions = [];
     }
 
-    this._rendererRef.setStyle(this._dataContainerElem.nativeElement, 'width', `${newWidth}px`);
+    this._rendererRef.setStyle(this._dataContainerElem().nativeElement, 'width', `${newWidth}px`);
     this._showImage();
   }
 
@@ -531,25 +533,30 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
       '-webkit-animation-duration', `${fadeDuration}s`);
     this._rendererRef.setStyle(this._lightboxElem.nativeElement,
       'animation-duration', `${fadeDuration}s`);
-    this._rendererRef.setStyle(this._outerContainerElem.nativeElement,
+    const _outerContainerElem = this._outerContainerElem();
+    this._rendererRef.setStyle(_outerContainerElem.nativeElement,
       '-webkit-transition-duration', `${resizeDuration}s`);
-    this._rendererRef.setStyle(this._outerContainerElem.nativeElement,
+    this._rendererRef.setStyle(_outerContainerElem.nativeElement,
       'transition-duration', `${resizeDuration}s`);
-    this._rendererRef.setStyle(this._dataContainerElem.nativeElement,
+    const _dataContainerElem = this._dataContainerElem();
+    this._rendererRef.setStyle(_dataContainerElem.nativeElement,
       '-webkit-animation-duration', `${fadeDuration}s`);
-    this._rendererRef.setStyle(this._dataContainerElem.nativeElement,
+    this._rendererRef.setStyle(_dataContainerElem.nativeElement,
       'animation-duration', `${fadeDuration}s`);
-    this._rendererRef.setStyle(this._imageElem.nativeElement,
+    const _imageElem = this._imageElem();
+    this._rendererRef.setStyle(_imageElem.nativeElement,
       '-webkit-animation-duration', `${fadeDuration}s`);
-    this._rendererRef.setStyle(this._imageElem.nativeElement,
+    this._rendererRef.setStyle(_imageElem.nativeElement,
       'animation-duration', `${fadeDuration}s`);
-    this._rendererRef.setStyle(this._captionElem.nativeElement,
+    const _captionElem = this._captionElem();
+    this._rendererRef.setStyle(_captionElem.nativeElement,
       '-webkit-animation-duration', `${fadeDuration}s`);
-    this._rendererRef.setStyle(this._captionElem.nativeElement,
+    this._rendererRef.setStyle(_captionElem.nativeElement,
       'animation-duration', `${fadeDuration}s`);
-    this._rendererRef.setStyle(this._numberElem.nativeElement,
+    const _numberElem = this._numberElem();
+    this._rendererRef.setStyle(_numberElem.nativeElement,
       '-webkit-animation-duration', `${fadeDuration}s`);
-    this._rendererRef.setStyle(this._numberElem.nativeElement,
+    this._rendererRef.setStyle(_numberElem.nativeElement,
       'animation-duration', `${fadeDuration}s`);
   }
 
@@ -619,8 +626,8 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
       if (this.options().wrapAround) {
         if (alwaysShowNav) {
           // alternatives this.$lightbox.find('.lb-prev, .lb-next').css('opacity', '1');
-          this._rendererRef.setStyle(this._leftArrowElem.nativeElement, 'opacity', '1');
-          this._rendererRef.setStyle(this._rightArrowElem.nativeElement, 'opacity', '1');
+          this._rendererRef.setStyle(this._leftArrowElem().nativeElement, 'opacity', '1');
+          this._rendererRef.setStyle(this._rightArrowElem().nativeElement, 'opacity', '1');
         }
 
         // alternatives this.$lightbox.find('.lb-prev, .lb-next').show();
@@ -632,7 +639,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
           this._showLeftArrowNav();
           if (alwaysShowNav) {
             // alternatives this.$lightbox.find('.lb-prev').css('opacity', '1');
-            this._rendererRef.setStyle(this._leftArrowElem.nativeElement, 'opacity', '1');
+            this._rendererRef.setStyle(this._leftArrowElem().nativeElement, 'opacity', '1');
           }
         }
 
@@ -641,7 +648,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
           this._showRightArrowNav();
           if (alwaysShowNav) {
             // alternatives this.$lightbox.find('.lb-next').css('opacity', '1');
-            this._rendererRef.setStyle(this._rightArrowElem.nativeElement, 'opacity', '1');
+            this._rendererRef.setStyle(this._rightArrowElem().nativeElement, 'opacity', '1');
           }
         }
       }
