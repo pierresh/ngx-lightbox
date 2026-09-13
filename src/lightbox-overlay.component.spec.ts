@@ -34,7 +34,9 @@ describe('[ Unit - LightboxOverlayComponent ]', () => {
   }));
 
   it('should init the component with correct styling', () => {
-    expect(fixture.nativeElement.getAttribute('class')).toContain('lightboxOverlay animation fadeInOverlay');
+    expect(fixture.nativeElement.getAttribute('class').split(' ')).toEqual(
+      jasmine.arrayWithExactContents(['lightboxOverlay', 'animation', 'fadeInOverlay'])
+    );
     expect(fixture.nativeElement.getAttribute('style'))
       .toMatch(new RegExp(`animation.*${mockData.options.fadeDuration}s`));
   });
@@ -46,7 +48,9 @@ describe('[ Unit - LightboxOverlayComponent ]', () => {
       expect(lightboxEvent.broadcastLightboxEvent).toHaveBeenCalledWith({ id: LIGHTBOX_EVENT.CLOSE, data: null });
       tick();
       fixture.detectChanges();
-      expect(fixture.nativeElement.getAttribute('class')).toContain('lightboxOverlay animation fadeOutOverlay');
+      expect(fixture.nativeElement.getAttribute('class').split(' ')).toEqual(
+        jasmine.arrayWithExactContents(['lightboxOverlay', 'animation', 'fadeOutOverlay'])
+      );
       tick(mockData.options.fadeDuration * 1000 + 1);
       expect(fixture.componentInstance.cmpRef.destroy).toHaveBeenCalledTimes(1);
     }));

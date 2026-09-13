@@ -58,6 +58,7 @@ describe('[ Unit - LightboxComponent ]', () => {
       showZoomButton: false,
       showRotateButton: false,
       showDownloadButton: false,
+      showDownloadExtButton: false,
       classList: 'lightbox animation fadeIn'
     });
     expect(fixture.componentInstance.content).toEqual({ pageNumber: '' });
@@ -119,6 +120,7 @@ describe('[ Unit - LightboxComponent ]', () => {
         showRotateButton: false,
         showCaption: false,
         showDownloadButton: false,
+        showDownloadExtButton: false,
         classList: 'lightbox animation fadeIn'
       });
       expect(lightboxEvent.broadcastLightboxEvent).toHaveBeenCalledTimes(1);
@@ -139,6 +141,7 @@ describe('[ Unit - LightboxComponent ]', () => {
         showPageNumber: false,
         showCaption: false,
         showDownloadButton: false,
+        showDownloadExtButton: false,
         classList: 'lightbox animation fadeIn'
       });
       expect(lightboxEvent.broadcastLightboxEvent).toHaveBeenCalledTimes(1);
@@ -161,6 +164,7 @@ describe('[ Unit - LightboxComponent ]', () => {
         showPageNumber: false,
         showCaption: false,
         showDownloadButton: false,
+        showDownloadExtButton: false,
         classList: 'lightbox animation fadeIn'
       });
       expect(lightboxEvent.broadcastLightboxEvent).toHaveBeenCalledTimes(1);
@@ -183,6 +187,7 @@ describe('[ Unit - LightboxComponent ]', () => {
         showPageNumber: false,
         showCaption: false,
         showDownloadButton: false,
+        showDownloadExtButton: false,
         classList: 'lightbox animation fadeIn'
       });
       expect(lightboxEvent.broadcastLightboxEvent).toHaveBeenCalledTimes(1);
