@@ -59,7 +59,7 @@ import {
             <a class="lb-download" (click)="download($event)"></a>
           </div>
           <div class="lb-downloadContainer" [hidden]="!ui.showDownloadExtButton">
-            <a class="lb-download" (click)="downloadExt($event)"></a>
+            <a class="lb-download" (click)="downloadExt()"></a>
           </div>
           <div class="lb-turnContainer" [hidden]="!ui.showRotateButton">
             <a class="lb-turnLeft" (click)="control($event)"></a>
@@ -205,7 +205,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
     }
   }
 
-  public downloadExt($event: any): void {
+  public downloadExt(): void {
     this._lightboxEvent.broadcastLightboxEvent({
       id: LIGHTBOX_EVENT.DOWNLOAD,
       data: this.album[this.currentImageIndex]
@@ -250,35 +250,35 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
       this.rotate = this.rotate - 90;
       this._rotateContainer();
       this._calcTransformPoint();
-      this._documentRef.getElementById('image').style.transform = `rotate(${this.rotate}deg)`;
-      this._documentRef.getElementById('image').style.webkitTransform = `rotate(${this.rotate}deg)`;
+      this._imageElem.nativeElement.style.transform = `rotate(${this.rotate}deg)`;
+      this._imageElem.nativeElement.style.webkitTransform = `rotate(${this.rotate}deg)`;
       this._lightboxEvent.broadcastLightboxEvent({ id: LIGHTBOX_EVENT.ROTATE_LEFT, data: null });
     } else if ($event.target.classList.contains('lb-turnRight')) {
       this.rotate = this.rotate + 90;
       this._rotateContainer();
       this._calcTransformPoint();
-      this._documentRef.getElementById('image').style.transform = `rotate(${this.rotate}deg)`;
-      this._documentRef.getElementById('image').style.webkitTransform = `rotate(${this.rotate}deg)`;
+      this._imageElem.nativeElement.style.transform = `rotate(${this.rotate}deg)`;
+      this._imageElem.nativeElement.style.webkitTransform = `rotate(${this.rotate}deg)`;
       this._lightboxEvent.broadcastLightboxEvent({ id: LIGHTBOX_EVENT.ROTATE_RIGHT, data: null });
     } else if ($event.target.classList.contains('lb-zoomOut')) {
-      height = parseInt(this._documentRef.getElementById('outerContainer').style.height, 10) / 1.5;
-      width = parseInt(this._documentRef.getElementById('outerContainer').style.width, 10) / 1.5;
-      this._documentRef.getElementById('outerContainer').style.height = height + 'px';
-      this._documentRef.getElementById('outerContainer').style.width = width + 'px';
-      height = parseInt(this._documentRef.getElementById('image').style.height, 10) / 1.5;
-      width = parseInt(this._documentRef.getElementById('image').style.width, 10) / 1.5;
-      this._documentRef.getElementById('image').style.height = height + 'px';
-      this._documentRef.getElementById('image').style.width = width + 'px';
+      height = parseInt(this._outerContainerElem.nativeElement.style.height, 10) / 1.5;
+      width = parseInt(this._outerContainerElem.nativeElement.style.width, 10) / 1.5;
+      this._outerContainerElem.nativeElement.style.height = height + 'px';
+      this._outerContainerElem.nativeElement.style.width = width + 'px';
+      height = parseInt(this._imageElem.nativeElement.style.height, 10) / 1.5;
+      width = parseInt(this._imageElem.nativeElement.style.width, 10) / 1.5;
+      this._imageElem.nativeElement.style.height = height + 'px';
+      this._imageElem.nativeElement.style.width = width + 'px';
       this._lightboxEvent.broadcastLightboxEvent({ id: LIGHTBOX_EVENT.ZOOM_OUT, data: null });
     } else if ($event.target.classList.contains('lb-zoomIn')) {
-      height = parseInt(this._documentRef.getElementById('outerContainer').style.height, 10) * 1.5;
-      width = parseInt(this._documentRef.getElementById('outerContainer').style.width, 10) * 1.5;
-      this._documentRef.getElementById('outerContainer').style.height = height + 'px';
-      this._documentRef.getElementById('outerContainer').style.width = width + 'px';
-      height = parseInt(this._documentRef.getElementById('image').style.height, 10) * 1.5;
-      width = parseInt(this._documentRef.getElementById('image').style.width, 10) * 1.5;
-      this._documentRef.getElementById('image').style.height = height + 'px';
-      this._documentRef.getElementById('image').style.width = width + 'px';
+      height = parseInt(this._outerContainerElem.nativeElement.style.height, 10) * 1.5;
+      width = parseInt(this._outerContainerElem.nativeElement.style.width, 10) * 1.5;
+      this._outerContainerElem.nativeElement.style.height = height + 'px';
+      this._outerContainerElem.nativeElement.style.width = width + 'px';
+      height = parseInt(this._imageElem.nativeElement.style.height, 10) * 1.5;
+      width = parseInt(this._imageElem.nativeElement.style.width, 10) * 1.5;
+      this._imageElem.nativeElement.style.height = height + 'px';
+      this._imageElem.nativeElement.style.width = width + 'px';
       this._lightboxEvent.broadcastLightboxEvent({ id: LIGHTBOX_EVENT.ZOOM_IN, data: null });
     }
   }
@@ -289,38 +289,38 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
       temp *= -1;
     }
     if (temp / 90 % 4 === 1 || temp / 90 % 4 === 3) {
-      this._documentRef.getElementById('outerContainer').style.height = this._documentRef.getElementById('image').style.width;
-      this._documentRef.getElementById('outerContainer').style.width = this._documentRef.getElementById('image').style.height;
-      this._documentRef.getElementById('container').style.height = this._documentRef.getElementById('image').style.width;
-      this._documentRef.getElementById('container').style.width = this._documentRef.getElementById('image').style.height;
+      this._outerContainerElem.nativeElement.style.height = this._imageElem.nativeElement.style.width;
+      this._outerContainerElem.nativeElement.style.width = this._imageElem.nativeElement.style.height;
+      this._containerElem.nativeElement.style.height = this._imageElem.nativeElement.style.width;
+      this._containerElem.nativeElement.style.width = this._imageElem.nativeElement.style.height;
     } else {
-      this._documentRef.getElementById('outerContainer').style.height = this._documentRef.getElementById('image').style.height;
-      this._documentRef.getElementById('outerContainer').style.width = this._documentRef.getElementById('image').style.width;
-      this._documentRef.getElementById('container').style.height = this._documentRef.getElementById('image').style.width;
-      this._documentRef.getElementById('container').style.width = this._documentRef.getElementById('image').style.height;
+      this._outerContainerElem.nativeElement.style.height = this._imageElem.nativeElement.style.height;
+      this._outerContainerElem.nativeElement.style.width = this._imageElem.nativeElement.style.width;
+      this._containerElem.nativeElement.style.height = this._imageElem.nativeElement.style.width;
+      this._containerElem.nativeElement.style.width = this._imageElem.nativeElement.style.height;
     }
   }
 
   private _resetImage(): void {
     this.rotate = 0;
-    this._documentRef.getElementById('image').style.transform = `rotate(${this.rotate}deg)`;
-    this._documentRef.getElementById('image').style.webkitTransform = `rotate(${this.rotate}deg)`;
+    this._imageElem.nativeElement.style.transform = `rotate(${this.rotate}deg)`;
+    this._imageElem.nativeElement.style.webkitTransform = `rotate(${this.rotate}deg)`;
   }
 
   private _calcTransformPoint(): void {
-    const height = parseInt(this._documentRef.getElementById('image').style.height, 10);
-    const width = parseInt(this._documentRef.getElementById('image').style.width, 10);
+    const height = parseInt(this._imageElem.nativeElement.style.height, 10);
+    const width = parseInt(this._imageElem.nativeElement.style.width, 10);
     let temp = this.rotate % 360;
     if (temp < 0) {
       temp = 360 + temp;
     }
     if (temp === 90) {
-      this._documentRef.getElementById('image').style.transformOrigin = (height / 2) + 'px ' + (height / 2) + 'px';
+      this._imageElem.nativeElement.style.transformOrigin = (height / 2) + 'px ' + (height / 2) + 'px';
     } else if (temp === 180) {
-      this._documentRef.getElementById('image').style.transformOrigin = (width / 2) + 'px ' + (height / 2) + 'px';
- } else if (temp === 270) {
-      this._documentRef.getElementById('image').style.transformOrigin = (width / 2) + 'px ' + (width / 2) + 'px';
- }
+      this._imageElem.nativeElement.style.transformOrigin = (width / 2) + 'px ' + (height / 2) + 'px';
+    } else if (temp === 270) {
+      this._imageElem.nativeElement.style.transformOrigin = (width / 2) + 'px ' + (width / 2) + 'px';
+    }
   }
 
   public nextImage(): void {
@@ -464,20 +464,20 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
           this._event.transitions.push(
             this._rendererRef.listen(this._outerContainerElem.nativeElement, eventName, (event: any) => {
               if (event.target === event.currentTarget) {
-                this._postResize(newWidth, newHeight);
+                this._postResize(newWidth);
               }
             })
           );
         });
       } else {
-        this._postResize(newWidth, newHeight);
+        this._postResize(newWidth);
       }
     } else {
-      this._postResize(newWidth, newHeight);
+      this._postResize(newWidth);
     }
   }
 
-  private _postResize(newWidth: number, newHeight: number): void {
+  private _postResize(newWidth: number): void {
     // unbind resize event
     if (Array.isArray(this._event.transitions)) {
       this._event.transitions.forEach((eventHandler: any) => {
@@ -623,7 +623,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
     try {
       this._documentRef.createEvent('TouchEvent');
       alwaysShowNav = (this.options.alwaysShowNavOnTouchDevices) ? true : false;
-    } catch (e) {
+    } catch {
       // noop
     }
 
