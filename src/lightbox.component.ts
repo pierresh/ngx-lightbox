@@ -64,8 +64,7 @@ import {
         '(click)': 'close($event)',
         '[class]': 'ui.classList'
     },
-    changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false
+    changeDetection: ChangeDetectionStrategy.Eager
 })
 export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnInit {
   private _elemRef = inject(ElementRef);

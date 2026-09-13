@@ -7,12 +7,12 @@ import { LightboxComponent } from './lightbox.component';
 import { Lightbox } from './lightbox.service';
 
 @NgModule({
-  declarations: [ LightboxOverlayComponent, LightboxComponent ],
-  providers: [
-    Lightbox,
-    LightboxConfig,
-    LightboxEvent,
-    LightboxWindowRef
-  ]
+    imports: [LightboxOverlayComponent, LightboxComponent],
+    providers: [
+        Lightbox,
+        LightboxConfig,
+        LightboxEvent,
+        LightboxWindowRef
+    ]
 })
 export class LightboxModule { }

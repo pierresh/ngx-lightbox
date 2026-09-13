@@ -15,8 +15,7 @@ import {
     host: {
         '[class]': 'classList'
     },
-    changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false
+    changeDetection: ChangeDetectionStrategy.Eager
 })
 export class LightboxOverlayComponent implements AfterViewInit, OnDestroy {
   private _elemRef = inject(ElementRef);

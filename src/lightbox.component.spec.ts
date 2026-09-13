@@ -36,8 +36,7 @@ describe('[ Unit - LightboxComponent ]', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    declarations: [LightboxComponent],
-    imports: [],
+    imports: [LightboxComponent],
     providers: [LightboxEvent, LightboxWindowRef, provideHttpClient(withXhr(), withInterceptorsFromDi()), provideHttpClientTesting()]
 });
     createComponent();
