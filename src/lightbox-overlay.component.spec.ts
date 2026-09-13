@@ -24,8 +24,8 @@ describe('[ Unit - LightboxOverlayComponent ]', () => {
     fixture = TestBed.createComponent(LightboxOverlayComponent);
 
     // mock options and ref
-    fixture.componentInstance.options = mockData.options;
-    fixture.componentInstance.cmpRef = { destroy: jasmine.createSpy('spy') };
+    fixture.componentRef.setInput('options', mockData.options);
+    fixture.componentRef.setInput('cmpRef', { destroy: jasmine.createSpy('spy') });
     fixture.detectChanges();
   });
 
@@ -52,7 +52,7 @@ describe('[ Unit - LightboxOverlayComponent ]', () => {
         jasmine.arrayWithExactContents(['lightboxOverlay', 'animation', 'fadeOutOverlay'])
       );
       tick(mockData.options.fadeDuration * 1000 + 1);
-      expect(fixture.componentInstance.cmpRef.destroy).toHaveBeenCalledTimes(1);
+      expect(fixture.componentInstance.cmpRef().destroy).toHaveBeenCalledTimes(1);
     }));
   });
 

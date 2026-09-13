@@ -62,9 +62,9 @@ describe('[ Unit - LightboxComponent ]', () => {
       classList: 'lightbox animation fadeIn'
     });
     expect(fixture.componentInstance.content).toEqual({ pageNumber: '' });
-    expect(fixture.componentInstance.album).toEqual(mockData.album);
-    expect(fixture.componentInstance.options).toEqual(mockData.options);
-    expect(fixture.componentInstance.currentImageIndex).toEqual(mockData.currentIndex);
+    expect(fixture.componentInstance.album()).toEqual(mockData.album);
+    expect(fixture.componentInstance.options()).toEqual(mockData.options);
+    expect(fixture.componentInstance.currentImageIndex()).toEqual(mockData.currentIndex);
   });
 
   describe('{ method: ngOnDestroy }', () => {
@@ -75,14 +75,14 @@ describe('[ Unit - LightboxComponent ]', () => {
     });
 
     it('should call correct method if enable keyboard event', () => {
-      fixture.componentInstance.options.disableKeyboardNav = false;
+      fixture.componentInstance.options().disableKeyboardNav = false;
       fixture.componentInstance.ngOnDestroy();
       expect(fixture.componentInstance['_event'].keyup).toHaveBeenCalledTimes(1);
       expect(fixture.componentInstance['_event'].subscription.unsubscribe).toHaveBeenCalledTimes(1);
     });
 
     it('should not call if keyboard event is disabled', () => {
-      fixture.componentInstance.options.disableKeyboardNav = true;
+      fixture.componentInstance.options().disableKeyboardNav = true;
       fixture.componentInstance.ngOnDestroy();
       expect(fixture.componentInstance['_event'].keyup).not.toHaveBeenCalled();
     });
@@ -199,10 +199,10 @@ describe('[ Unit - LightboxComponent ]', () => {
     fixture = TestBed.createComponent(LightboxComponent);
 
     // mock options and ref
-    fixture.componentInstance.options = mockData.options;
-    fixture.componentInstance.album = mockData.album;
-    fixture.componentInstance.currentImageIndex = mockData.currentIndex;
-    fixture.componentInstance.cmpRef = { destroy: jasmine.createSpy('spy') };
+    fixture.componentRef.setInput('options', mockData.options);
+    fixture.componentRef.setInput('album', mockData.album);
+    fixture.componentRef.setInput('currentImageIndex', mockData.currentIndex);
+    fixture.componentRef.setInput('cmpRef', { destroy: jasmine.createSpy('spy') });
     fixture.detectChanges();
   }
 });

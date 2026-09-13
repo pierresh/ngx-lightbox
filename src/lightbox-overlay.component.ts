@@ -1,7 +1,7 @@
 import { Subscription } from 'rxjs';
 
 
-import { AfterViewInit, Component, ElementRef, HostListener, Input, OnDestroy, Renderer2, DOCUMENT, ChangeDetectionStrategy, inject } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, Renderer2, DOCUMENT, ChangeDetectionStrategy, inject, input } from '@angular/core';
 
 import {
   IEvent,
@@ -24,8 +24,8 @@ export class LightboxOverlayComponent implements AfterViewInit, OnDestroy {
   private _lightboxEvent = inject(LightboxEvent);
   private _documentRef = inject(DOCUMENT);
 
-  @Input() options: any;
-  @Input() cmpRef: any;
+  options = input<any>({});
+  cmpRef = input<any>();
   public classList;
   private _subscription: Subscription;
   constructor() {
@@ -40,7 +40,7 @@ export class LightboxOverlayComponent implements AfterViewInit, OnDestroy {
   }
 
   public ngAfterViewInit(): void {
-    const fadeDuration = this.options.fadeDuration;
+    const fadeDuration = this.options().fadeDuration;
 
     this._rendererRef.setStyle(this._elemRef.nativeElement,
       '-webkit-animation-duration', `${fadeDuration}s`);
@@ -82,8 +82,8 @@ export class LightboxOverlayComponent implements AfterViewInit, OnDestroy {
     // queue self destruction after the animation has finished
     // FIXME: not sure if there is any way better than this
     setTimeout(() => {
-      this.cmpRef.destroy();
-    }, this.options.fadeDuration * 1000);
+      this.cmpRef().destroy();
+    }, this.options().fadeDuration * 1000);
   }
 
   private _getOverlayWidth(): number {
