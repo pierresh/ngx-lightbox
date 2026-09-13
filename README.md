@@ -1,11 +1,17 @@
-[![Build Status](https://travis-ci.org/themyth92/ngx-lightbox.svg?branch=master)](https://travis-ci.org/themyth92/ngx-lightbox)
-
 # Ngx-Lightbox
 
 A [lightbox2](https://github.com/lokesh/lightbox2) implementation port to use with new Angular without the need for jQuery
 
 
 ## [Demo](https://themyth92.com/project/ngx-lightbox)
+
+## Compatibility
+
+The major version of this package follows the Angular major version.
+
+| @pierresh/ngx-lightbox | Angular |
+| ---------------------- | ------- |
+| 22.x                   | 22.x    |
 
 ## Installation
 
@@ -24,11 +30,25 @@ Update your `angular.json`
 
 ## Usage
 
-### Module:
+### Setup
 
-Import `LightboxModule` from `@pierresh/ngx-lightbox`
+`LightboxModule` registers the lightbox providers.
 
-```javascript
+With a standalone application (default since Angular 19), add it to the providers of `bootstrapApplication`:
+
+```typescript
+import { importProvidersFrom } from '@angular/core';
+import { bootstrapApplication } from '@angular/platform-browser';
+import { LightboxModule } from '@pierresh/ngx-lightbox';
+
+bootstrapApplication(AppComponent, {
+  providers: [importProvidersFrom(LightboxModule)]
+});
+```
+
+With an `NgModule` based application, import it in your module:
+
+```typescript
 import { LightboxModule } from '@pierresh/ngx-lightbox';
 
 @NgModule({
@@ -41,30 +61,27 @@ import { LightboxModule } from '@pierresh/ngx-lightbox';
 1. Markup
 
 ```html
-<div *ngFor="let image of _albums; let i=index">
+@for (image of _albums; track image.src; let i = $index) {
   <img [src]="image.thumb" (click)="open(i)" />
-</div>
+}
 ```
 
 2. Component method
 
-```javascript
-import { Lightbox } from '@pierresh/ngx-lightbox';
+```typescript
+import { inject } from '@angular/core';
+import { IAlbum, Lightbox } from '@pierresh/ngx-lightbox';
 
 export class AppComponent {
-  private _album: Array = [];
-  constructor(private _lightbox: Lightbox) {
+  private _lightbox = inject(Lightbox);
+  _albums: IAlbum[] = [];
+
+  constructor() {
     for (let i = 1; i <= 4; i++) {
       const src = 'demo/img/image' + i + '.jpg';
       const caption = 'Image ' + i + ' caption here';
       const thumb = 'demo/img/image' + i + '-thumb.jpg';
-      const album = {
-         src: src,
-         caption: caption,
-         thumb: thumb
-      };
-
-      this._albums.push(album);
+      this._albums.push({ src, caption, thumb });
     }
   }
 
@@ -78,7 +95,6 @@ export class AppComponent {
     this._lightbox.close();
   }
 }
-
 ```
 
 Each `object` of `album` array inside your component may contains 3 properties :
@@ -93,13 +109,15 @@ Each `object` of `album` array inside your component may contains 3 properties :
 
 You can listen to 3 events, which are either **CHANGE_PAGE**, **CLOSE** or **OPEN**.
 
-```javascript
+```typescript
+import { inject } from '@angular/core';
 import { LightboxEvent, LIGHTBOX_EVENT } from '@pierresh/ngx-lightbox';
 import { Subscription } from 'rxjs';
 
 export class AppComponent {
+  private _lightboxEvent = inject(LightboxEvent);
   private _subscription: Subscription;
-  constructor(private _lightboxEvent: LightboxEvent) {}
+
   open(index: number): void {
     // register your subscription and callback whe open lightbox is fired
     this._subscription = this._lightboxEvent.lightboxEvent$
@@ -154,25 +172,30 @@ Available options based on lightbox2 options
 
 1. Override default config
 
-```javascript
+```typescript
+import { inject } from '@angular/core';
 import { LightboxConfig } from '@pierresh/ngx-lightbox';
 
 export class AppComponent {
-  constructor(private _lightboxConfig: LightboxConfig) {
+  private _lightboxConfig = inject(LightboxConfig);
+
+  constructor() {
     // override default config
-    _lightboxConfig.fadeDuration = 1;
+    this._lightboxConfig.fadeDuration = 1;
   }
 }
 ```
 
 2. Set config in a specific opening window
 
-```javascript
-import { LightboxConfig, Lightbox } from '@pierresh/ngx-lightbox';
+```typescript
+import { inject } from '@angular/core';
+import { Lightbox } from '@pierresh/ngx-lightbox';
 
 export class AppComponent {
-  constructor(private _lightboxConfig: LightboxConfig, private _lightbox: Lightbox) {}
-  open(index: number) {
+  private _lightbox = inject(Lightbox);
+
+  open(index: number): void {
     // override the default config on second parameter
     this._lightbox.open(this._albums, index, { wrapAround: true, showImageNumberLabel: true });
   }
@@ -184,23 +207,24 @@ export class AppComponent {
 If you want to use any other parent element than your `<body>`, please override the `containerElementResolver` property of your `LightboxConfig`.
 This can be used, e.g. if you are opening the lightbox from within a Shadow DOM based web component.
 
-```js
+```typescript
 export class MyLightBoxTrigger {
-  constructor(
-    private _lightbox: Lightbox,
-    private _lighboxConfig: LightboxConfig,
-  ) {
-    _lighboxConfig.containerElementResolver = (doc: Document) => doc.getElementById('my-lightbox-host');
+  private _lightbox = inject(Lightbox);
+  private _lightboxConfig = inject(LightboxConfig);
+
+  constructor() {
+    this._lightboxConfig.containerElementResolver = (doc: Document) => doc.getElementById('my-lightbox-host');
   }
 
   open(index: number): void {
     this._lightbox.open(this.images, index); // will put the lightbox child into e.g. <div id="my-lightbox-host"></div>
   }
+}
 ```
 
-## Angular Universal
+## Server-side rendering (SSR)
 
-This project works with universal out of the box with no additional configuration.
+This project works with SSR out of the box with no additional configuration.
 
 ## License
 

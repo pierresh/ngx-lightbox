@@ -1,5 +1,9 @@
-import { provideZoneChangeDetection } from "@angular/core";
-import { AppModule } from './app.module';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { provideZoneChangeDetection, importProvidersFrom } from "@angular/core";
 
-platformBrowserDynamic().bootstrapModule(AppModule, { applicationProviders: [provideZoneChangeDetection()], });
+import { BrowserModule, bootstrapApplication } from "@angular/platform-browser";
+import { LightboxModule } from "../src";
+import { AppComponent } from "./app.component";
+
+bootstrapApplication(AppComponent, {
+    providers: [provideZoneChangeDetection(), importProvidersFrom(BrowserModule, LightboxModule)]
+});
