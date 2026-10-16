@@ -1,7 +1,7 @@
 import { FileSaverService } from 'ngx-filesaver';
 
 
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, Renderer2, SecurityContext, DOCUMENT, ChangeDetectionStrategy, inject, input, linkedSignal, viewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, Renderer2, SecurityContext, DOCUMENT, ChangeDetectionStrategy, inject, input, linkedSignal, signal, viewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import {
@@ -12,6 +12,37 @@ import {
   LightboxWindowRef,
 } from './lightbox-event.service';
 
+export interface LightboxUi {
+  // control the appear of the reloader
+  // false: image has loaded completely and ready to be shown
+  // true: image is still loading
+  showReloader: boolean;
+
+  // control the appear of the nav arrow
+  // the arrowNav is the parent of both left and right arrow
+  // in some cases, the parent shows but the child does not show
+  showLeftArrow: boolean;
+  showRightArrow: boolean;
+  showArrowNav: boolean;
+
+  // control the appear of the zoom and rotate buttons
+  showZoomButton: boolean;
+  showRotateButton: boolean;
+
+  // control whether to show the
+  // page number or not
+  showPageNumber: boolean;
+  showCaption: boolean;
+
+  // control whether to show the download button or not
+  showDownloadButton: boolean;
+
+  // control whether to show the external download button or not
+  showDownloadExtButton: boolean;
+
+  classList: string;
+}
+
 @Component({
     template: `
     <div class="lb-outerContainer transition" #outerContainer id="outerContainer">
@@ -20,39 +51,39 @@ import {
              id="image"
              [src]="album()[currentIndex()].src"
              class="lb-image animation fadeIn"
-             [hidden]="ui.showReloader"
+             [hidden]="ui().showReloader"
              #image>
-        <div class="lb-nav" [hidden]="!ui.showArrowNav" #navArrow>
-          <a class="lb-prev" [hidden]="!ui.showLeftArrow" (click)="prevImage()" #leftArrow></a>
-          <a class="lb-next" [hidden]="!ui.showRightArrow" (click)="nextImage()" #rightArrow></a>
+        <div class="lb-nav" [hidden]="!ui().showArrowNav" #navArrow>
+          <a class="lb-prev" [hidden]="!ui().showLeftArrow" (click)="prevImage()" #leftArrow></a>
+          <a class="lb-next" [hidden]="!ui().showRightArrow" (click)="nextImage()" #rightArrow></a>
         </div>
-        <div class="lb-loader" [hidden]="!ui.showReloader" (click)="close($event)">
+        <div class="lb-loader" [hidden]="!ui().showReloader" (click)="close($event)">
           <a class="lb-cancel"></a>
         </div>
       </div>
     </div>
-    <div class="lb-dataContainer" [hidden]="ui.showReloader" #dataContainer>
+    <div class="lb-dataContainer" [hidden]="ui().showReloader" #dataContainer>
       <div class="lb-data">
         <div class="lb-details">
-          <span class="lb-caption animation fadeIn" [hidden]="!ui.showCaption" [innerHtml]="album()[currentIndex()].caption" #caption>
+          <span class="lb-caption animation fadeIn" [hidden]="!ui().showCaption" [innerHtml]="album()[currentIndex()].caption" #caption>
           </span>
-          <span class="lb-number animation fadeIn" [hidden]="!ui.showPageNumber" #number>{{ content.pageNumber }}</span>
+          <span class="lb-number animation fadeIn" [hidden]="!ui().showPageNumber" #number>{{ content().pageNumber }}</span>
         </div>
         <div class="lb-controlContainer">
           <div class="lb-closeContainer">
             <a class="lb-close" (click)="close($event)"></a>
           </div>
-          <div class="lb-downloadContainer" [hidden]="!ui.showDownloadButton">
+          <div class="lb-downloadContainer" [hidden]="!ui().showDownloadButton">
             <a class="lb-download" (click)="download($event)"></a>
           </div>
-          <div class="lb-downloadContainer" [hidden]="!ui.showDownloadExtButton">
+          <div class="lb-downloadContainer" [hidden]="!ui().showDownloadExtButton">
             <a class="lb-download" (click)="downloadExt()"></a>
           </div>
-          <div class="lb-turnContainer" [hidden]="!ui.showRotateButton">
+          <div class="lb-turnContainer" [hidden]="!ui().showRotateButton">
             <a class="lb-turnLeft" (click)="control($event)"></a>
             <a class="lb-turnRight" (click)="control($event)"></a>
           </div>
-          <div class="lb-zoomContainer" [hidden]="!ui.showZoomButton">
+          <div class="lb-zoomContainer" [hidden]="!ui().showZoomButton">
             <a class="lb-zoomOut" (click)="control($event)"></a>
             <a class="lb-zoomIn" (click)="control($event)"></a>
           </div>
@@ -62,9 +93,9 @@ import {
     selector: '[lb-content]',
     host: {
         '(click)': 'close($event)',
-        '[class]': 'ui.classList'
+        '[class]': 'ui().classList'
     },
-    changeDetection: ChangeDetectionStrategy.Eager
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnInit {
   private _elemRef = inject(ElementRef);
@@ -90,8 +121,20 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   readonly _imageElem = viewChild<ElementRef>('image');
   readonly _captionElem = viewChild<ElementRef>('caption');
   readonly _numberElem = viewChild<ElementRef>('number');
-  public content: any;
-  public ui: any;
+  readonly ui = signal<LightboxUi>({
+    showReloader: true,
+    showLeftArrow: false,
+    showRightArrow: false,
+    showArrowNav: false,
+    showZoomButton: false,
+    showRotateButton: false,
+    showPageNumber: false,
+    showCaption: false,
+    showDownloadButton: false,
+    showDownloadExtButton: false,
+    classList: 'lightbox animation fadeIn'
+  });
+  readonly content = signal({ pageNumber: '' });
   private _cssValue: any;
   private _event: any;
   private _windowRef: any;
@@ -99,42 +142,6 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   constructor() {
     // initialize data
     this._windowRef = this._lightboxWindowRef.nativeWindow;
-
-    // control the interactive of the directive
-    this.ui = {
-      // control the appear of the reloader
-      // false: image has loaded completely and ready to be shown
-      // true: image is still loading
-      showReloader: true,
-
-      // control the appear of the nav arrow
-      // the arrowNav is the parent of both left and right arrow
-      // in some cases, the parent shows but the child does not show
-      showLeftArrow: false,
-      showRightArrow: false,
-      showArrowNav: false,
-
-      // control the appear of the zoom and rotate buttons
-      showZoomButton: false,
-      showRotateButton: false,
-
-      // control whether to show the
-      // page number or not
-      showPageNumber: false,
-      showCaption: false,
-
-      // control whether to show the download button or not
-      showDownloadButton: false,
-
-      // control whether to show the download button or not
-      showDownloadExtButton: false,
-
-      classList: 'lightbox animation fadeIn'
-    };
-
-    this.content = {
-      pageNumber: ''
-    };
 
     this._event = {};
     this._lightboxElem = this._elemRef;
@@ -478,7 +485,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   }
 
   private _showImage(): void {
-    this.ui.showReloader = false;
+    this._patchUi({ showReloader: false });
     this._updateNav();
     this._updateDetails();
     if (!this.options().disableKeyboardNav) {
@@ -495,10 +502,12 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
 
     // update controls visibility on next view generation
     setTimeout(() => {
-      this.ui.showZoomButton = this.options().showZoom;
-      this.ui.showRotateButton = this.options().showRotate;
-      this.ui.showDownloadButton = this.options().showDownloadButton;
-      this.ui.showDownloadExtButton = this.options().showDownloadExtButton;
+      this._patchUi({
+        showZoomButton: this.options().showZoom,
+        showRotateButton: this.options().showRotate,
+        showDownloadButton: this.options().showDownloadButton,
+        showDownloadExtButton: this.options().showDownloadExtButton
+      });
     }, 0);
   }
 
@@ -560,7 +569,7 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   }
 
   private _end(): void {
-    this.ui.classList = 'lightbox animation fadeOut';
+    this._patchUi({ classList: 'lightbox animation fadeOut' });
     if (this.options().disableScrolling) {
       this._rendererRef.removeClass(this._documentRef.documentElement, 'lb-disable-scrolling');
     }
@@ -573,15 +582,15 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
     // update the caption
     if (typeof this.album()[this.currentIndex()].caption !== 'undefined' &&
       this.album()[this.currentIndex()].caption !== '') {
-      this.ui.showCaption = true;
+      this._patchUi({ showCaption: true });
     }
 
     // update the page number if user choose to do so
     // does not perform numbering the page if the
     // array length in album <= 1
     if (this.album().length > 1 && this.options().showImageNumberLabel) {
-      this.ui.showPageNumber = true;
-      this.content.pageNumber = this._albumLabel();
+      this._patchUi({ showPageNumber: true });
+      this.content.set({ pageNumber: this._albumLabel() });
     }
   }
 
@@ -599,12 +608,14 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   }
 
   private _hideImage(): void {
-    this.ui.showReloader = true;
-    this.ui.showArrowNav = false;
-    this.ui.showLeftArrow = false;
-    this.ui.showRightArrow = false;
-    this.ui.showPageNumber = false;
-    this.ui.showCaption = false;
+    this._patchUi({
+      showReloader: true,
+      showArrowNav: false,
+      showLeftArrow: false,
+      showRightArrow: false,
+      showPageNumber: false,
+      showCaption: false
+    });
   }
 
   private _updateNav(): void {
@@ -655,15 +666,15 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
   }
 
   private _showLeftArrowNav(): void {
-    this.ui.showLeftArrow = true;
+    this._patchUi({ showLeftArrow: true });
   }
 
   private _showRightArrowNav(): void {
-    this.ui.showRightArrow = true;
+    this._patchUi({ showRightArrow: true });
   }
 
   private _showArrowNav(): void {
-    this.ui.showArrowNav = (this.album().length !== 1);
+    this._patchUi({ showArrowNav: this.album().length !== 1 });
   }
 
   private _enableKeyboardNav(): void {
@@ -706,6 +717,10 @@ export class LightboxComponent implements OnInit, AfterViewInit, OnDestroy, OnIn
     return parseFloat(this._windowRef
       .getComputedStyle(elem.nativeElement, null)
       .getPropertyValue(propertyName));
+  }
+
+  private _patchUi(patch: Partial<LightboxUi>): void {
+    this.ui.update(ui => ({ ...ui, ...patch }));
   }
 
   private _onReceivedEvent(event: IEvent): void {

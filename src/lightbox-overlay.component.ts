@@ -1,7 +1,7 @@
 import { Subscription } from 'rxjs';
 
 
-import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, Renderer2, DOCUMENT, ChangeDetectionStrategy, inject, input } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, Renderer2, DOCUMENT, ChangeDetectionStrategy, inject, input, signal } from '@angular/core';
 
 import {
   IEvent,
@@ -13,9 +13,9 @@ import {
     selector: '[lb-overlay]',
     template: '',
     host: {
-        '[class]': 'classList'
+        '[class]': 'classList()'
     },
-    changeDetection: ChangeDetectionStrategy.Eager
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LightboxOverlayComponent implements AfterViewInit, OnDestroy {
   private _elemRef = inject(ElementRef);
@@ -25,10 +25,9 @@ export class LightboxOverlayComponent implements AfterViewInit, OnDestroy {
 
   options = input<any>({});
   cmpRef = input<any>();
-  public classList;
+  readonly classList = signal('lightboxOverlay animation fadeInOverlay');
   private _subscription: Subscription;
   constructor() {
-    this.classList = 'lightboxOverlay animation fadeInOverlay';
     this._subscription = this._lightboxEvent.lightboxEvent$.subscribe((event: IEvent) => this._onReceivedEvent(event));
   }
 
@@ -76,7 +75,7 @@ export class LightboxOverlayComponent implements AfterViewInit, OnDestroy {
   }
 
   private _end(): void {
-    this.classList = 'lightboxOverlay animation fadeOutOverlay';
+    this.classList.set('lightboxOverlay animation fadeOutOverlay');
 
     // queue self destruction after the animation has finished
     // FIXME: not sure if there is any way better than this

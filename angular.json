@@ -17,9 +17,6 @@
               "base": "dist"
             },
             "index": "index.html",
-            "polyfills": [
-              "demo/polyfills.ts"
-            ],
             "tsConfig": "tsconfig-demo.json",
             "styles": [
               "./src/lightbox.css",
@@ -72,10 +69,6 @@
           "options": {
             "tsConfig": "tsconfig.json",
             "karmaConfig": "karma.conf.js",
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
             "watch": false
           }
         },

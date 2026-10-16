@@ -25,7 +25,7 @@ import { IAlbum, IEvent, Lightbox, LIGHTBOX_EVENT, LightboxConfig, LightboxEvent
     host: {
         class: 'columns'
     },
-    changeDetection: ChangeDetectionStrategy.Eager
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
   private _lightbox = inject(Lightbox);

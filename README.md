@@ -13,6 +13,8 @@ The major version of this package follows the Angular major version.
 | ---------------------- | ------- |
 | 22.x                   | 22.x    |
 
+It works in both zoneless applications (`provideZonelessChangeDetection()`) and applications using zone.js.
+
 ## Installation
 
 `npm install --save @pierresh/ngx-lightbox`

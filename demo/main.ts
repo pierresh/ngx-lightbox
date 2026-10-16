@@ -1,9 +1,9 @@
-import { provideZoneChangeDetection, importProvidersFrom } from "@angular/core";
+import { importProvidersFrom, provideZonelessChangeDetection } from "@angular/core";
 
-import { BrowserModule, bootstrapApplication } from "@angular/platform-browser";
+import { bootstrapApplication } from "@angular/platform-browser";
 import { LightboxModule } from "../src";
 import { AppComponent } from "./app.component";
 
 bootstrapApplication(AppComponent, {
-    providers: [provideZoneChangeDetection(), importProvidersFrom(BrowserModule, LightboxModule)]
+    providers: [provideZonelessChangeDetection(), importProvidersFrom(LightboxModule)]
 });

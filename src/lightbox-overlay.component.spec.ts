@@ -1,4 +1,5 @@
-import { ComponentFixture, TestBed, fakeAsync, inject, tick } from '@angular/core/testing';
+import { provideZonelessChangeDetection } from '@angular/core';
+import { ComponentFixture, TestBed, inject } from '@angular/core/testing';
 import { LightboxEvent, LIGHTBOX_EVENT } from './lightbox-event.service';
 import { LightboxOverlayComponent } from './lightbox-overlay.component';
 
@@ -18,7 +19,7 @@ describe('[ Unit - LightboxOverlayComponent ]', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
     imports: [LightboxOverlayComponent],
-    providers: [LightboxEvent]
+    providers: [provideZonelessChangeDetection(), LightboxEvent]
 });
 
     fixture = TestBed.createComponent(LightboxOverlayComponent);
@@ -42,18 +43,25 @@ describe('[ Unit - LightboxOverlayComponent ]', () => {
   });
 
   describe('{ method: close }', () => {
-    it('should self destroy and broadcast event when component is closed', fakeAsync(() => {
+    beforeEach(() => {
+      jasmine.clock().install();
+    });
+
+    afterEach(() => {
+      jasmine.clock().uninstall();
+    });
+
+    it('should self destroy and broadcast event when component is closed', () => {
       spyOn(lightboxEvent, 'broadcastLightboxEvent').and.callThrough();
       fixture.componentInstance.close();
       expect(lightboxEvent.broadcastLightboxEvent).toHaveBeenCalledWith({ id: LIGHTBOX_EVENT.CLOSE, data: null });
-      tick();
       fixture.detectChanges();
       expect(fixture.nativeElement.getAttribute('class').split(' ')).toEqual(
         jasmine.arrayWithExactContents(['lightboxOverlay', 'animation', 'fadeOutOverlay'])
       );
-      tick(mockData.options.fadeDuration * 1000 + 1);
+      jasmine.clock().tick(mockData.options.fadeDuration * 1000 + 1);
       expect(fixture.componentInstance.cmpRef().destroy).toHaveBeenCalledTimes(1);
-    }));
+    });
   });
 
   describe('{ method: ngOnDestroy }', () => {
